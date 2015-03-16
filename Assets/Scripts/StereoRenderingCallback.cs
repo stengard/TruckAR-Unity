@@ -1,0 +1,29 @@
+﻿using metaio;
+using UnityEngine;
+using System;
+
+public class StereoRenderingCallback : metaioCallback
+{
+	protected override void onSDKReady()
+	{
+		// Recommended way to load stereo calibration (in this order):
+		// 1) Load your own, exact calibration (calibration XML file created with Toolbox 6.0.1 or newer),
+		//    i.e. *you* as developer provide a calibration file. Note that the path to "hec.xml"
+		//    doesn't actually exist in this example; it's only there to show how to apply a custom
+		//    calibration file.
+		// 2) Load calibration XML file from default path, i.e. in case the user has used Toolbox to
+		//    calibrate (result file always stored at same path).
+		// 3) Load calibration built into Metaio SDK for known devices (may not give perfect result
+		//    because stereo glasses can vary).
+		// Items 2) and 3) only do something on Android for the moment, as there are no supported,
+		// non-Android stereo devices yet.
+		string calibrationFilePath = AssetsManager.getAssetPath("TutorialStereoRendering/hec.xml");
+		if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath)) &&
+			!MetaioSDKUnity.setHandEyeCalibrationFromFile())
+		{
+			MetaioSDKUnity.setHandEyeCalibrationByDevice();
+		}
+	}
+
+
+}
