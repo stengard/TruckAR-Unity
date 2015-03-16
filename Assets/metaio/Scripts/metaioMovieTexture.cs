@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using metaio;
 
+[RequireComponent(typeof(Renderer))]
 public class metaioMovieTexture : MonoBehaviour
 {
 	[HideInInspector]
@@ -32,7 +33,12 @@ public class metaioMovieTexture : MonoBehaviour
 	public UnityEngine.Object movieAsset = null;
 	
 #endregion
-	
+
+	/// <summary>
+	/// Reference to the renderer
+	/// </summary>
+	private Renderer mRenderer;
+
 	// Pointer to the movie geometry
 	private IntPtr movieGeometry;
 	
@@ -113,7 +119,7 @@ public class metaioMovieTexture : MonoBehaviour
 
 		// User has to set transparency-supporting shader himself since he might as well overwrite the shader with
 		// a custom one, so we do not force anyone to use the Unity built-in shader
-		Material mat = gameObject.renderer.material;
+		Material mat = gameObject.GetComponent<Renderer>().material;
 		texture.wrapMode = TextureWrapMode.Clamp;
 		mat.mainTexture = texture;
 
@@ -215,6 +221,14 @@ public class metaioMovieTexture : MonoBehaviour
 	
 	void Awake()
 	{
+		mRenderer = GetComponent<Renderer>();
+
+		// Set the right shader
+#if UNITY_IPHONE && !UNITY_EDITOR
+		mRenderer.material.shader = Shader.Find("metaio/UnlitTextureBGRA");
+#else
+		mRenderer.material.shader = Shader.Find("Unlit/Transparent");
+#endif
 		movieGeometry = IntPtr.Zero;
 		createMovie = true;
 		isLooping = false;
@@ -268,7 +282,7 @@ public class metaioMovieTexture : MonoBehaviour
 		
 		// if the associated GameObject is visible, play movie if it should
 		// be played
-		if (gameObject.renderer.isVisible && isPlaying)
+		if (mRenderer.isVisible && isPlaying)
 			play(isLooping);
 	}
 

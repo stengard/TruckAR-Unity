@@ -164,56 +164,74 @@ public class metaioCallback : MonoBehaviour
 	
 		if (eventID != EUNITY_CALLBACK_EVENT.EUCE_NONE)
 		{
+
 			uint eventValueLength = 0;
 			IntPtr eventValuePtr = MetaioSDKUnity.getUnityCallbackEventValue(out eventValueLength);
 
 //			Debug.Log("Callback event: "+eventID+", "+eventValue);
-			
-			switch (eventID)
+
+			try
 			{
-				case EUNITY_CALLBACK_EVENT.EUCE_LOG:
-					onLog(Marshal.PtrToStringAnsi(eventValuePtr));
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_LOG_WARNING:
-					onLogWarning(Marshal.PtrToStringAnsi(eventValuePtr));
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_LOG_ERROR:
-					onLogError(Marshal.PtrToStringAnsi(eventValuePtr));
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_SDK_READY:
-					onSDKReady();
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_TRACKING_EVENT:
-					byte[] pbAsBytes = new byte[eventValueLength];
-					Marshal.Copy(eventValuePtr, pbAsBytes, 0, (int)eventValueLength);
-					metaio.unitycommunication.OnTrackingEventProtocol prot = metaio.unitycommunication.OnTrackingEventProtocol.ParseFrom(pbAsBytes);
-					List<TrackingValues> listTV = new List<TrackingValues>();
-					for (int i = 0; i < prot.TrackingValuesCount; ++i)
-					{
-						listTV.Add(TrackingValues.FromPB(prot.TrackingValuesList[i]));
-					}
-					onTrackingEvent(listTV);
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_INSTANT_TRACKING_EVENT:
-					onInstantTrackingEvent(eventValuePtr.MarshalToStringUTF8());
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_CAMERA_IMAGE_SAVED:
-					onCameraImageSaved(eventValuePtr.MarshalToStringUTF8());
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_VISUAL_SEARCH_RESULT:
-					parseVisualSearchResponse(eventValuePtr, eventValueLength);
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_VISUAL_SEARCH_STATUS:
-					onVisualSearchStatusChanged(Marshal.PtrToStringAnsi(eventValuePtr));
-					break;
-				case EUNITY_CALLBACK_EVENT.EUCE_MOVIE_END:
-					IntPtr movieTextureGeometryPtr = new IntPtr(int.Parse(Marshal.PtrToStringAnsi(eventValuePtr)));
-					onMovieEnd(metaioMovieTexture.getGameObjectNameForMovieTextureGeometryPtr(movieTextureGeometryPtr));
-					break;
+				if (eventID != EUNITY_CALLBACK_EVENT.EUCE_SDK_READY && (eventValuePtr == IntPtr.Zero || eventValueLength == 0))
+				{
+					throw new Exception("Failed to retrieve callback event: eventID: "+eventID+", "+eventValuePtr+", "+eventValueLength);
+				}
+
+				switch (eventID)
+				{
+					case EUNITY_CALLBACK_EVENT.EUCE_LOG:
+						onLog(Marshal.PtrToStringAnsi(eventValuePtr));
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_LOG_WARNING:
+						onLogWarning(Marshal.PtrToStringAnsi(eventValuePtr));
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_LOG_ERROR:
+						onLogError(Marshal.PtrToStringAnsi(eventValuePtr));
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_SDK_READY:
+						onSDKReady();
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_TRACKING_EVENT:
+						byte[] pbAsBytes = new byte[eventValueLength];
+						Marshal.Copy(eventValuePtr, pbAsBytes, 0, (int)eventValueLength);
+						metaio.unitycommunication.OnTrackingEventProtocol prot = metaio.unitycommunication.OnTrackingEventProtocol.ParseFrom(pbAsBytes);
+						List<TrackingValues> listTV = new List<TrackingValues>();
+						for (int i = 0; i < prot.TrackingValuesCount; ++i)
+						{
+							listTV.Add(TrackingValues.FromPB(prot.TrackingValuesList[i]));
+						}
+						onTrackingEvent(listTV);
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_INSTANT_TRACKING_EVENT:
+						onInstantTrackingEvent(eventValuePtr.MarshalToStringUTF8());
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_CAMERA_IMAGE_SAVED:
+						onCameraImageSaved(eventValuePtr.MarshalToStringUTF8());
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_VISUAL_SEARCH_RESULT:
+						parseVisualSearchResponse(eventValuePtr, eventValueLength);
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_VISUAL_SEARCH_STATUS:
+						onVisualSearchStatusChanged(Marshal.PtrToStringAnsi(eventValuePtr));
+						break;
+					case EUNITY_CALLBACK_EVENT.EUCE_MOVIE_END:
+						IntPtr movieTextureGeometryPtr = new IntPtr(int.Parse(Marshal.PtrToStringAnsi(eventValuePtr)));
+						onMovieEnd(metaioMovieTexture.getGameObjectNameForMovieTextureGeometryPtr(movieTextureGeometryPtr));
+						break;
+				}
 			}
-			
-			// remove the callback event from queue
-			MetaioSDKUnity.removeUnityCallbackEvent();
+			catch (Exception e)
+			{
+				Debug.LogException(e);
+			}
+			finally
+			{
+				MetaioSDKUnity.freeReturnedMemory(eventValuePtr);
+
+				// remove the callback event from queue
+				MetaioSDKUnity.removeUnityCallbackEvent();
+			}
+
 		}
 	}
 	

@@ -33,7 +33,13 @@ public class MapLoader
         clearMap();
         loadedFeatures = 0;
         totalFeatures = MetaioSDKUnity.get3DPointsFrom3Dmap(Path.Combine(Application.streamingAssetsPath, mapPath), featuresRaw);
-        Debug.Log(String.Format("Loaded map has {0} features", totalFeatures));
+		if (totalFeatures <= 0)
+		{
+			Debug.LogError("Failed to load 3D map visualization");
+			return;
+		}
+
+		Debug.Log(String.Format("Loaded map has {0} features", totalFeatures));
         
         map = new GameObject("Feature Map") as GameObject;
         map.AddComponent<EditorOnly>();     

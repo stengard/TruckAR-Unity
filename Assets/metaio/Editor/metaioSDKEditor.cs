@@ -42,15 +42,8 @@ public class metaioSDKEditor : Editor {
 		{
 			// This may fail with Unity free license (Unity plugins for Windows/Mac require Unity PRO license)
 			metaioSDK.writeApplicationSignature(EditorGUILayout.TextField("SDK Signature", metaioSDK.parseApplicationSignature()));
-#if UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
-			metaioSDK.stereoRenderingEnabled = EditorGUILayout.Toggle("Stereo rendering", metaioSDK.stereoRenderingEnabled);
-
-			metaioSDK.seeThroughEnabled = EditorGUILayout.Toggle("See-through", metaioSDK.seeThroughEnabled);
-#else
 			metaioSDK.stereoRenderingEnabled = EditorGUILayout.ToggleLeft("Stereo rendering", metaioSDK.stereoRenderingEnabled);
-
 			metaioSDK.seeThroughEnabled = EditorGUILayout.ToggleLeft("See-through", metaioSDK.seeThroughEnabled);
-#endif
 		}
 		catch (Exception e)
 		{

@@ -13,9 +13,15 @@ public class metaioCamera : MonoBehaviour
 	[SerializeField]
 	public CameraType cameraType;
 
+	/// <summary>
+	/// Reference to the camera object
+	/// </summary>
+	private Camera mCamera;
+
 	public void Awake()
 	{
 		instances.Add(this);
+		mCamera = GetComponent<Camera>();
 	}
 
 	public void OnDestroy()
@@ -25,9 +31,8 @@ public class metaioCamera : MonoBehaviour
 
 	void Start()
 	{
-		camera.transform.position = Vector3.zero;
-		camera.transform.rotation = Quaternion.identity;
-		
+		mCamera.transform.position = Vector3.zero;
+		mCamera.transform.rotation = Quaternion.identity;
 		updateProjectionMatrix = true;
 	}
 
@@ -71,10 +76,8 @@ public class metaioCamera : MonoBehaviour
 			matrix.m23 = m[14];
 			matrix.m33 = m[15];
 			
-			camera.projectionMatrix = matrix;
-
-			Debug.Log("Setting projection matrix: " + camera.projectionMatrix.ToString());
-			
+			mCamera.projectionMatrix = matrix;
+			Debug.Log("Setting projection matrix: " + mCamera.projectionMatrix.ToString());
 			updateProjectionMatrix = false;
 		}
 	}

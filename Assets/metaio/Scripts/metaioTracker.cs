@@ -381,7 +381,7 @@ public class metaioTracker : MonoBehaviour
 		GameObject previewPlane = previewTransform.gameObject;
 		
 		// set the texture preview
-		previewPlane.renderer.sharedMaterial.SetTexture( "_MainTex", texture ) ;
+		previewPlane.GetComponent<Renderer>().sharedMaterial.SetTexture( "_MainTex", texture ) ;
 		
 		// scale the plane
 		previewPlane.transform.localScale = new Vector3( 20f*texture.texelSize.x*texture.width, 1, 20f*texture.texelSize.x*texture.width); 

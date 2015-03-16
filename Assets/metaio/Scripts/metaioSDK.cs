@@ -17,7 +17,7 @@ public class metaioSDK : MonoBehaviour
 	{
 		var envPath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Process);
 		var pluginsPath = Path.Combine(Path.Combine(Environment.CurrentDirectory, "Assets"), "Plugins");
-		
+
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR
 		// Unfortunately we cannot use Application.dataPath in the loading thread (in which this constructor is called),
 		// so we have to construct the path to "XYZ_Data/Plugins" ourself. Changing the PATH later (e.g. in Awake) does
@@ -25,43 +25,59 @@ public class metaioSDK : MonoBehaviour
 
 		// Search for "Plugins" folder in subfolders of the current directory (where the executable is)
 		string[] subPaths = Directory.GetFileSystemEntries(Environment.CurrentDirectory);
-		
+
 		foreach (var subPath in subPaths)
 		{
 			var fullSubPath = Path.Combine(Environment.CurrentDirectory, subPath);
 			// Only look at directories
 			if (!Directory.Exists(fullSubPath))
 				continue;
-			
+
 			// Use GetFullPath to ensure conversion of path separators (slash or backslash) to native
 			var potentialPluginsPath = Path.GetFullPath(Path.Combine(fullSubPath, "Plugins"));
 			if (Directory.Exists(potentialPluginsPath) && !envPath.Contains(Path.PathSeparator + potentialPluginsPath))
+			{
 				envPath += Path.PathSeparator + potentialPluginsPath;
+			}
 		}
 #endif
-		
-		if ((pluginsPath.Length > 0 && !envPath.Contains(Path.PathSeparator + pluginsPath)))
+
+#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
+#if (UNITY_EDITOR_64 || UNITY_64)
+		var cpuArchPluginPath = Path.Combine(pluginsPath, "x86_64");
+#else
+		var cpuArchPluginPath = Path.Combine(pluginsPath, "x86");
+#endif
+		if (pluginsPath.Length > 0 && !envPath.Contains(Path.PathSeparator + cpuArchPluginPath))
+		{
+			envPath += Path.PathSeparator + cpuArchPluginPath;
+		}
+#endif
+
+		if (pluginsPath.Length > 0 && !envPath.Contains(Path.PathSeparator + pluginsPath))
+		{
 			envPath += Path.PathSeparator + pluginsPath;
-		
+		}
+
 		Environment.SetEnvironmentVariable(
 			"PATH",
 			envPath,
 			EnvironmentVariableTarget.Process);
 	}
-	
+
 	public metaioSDK()
 	{
 		// Must be called before any calls to the metaio SDK DLL
 		adjustPath();
 	}
-	
-	
+
+
 #region Public fields
 
 	// Tracking configuration (path to file or a string)
 	[SerializeField]
 	public String trackingConfiguration;
-	
+
 	// Device camera to start
 	[SerializeField]
 	public int cameraFacing = MetaioCamera.FACE_UNDEFINED;
@@ -119,48 +135,61 @@ public class metaioSDK : MonoBehaviour
 	// Near clipping plane limit (default 50mm)
 	[SerializeField]
 	public float nearClippingPlaneLimit = 50f;
-	
+
 	// Far clipping plane limit (default 1000Km)
 	[SerializeField]
 	public float farClippingPlaneLimit = 1e+9f;
 
 #endregion
-	
+
 #region Private fields
 	/// <summary>
 	/// Whether a GUI label should be shown, indicating that the application was not started with "-force-opengl".
-	/// </summary> 
+	/// </summary>
 	private bool showWrongRendererError = false;
 
 #endregion
-	
+
 #region Editor script fields
 
 	public static String[] trackingAssets = {"None", "DUMMY", "GPS", "ORIENTATION", "LLA", "CODE", "QRCODE", "FACE", "StreamingAssets...", "Absolute Path or String...", "Generated"};
-	
+
 	[HideInInspector]
 	[SerializeField]
 	public int trackingAssetIndex;
-	
+
 	[HideInInspector]
 	[SerializeField]
 	public UnityEngine.Object trackingAsset = null;
-	
+
 #endregion
-	
+
 	void Awake()
-	{	
-		if (!SystemInfo.graphicsDeviceVersion.ToLowerInvariant().Contains("opengl"))
+	{
+		// Validate that renderer is OpenGL
+		showWrongRendererError = !SystemInfo.graphicsDeviceVersion.Contains("OpenGL");
+
+#if !UNITY_EDITOR && (UNITY_IPHONE)
+		if (!showWrongRendererError)
+		{
+			// validate OpenGL ES version
+			showWrongRendererError = !SystemInfo.graphicsDeviceVersion.Contains("OpenGL ES 2.");
+		}
+#endif
+
+		if (showWrongRendererError)
 		{
 			Debug.LogError("#######################\n" +
-			               "It seems that another renderer than OpenGL is used, but OpenGL is required when using " +
-			               "the metaio SDK. Please pass \"-force-opengl\" to the executable to enforce running " +
-			               "with OpenGL.\n" +
+			               "Metaio SDK only works with OpenGL renderer. The current renderer is "+SystemInfo.graphicsDeviceVersion+".\n"+
+#if !UNITY_EDITOR && (UNITY_IPHONE)
+			               "Please choose OpenGL ES 2.x Graphics API from the Player Settings.\n" +
+#elif (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
+			               "Please pass \"-force-opengl\" to the Windows executable to enforce running with OpenGL.\n" +
+#endif
 			               "#######################");
-			showWrongRendererError = true;
 		}
 
-		AssetsManager.extractAssets(true);	
+		AssetsManager.extractAssets(true);
 	}
 
 	void OnGUI()
@@ -169,11 +198,16 @@ public class metaioSDK : MonoBehaviour
 		{
 			Color backup = GUI.contentColor;
 			GUI.contentColor = new Color(1, 0, 0); // red
-			GUI.Label(new Rect(0, 0, Screen.width, 100), "Metaio SDK camera stream rendering cannot work without passing \"-force-opengl\" to the executable.");
+			GUI.Label(new Rect(0, 0, Screen.width, 100), "Metaio SDK camera stream rendering can only work with OpenGL.");
+#if !UNITY_EDITOR && (UNITY_IPHONE || UNITY_ANDROID)
+			GUI.Label(new Rect(0, 110, Screen.width, 100), "Please choose OpenGL ES 2.x Graphics API from the Player Settings.");
+#elif (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
+			GUI.Label(new Rect(0, 110, Screen.width, 100), "Please pass \"-force-opengl\" to the Windows executable to enforce running with OpenGL.");
+#endif
 			GUI.contentColor = backup;
 		}
 	}
-	
+
 	/// <summary>
 	/// Parses the application signature from the file StreamingAssets/MetaioSDKLicense.xml.
 	/// </summary>
@@ -214,7 +248,7 @@ public class metaioSDK : MonoBehaviour
 						signatureKey = childNode.InnerText;
 					}
 				}
-				
+
 				if (string.IsNullOrEmpty(signatureKey))
 				{
 					// On Android/iOS, you *must* register the application and enter a signature (even for free
@@ -242,7 +276,7 @@ public class metaioSDK : MonoBehaviour
 
 		return string.Empty;
 	}
-					
+
 	public void writeApplicationSignature(string signatureKey)
 	{
 		// Code not needed in deployed application
@@ -277,14 +311,14 @@ public class metaioSDK : MonoBehaviour
 #endif
 	}
 
-	void Start () 
+	void Start ()
 	{
 		int result = MetaioSDKUnity.createMetaioSDKUnity(parseApplicationSignature());
 		if (result == 0)
 			Debug.Log("metaio SDK created successfully");
 		else
 			Debug.LogError("Failed to create metaio SDK!");
-				
+
 		bool mustRestoreAutoRotation = false;
 		if (Screen.orientation == ScreenOrientation.Unknown)
 		{
@@ -324,7 +358,7 @@ public class metaioSDK : MonoBehaviour
 
 		Debug.Log("Starting the default camera with facing: "+cameraFacing);
 		MetaioSDKUnity.startCamera(cameraFacing);
-		
+
 		// Load tracking configuration
 		if (String.IsNullOrEmpty(trackingConfiguration))
 		{
@@ -344,7 +378,7 @@ public class metaioSDK : MonoBehaviour
 
 		// Set LLA objects' rendering limits
 		MetaioSDKUnity.setLLAObjectRenderingLimits(10, 1000);
-		
+
 		// Set renderer clipping plane limits
 		MetaioSDKUnity.setRendererClippingPlaneLimits(nearClippingPlaneLimit, farClippingPlaneLimit);
 
@@ -352,18 +386,18 @@ public class metaioSDK : MonoBehaviour
 		stereoRenderingEnabled = _stereoRenderingEnabled;
 		seeThroughEnabled = _seeThroughEnabled;
 	}
-	
+
 	void OnDisable()
 	{
 		Debug.Log("OnDisable: deleting metaio sdk...");
-		
+
 		// stop camera before deleting the instance
 		MetaioSDKUnity.stopCamera();
-		
+
 		// delete the instance
 		MetaioSDKUnity.deleteMetaioSDKUnity();
 	}
-	
+
 	void OnApplicationPause(bool pause)
 	{
 		Debug.Log("OnApplicationPause: "+pause);
@@ -374,8 +408,11 @@ public class metaioSDK : MonoBehaviour
 		}
 		else
 		{
+#if UNITY_IPHONE
+			System.Threading.Thread.Sleep(1000);
+#endif
 			MetaioSDKUnity.onResumeApplication();
 		}
 	}
-	
+
 }

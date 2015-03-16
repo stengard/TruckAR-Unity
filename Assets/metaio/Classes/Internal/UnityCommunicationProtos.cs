@@ -2540,8 +2540,8 @@ namespace metaio.unitycommunication {
   public sealed partial class TrackingValues : pb::GeneratedMessageLite<TrackingValues, TrackingValues.Builder> {
     private TrackingValues() { }
     private static readonly TrackingValues defaultInstance = new TrackingValues().MakeReadOnly();
-    private static readonly string[] _trackingValuesFieldNames = new string[] { "additionalValues", "coordinateSystemID", "cosName", "llaCoordinate", "quality", "rotation", "state", "timeElapsed", "translation" };
-    private static readonly uint[] _trackingValuesFieldTags = new uint[] { 74, 56, 66, 34, 45, 26, 8, 49, 18 };
+    private static readonly string[] _trackingValuesFieldNames = new string[] { "additionalValues", "coordinateSystemID", "cosName", "llaCoordinate", "quality", "rotation", "sensor", "state", "timeElapsed", "timestampInSeconds", "trackingTimeMs", "translation" };
+    private static readonly uint[] _trackingValuesFieldTags = new uint[] { 90, 72, 82, 34, 45, 26, 98, 8, 49, 65, 57, 18 };
     public static TrackingValues DefaultInstance {
       get { return defaultInstance; }
     }
@@ -2614,7 +2614,27 @@ namespace metaio.unitycommunication {
       get { return timeElapsed_; }
     }
     
-    public const int CoordinateSystemIDFieldNumber = 7;
+    public const int TrackingTimeMsFieldNumber = 7;
+    private bool hasTrackingTimeMs;
+    private double trackingTimeMs_;
+    public bool HasTrackingTimeMs {
+      get { return hasTrackingTimeMs; }
+    }
+    public double TrackingTimeMs {
+      get { return trackingTimeMs_; }
+    }
+    
+    public const int TimestampInSecondsFieldNumber = 8;
+    private bool hasTimestampInSeconds;
+    private double timestampInSeconds_;
+    public bool HasTimestampInSeconds {
+      get { return hasTimestampInSeconds; }
+    }
+    public double TimestampInSeconds {
+      get { return timestampInSeconds_; }
+    }
+    
+    public const int CoordinateSystemIDFieldNumber = 9;
     private bool hasCoordinateSystemID;
     private int coordinateSystemID_;
     public bool HasCoordinateSystemID {
@@ -2624,7 +2644,7 @@ namespace metaio.unitycommunication {
       get { return coordinateSystemID_; }
     }
     
-    public const int CosNameFieldNumber = 8;
+    public const int CosNameFieldNumber = 10;
     private bool hasCosName;
     private string cosName_ = "";
     public bool HasCosName {
@@ -2634,7 +2654,7 @@ namespace metaio.unitycommunication {
       get { return cosName_; }
     }
     
-    public const int AdditionalValuesFieldNumber = 9;
+    public const int AdditionalValuesFieldNumber = 11;
     private bool hasAdditionalValues;
     private string additionalValues_ = "";
     public bool HasAdditionalValues {
@@ -2642,6 +2662,16 @@ namespace metaio.unitycommunication {
     }
     public string AdditionalValues {
       get { return additionalValues_; }
+    }
+    
+    public const int SensorFieldNumber = 12;
+    private bool hasSensor;
+    private string sensor_ = "";
+    public bool HasSensor {
+      get { return hasSensor; }
+    }
+    public string Sensor {
+      get { return sensor_; }
     }
     
     public override bool IsInitialized {
@@ -2652,9 +2682,12 @@ namespace metaio.unitycommunication {
         if (!hasLlaCoordinate) return false;
         if (!hasQuality) return false;
         if (!hasTimeElapsed) return false;
+        if (!hasTrackingTimeMs) return false;
+        if (!hasTimestampInSeconds) return false;
         if (!hasCoordinateSystemID) return false;
         if (!hasCosName) return false;
         if (!hasAdditionalValues) return false;
+        if (!hasSensor) return false;
         if (!Translation.IsInitialized) return false;
         if (!Rotation.IsInitialized) return false;
         if (!LlaCoordinate.IsInitialized) return false;
@@ -2668,10 +2701,10 @@ namespace metaio.unitycommunication {
       #pragma warning restore 0219
       string[] field_names = _trackingValuesFieldNames;
       if (hasState) {
-        output.WriteInt32(1, field_names[6], State);
+        output.WriteInt32(1, field_names[7], State);
       }
       if (hasTranslation) {
-        output.WriteMessage(2, field_names[8], Translation);
+        output.WriteMessage(2, field_names[11], Translation);
       }
       if (hasRotation) {
         output.WriteMessage(3, field_names[5], Rotation);
@@ -2683,16 +2716,25 @@ namespace metaio.unitycommunication {
         output.WriteFloat(5, field_names[4], Quality);
       }
       if (hasTimeElapsed) {
-        output.WriteDouble(6, field_names[7], TimeElapsed);
+        output.WriteDouble(6, field_names[8], TimeElapsed);
+      }
+      if (hasTrackingTimeMs) {
+        output.WriteDouble(7, field_names[10], TrackingTimeMs);
+      }
+      if (hasTimestampInSeconds) {
+        output.WriteDouble(8, field_names[9], TimestampInSeconds);
       }
       if (hasCoordinateSystemID) {
-        output.WriteInt32(7, field_names[1], CoordinateSystemID);
+        output.WriteInt32(9, field_names[1], CoordinateSystemID);
       }
       if (hasCosName) {
-        output.WriteString(8, field_names[2], CosName);
+        output.WriteString(10, field_names[2], CosName);
       }
       if (hasAdditionalValues) {
-        output.WriteString(9, field_names[0], AdditionalValues);
+        output.WriteString(11, field_names[0], AdditionalValues);
+      }
+      if (hasSensor) {
+        output.WriteString(12, field_names[6], Sensor);
       }
     }
     
@@ -2721,14 +2763,23 @@ namespace metaio.unitycommunication {
         if (hasTimeElapsed) {
           size += pb::CodedOutputStream.ComputeDoubleSize(6, TimeElapsed);
         }
+        if (hasTrackingTimeMs) {
+          size += pb::CodedOutputStream.ComputeDoubleSize(7, TrackingTimeMs);
+        }
+        if (hasTimestampInSeconds) {
+          size += pb::CodedOutputStream.ComputeDoubleSize(8, TimestampInSeconds);
+        }
         if (hasCoordinateSystemID) {
-          size += pb::CodedOutputStream.ComputeInt32Size(7, CoordinateSystemID);
+          size += pb::CodedOutputStream.ComputeInt32Size(9, CoordinateSystemID);
         }
         if (hasCosName) {
-          size += pb::CodedOutputStream.ComputeStringSize(8, CosName);
+          size += pb::CodedOutputStream.ComputeStringSize(10, CosName);
         }
         if (hasAdditionalValues) {
-          size += pb::CodedOutputStream.ComputeStringSize(9, AdditionalValues);
+          size += pb::CodedOutputStream.ComputeStringSize(11, AdditionalValues);
+        }
+        if (hasSensor) {
+          size += pb::CodedOutputStream.ComputeStringSize(12, Sensor);
         }
         memoizedSerializedSize = size;
         return size;
@@ -2744,9 +2795,12 @@ namespace metaio.unitycommunication {
       if (hasLlaCoordinate) hash ^= llaCoordinate_.GetHashCode();
       if (hasQuality) hash ^= quality_.GetHashCode();
       if (hasTimeElapsed) hash ^= timeElapsed_.GetHashCode();
+      if (hasTrackingTimeMs) hash ^= trackingTimeMs_.GetHashCode();
+      if (hasTimestampInSeconds) hash ^= timestampInSeconds_.GetHashCode();
       if (hasCoordinateSystemID) hash ^= coordinateSystemID_.GetHashCode();
       if (hasCosName) hash ^= cosName_.GetHashCode();
       if (hasAdditionalValues) hash ^= additionalValues_.GetHashCode();
+      if (hasSensor) hash ^= sensor_.GetHashCode();
       return hash;
     }
     
@@ -2759,9 +2813,12 @@ namespace metaio.unitycommunication {
       if (hasLlaCoordinate != other.hasLlaCoordinate || (hasLlaCoordinate && !llaCoordinate_.Equals(other.llaCoordinate_))) return false;
       if (hasQuality != other.hasQuality || (hasQuality && !quality_.Equals(other.quality_))) return false;
       if (hasTimeElapsed != other.hasTimeElapsed || (hasTimeElapsed && !timeElapsed_.Equals(other.timeElapsed_))) return false;
+      if (hasTrackingTimeMs != other.hasTrackingTimeMs || (hasTrackingTimeMs && !trackingTimeMs_.Equals(other.trackingTimeMs_))) return false;
+      if (hasTimestampInSeconds != other.hasTimestampInSeconds || (hasTimestampInSeconds && !timestampInSeconds_.Equals(other.timestampInSeconds_))) return false;
       if (hasCoordinateSystemID != other.hasCoordinateSystemID || (hasCoordinateSystemID && !coordinateSystemID_.Equals(other.coordinateSystemID_))) return false;
       if (hasCosName != other.hasCosName || (hasCosName && !cosName_.Equals(other.cosName_))) return false;
       if (hasAdditionalValues != other.hasAdditionalValues || (hasAdditionalValues && !additionalValues_.Equals(other.additionalValues_))) return false;
+      if (hasSensor != other.hasSensor || (hasSensor && !sensor_.Equals(other.sensor_))) return false;
       return true;
     }
     
@@ -2772,9 +2829,12 @@ namespace metaio.unitycommunication {
       PrintField("llaCoordinate", hasLlaCoordinate, llaCoordinate_, writer);
       PrintField("quality", hasQuality, quality_, writer);
       PrintField("timeElapsed", hasTimeElapsed, timeElapsed_, writer);
+      PrintField("trackingTimeMs", hasTrackingTimeMs, trackingTimeMs_, writer);
+      PrintField("timestampInSeconds", hasTimestampInSeconds, timestampInSeconds_, writer);
       PrintField("coordinateSystemID", hasCoordinateSystemID, coordinateSystemID_, writer);
       PrintField("cosName", hasCosName, cosName_, writer);
       PrintField("additionalValues", hasAdditionalValues, additionalValues_, writer);
+      PrintField("sensor", hasSensor, sensor_, writer);
     }
     #endregion
     
@@ -2910,6 +2970,12 @@ namespace metaio.unitycommunication {
         if (other.HasTimeElapsed) {
           TimeElapsed = other.TimeElapsed;
         }
+        if (other.HasTrackingTimeMs) {
+          TrackingTimeMs = other.TrackingTimeMs;
+        }
+        if (other.HasTimestampInSeconds) {
+          TimestampInSeconds = other.TimestampInSeconds;
+        }
         if (other.HasCoordinateSystemID) {
           CoordinateSystemID = other.CoordinateSystemID;
         }
@@ -2918,6 +2984,9 @@ namespace metaio.unitycommunication {
         }
         if (other.HasAdditionalValues) {
           AdditionalValues = other.AdditionalValues;
+        }
+        if (other.HasSensor) {
+          Sensor = other.Sensor;
         }
         return this;
       }
@@ -2990,16 +3059,28 @@ namespace metaio.unitycommunication {
               result.hasTimeElapsed = input.ReadDouble(ref result.timeElapsed_);
               break;
             }
-            case 56: {
+            case 57: {
+              result.hasTrackingTimeMs = input.ReadDouble(ref result.trackingTimeMs_);
+              break;
+            }
+            case 65: {
+              result.hasTimestampInSeconds = input.ReadDouble(ref result.timestampInSeconds_);
+              break;
+            }
+            case 72: {
               result.hasCoordinateSystemID = input.ReadInt32(ref result.coordinateSystemID_);
               break;
             }
-            case 66: {
+            case 82: {
               result.hasCosName = input.ReadString(ref result.cosName_);
               break;
             }
-            case 74: {
+            case 90: {
               result.hasAdditionalValues = input.ReadString(ref result.additionalValues_);
+              break;
+            }
+            case 98: {
+              result.hasSensor = input.ReadString(ref result.sensor_);
               break;
             }
           }
@@ -3189,6 +3270,46 @@ namespace metaio.unitycommunication {
         return this;
       }
       
+      public bool HasTrackingTimeMs {
+        get { return result.hasTrackingTimeMs; }
+      }
+      public double TrackingTimeMs {
+        get { return result.TrackingTimeMs; }
+        set { SetTrackingTimeMs(value); }
+      }
+      public Builder SetTrackingTimeMs(double value) {
+        PrepareBuilder();
+        result.hasTrackingTimeMs = true;
+        result.trackingTimeMs_ = value;
+        return this;
+      }
+      public Builder ClearTrackingTimeMs() {
+        PrepareBuilder();
+        result.hasTrackingTimeMs = false;
+        result.trackingTimeMs_ = 0D;
+        return this;
+      }
+      
+      public bool HasTimestampInSeconds {
+        get { return result.hasTimestampInSeconds; }
+      }
+      public double TimestampInSeconds {
+        get { return result.TimestampInSeconds; }
+        set { SetTimestampInSeconds(value); }
+      }
+      public Builder SetTimestampInSeconds(double value) {
+        PrepareBuilder();
+        result.hasTimestampInSeconds = true;
+        result.timestampInSeconds_ = value;
+        return this;
+      }
+      public Builder ClearTimestampInSeconds() {
+        PrepareBuilder();
+        result.hasTimestampInSeconds = false;
+        result.timestampInSeconds_ = 0D;
+        return this;
+      }
+      
       public bool HasCoordinateSystemID {
         get { return result.hasCoordinateSystemID; }
       }
@@ -3250,304 +3371,29 @@ namespace metaio.unitycommunication {
         result.additionalValues_ = "";
         return this;
       }
+      
+      public bool HasSensor {
+        get { return result.hasSensor; }
+      }
+      public string Sensor {
+        get { return result.Sensor; }
+        set { SetSensor(value); }
+      }
+      public Builder SetSensor(string value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.hasSensor = true;
+        result.sensor_ = value;
+        return this;
+      }
+      public Builder ClearSensor() {
+        PrepareBuilder();
+        result.hasSensor = false;
+        result.sensor_ = "";
+        return this;
+      }
     }
     static TrackingValues() {
-      object.ReferenceEquals(global::metaio.unitycommunication.UnityCommunicationProtos.Descriptor, null);
-    }
-  }
-  
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-  public sealed partial class ListCamerasProtocol : pb::GeneratedMessageLite<ListCamerasProtocol, ListCamerasProtocol.Builder> {
-    private ListCamerasProtocol() { }
-    private static readonly ListCamerasProtocol defaultInstance = new ListCamerasProtocol().MakeReadOnly();
-    private static readonly string[] _listCamerasProtocolFieldNames = new string[] { "cameras" };
-    private static readonly uint[] _listCamerasProtocolFieldTags = new uint[] { 10 };
-    public static ListCamerasProtocol DefaultInstance {
-      get { return defaultInstance; }
-    }
-    
-    public override ListCamerasProtocol DefaultInstanceForType {
-      get { return DefaultInstance; }
-    }
-    
-    protected override ListCamerasProtocol ThisMessage {
-      get { return this; }
-    }
-    
-    public const int CamerasFieldNumber = 1;
-    private pbc::PopsicleList<global::metaio.unitycommunication.Camera> cameras_ = new pbc::PopsicleList<global::metaio.unitycommunication.Camera>();
-    public scg::IList<global::metaio.unitycommunication.Camera> CamerasList {
-      get { return cameras_; }
-    }
-    public int CamerasCount {
-      get { return cameras_.Count; }
-    }
-    public global::metaio.unitycommunication.Camera GetCameras(int index) {
-      return cameras_[index];
-    }
-    
-    public override bool IsInitialized {
-      get {
-        foreach (global::metaio.unitycommunication.Camera element in CamerasList) {
-          if (!element.IsInitialized) return false;
-        }
-        return true;
-      }
-    }
-    
-    public override void WriteTo(pb::ICodedOutputStream output) {
-      #pragma warning disable 0219
-      int size = SerializedSize;
-      #pragma warning restore 0219
-      string[] field_names = _listCamerasProtocolFieldNames;
-      if (cameras_.Count > 0) {
-        output.WriteMessageArray(1, field_names[0], cameras_);
-      }
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public override int SerializedSize {
-      get {
-        int size = memoizedSerializedSize;
-        if (size != -1) return size;
-        
-        size = 0;
-        foreach (global::metaio.unitycommunication.Camera element in CamerasList) {
-          size += pb::CodedOutputStream.ComputeMessageSize(1, element);
-        }
-        memoizedSerializedSize = size;
-        return size;
-      }
-    }
-    
-    #region Lite runtime methods
-    public override int GetHashCode() {
-      int hash = GetType().GetHashCode();
-      foreach(global::metaio.unitycommunication.Camera i in cameras_)
-        hash ^= i.GetHashCode();
-      return hash;
-    }
-    
-    public override bool Equals(object obj) {
-      ListCamerasProtocol other = obj as ListCamerasProtocol;
-      if (other == null) return false;
-      if(cameras_.Count != other.cameras_.Count) return false;
-      for(int ix=0; ix < cameras_.Count; ix++)
-        if(!cameras_[ix].Equals(other.cameras_[ix])) return false;
-      return true;
-    }
-    
-    public override void PrintTo(global::System.IO.TextWriter writer) {
-      PrintField("cameras", cameras_, writer);
-    }
-    #endregion
-    
-    public static ListCamerasProtocol ParseFrom(pb::ByteString data) {
-      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
-      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(byte[] data) {
-      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
-      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(global::System.IO.Stream input) {
-      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
-      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseDelimitedFrom(global::System.IO.Stream input) {
-      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
-      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(pb::ICodedInputStream input) {
-      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
-    }
-    public static ListCamerasProtocol ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
-      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
-    }
-    private ListCamerasProtocol MakeReadOnly() {
-      cameras_.MakeReadOnly();
-      return this;
-    }
-    
-    public static Builder CreateBuilder() { return new Builder(); }
-    public override Builder ToBuilder() { return CreateBuilder(this); }
-    public override Builder CreateBuilderForType() { return new Builder(); }
-    public static Builder CreateBuilder(ListCamerasProtocol prototype) {
-      return new Builder(prototype);
-    }
-    
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    public sealed partial class Builder : pb::GeneratedBuilderLite<ListCamerasProtocol, Builder> {
-      protected override Builder ThisBuilder {
-        get { return this; }
-      }
-      public Builder() {
-        result = DefaultInstance;
-        resultIsReadOnly = true;
-      }
-      internal Builder(ListCamerasProtocol cloneFrom) {
-        result = cloneFrom;
-        resultIsReadOnly = true;
-      }
-      
-      private bool resultIsReadOnly;
-      private ListCamerasProtocol result;
-      
-      private ListCamerasProtocol PrepareBuilder() {
-        if (resultIsReadOnly) {
-          ListCamerasProtocol original = result;
-          result = new ListCamerasProtocol();
-          resultIsReadOnly = false;
-          MergeFrom(original);
-        }
-        return result;
-      }
-      
-      public override bool IsInitialized {
-        get { return result.IsInitialized; }
-      }
-      
-      protected override ListCamerasProtocol MessageBeingBuilt {
-        get { return PrepareBuilder(); }
-      }
-      
-      public override Builder Clear() {
-        result = DefaultInstance;
-        resultIsReadOnly = true;
-        return this;
-      }
-      
-      public override Builder Clone() {
-        if (resultIsReadOnly) {
-          return new Builder(result);
-        } else {
-          return new Builder().MergeFrom(result);
-        }
-      }
-      
-      public override ListCamerasProtocol DefaultInstanceForType {
-        get { return global::metaio.unitycommunication.ListCamerasProtocol.DefaultInstance; }
-      }
-      
-      public override ListCamerasProtocol BuildPartial() {
-        if (resultIsReadOnly) {
-          return result;
-        }
-        resultIsReadOnly = true;
-        return result.MakeReadOnly();
-      }
-      
-      public override Builder MergeFrom(pb::IMessageLite other) {
-        if (other is ListCamerasProtocol) {
-          return MergeFrom((ListCamerasProtocol) other);
-        } else {
-          base.MergeFrom(other);
-          return this;
-        }
-      }
-      
-      public override Builder MergeFrom(ListCamerasProtocol other) {
-        if (other == global::metaio.unitycommunication.ListCamerasProtocol.DefaultInstance) return this;
-        PrepareBuilder();
-        if (other.cameras_.Count != 0) {
-          result.cameras_.Add(other.cameras_);
-        }
-        return this;
-      }
-      
-      public override Builder MergeFrom(pb::ICodedInputStream input) {
-        return MergeFrom(input, pb::ExtensionRegistry.Empty);
-      }
-      
-      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
-        PrepareBuilder();
-        uint tag;
-        string field_name;
-        while (input.ReadTag(out tag, out field_name)) {
-          if(tag == 0 && field_name != null) {
-            int field_ordinal = global::System.Array.BinarySearch(_listCamerasProtocolFieldNames, field_name, global::System.StringComparer.Ordinal);
-            if(field_ordinal >= 0)
-              tag = _listCamerasProtocolFieldTags[field_ordinal];
-            else {
-              ParseUnknownField(input, extensionRegistry, tag, field_name);
-              continue;
-            }
-          }
-          switch (tag) {
-            case 0: {
-              throw pb::InvalidProtocolBufferException.InvalidTag();
-            }
-            default: {
-              if (pb::WireFormat.IsEndGroupTag(tag)) {
-                return this;
-              }
-              ParseUnknownField(input, extensionRegistry, tag, field_name);
-              break;
-            }
-            case 10: {
-              input.ReadMessageArray(tag, field_name, result.cameras_, global::metaio.unitycommunication.Camera.DefaultInstance, extensionRegistry);
-              break;
-            }
-          }
-        }
-        
-        return this;
-      }
-      
-      
-      public pbc::IPopsicleList<global::metaio.unitycommunication.Camera> CamerasList {
-        get { return PrepareBuilder().cameras_; }
-      }
-      public int CamerasCount {
-        get { return result.CamerasCount; }
-      }
-      public global::metaio.unitycommunication.Camera GetCameras(int index) {
-        return result.GetCameras(index);
-      }
-      public Builder SetCameras(int index, global::metaio.unitycommunication.Camera value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        PrepareBuilder();
-        result.cameras_[index] = value;
-        return this;
-      }
-      public Builder SetCameras(int index, global::metaio.unitycommunication.Camera.Builder builderForValue) {
-        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-        PrepareBuilder();
-        result.cameras_[index] = builderForValue.Build();
-        return this;
-      }
-      public Builder AddCameras(global::metaio.unitycommunication.Camera value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        PrepareBuilder();
-        result.cameras_.Add(value);
-        return this;
-      }
-      public Builder AddCameras(global::metaio.unitycommunication.Camera.Builder builderForValue) {
-        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-        PrepareBuilder();
-        result.cameras_.Add(builderForValue.Build());
-        return this;
-      }
-      public Builder AddRangeCameras(scg::IEnumerable<global::metaio.unitycommunication.Camera> values) {
-        PrepareBuilder();
-        result.cameras_.Add(values);
-        return this;
-      }
-      public Builder ClearCameras() {
-        PrepareBuilder();
-        result.cameras_.Clear();
-        return this;
-      }
-    }
-    static ListCamerasProtocol() {
       object.ReferenceEquals(global::metaio.unitycommunication.UnityCommunicationProtos.Descriptor, null);
     }
   }
@@ -3844,6 +3690,302 @@ namespace metaio.unitycommunication {
       }
     }
     static OnTrackingEventProtocol() {
+      object.ReferenceEquals(global::metaio.unitycommunication.UnityCommunicationProtos.Descriptor, null);
+    }
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class ListCamerasProtocol : pb::GeneratedMessageLite<ListCamerasProtocol, ListCamerasProtocol.Builder> {
+    private ListCamerasProtocol() { }
+    private static readonly ListCamerasProtocol defaultInstance = new ListCamerasProtocol().MakeReadOnly();
+    private static readonly string[] _listCamerasProtocolFieldNames = new string[] { "cameras" };
+    private static readonly uint[] _listCamerasProtocolFieldTags = new uint[] { 10 };
+    public static ListCamerasProtocol DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override ListCamerasProtocol DefaultInstanceForType {
+      get { return DefaultInstance; }
+    }
+    
+    protected override ListCamerasProtocol ThisMessage {
+      get { return this; }
+    }
+    
+    public const int CamerasFieldNumber = 1;
+    private pbc::PopsicleList<global::metaio.unitycommunication.Camera> cameras_ = new pbc::PopsicleList<global::metaio.unitycommunication.Camera>();
+    public scg::IList<global::metaio.unitycommunication.Camera> CamerasList {
+      get { return cameras_; }
+    }
+    public int CamerasCount {
+      get { return cameras_.Count; }
+    }
+    public global::metaio.unitycommunication.Camera GetCameras(int index) {
+      return cameras_[index];
+    }
+    
+    public override bool IsInitialized {
+      get {
+        foreach (global::metaio.unitycommunication.Camera element in CamerasList) {
+          if (!element.IsInitialized) return false;
+        }
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::ICodedOutputStream output) {
+      #pragma warning disable 0219
+      int size = SerializedSize;
+      #pragma warning restore 0219
+      string[] field_names = _listCamerasProtocolFieldNames;
+      if (cameras_.Count > 0) {
+        output.WriteMessageArray(1, field_names[0], cameras_);
+      }
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        foreach (global::metaio.unitycommunication.Camera element in CamerasList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+        }
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    #region Lite runtime methods
+    public override int GetHashCode() {
+      int hash = GetType().GetHashCode();
+      foreach(global::metaio.unitycommunication.Camera i in cameras_)
+        hash ^= i.GetHashCode();
+      return hash;
+    }
+    
+    public override bool Equals(object obj) {
+      ListCamerasProtocol other = obj as ListCamerasProtocol;
+      if (other == null) return false;
+      if(cameras_.Count != other.cameras_.Count) return false;
+      for(int ix=0; ix < cameras_.Count; ix++)
+        if(!cameras_[ix].Equals(other.cameras_[ix])) return false;
+      return true;
+    }
+    
+    public override void PrintTo(global::System.IO.TextWriter writer) {
+      PrintField("cameras", cameras_, writer);
+    }
+    #endregion
+    
+    public static ListCamerasProtocol ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(pb::ICodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static ListCamerasProtocol ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    private ListCamerasProtocol MakeReadOnly() {
+      cameras_.MakeReadOnly();
+      return this;
+    }
+    
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(ListCamerasProtocol prototype) {
+      return new Builder(prototype);
+    }
+    
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public sealed partial class Builder : pb::GeneratedBuilderLite<ListCamerasProtocol, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+      }
+      internal Builder(ListCamerasProtocol cloneFrom) {
+        result = cloneFrom;
+        resultIsReadOnly = true;
+      }
+      
+      private bool resultIsReadOnly;
+      private ListCamerasProtocol result;
+      
+      private ListCamerasProtocol PrepareBuilder() {
+        if (resultIsReadOnly) {
+          ListCamerasProtocol original = result;
+          result = new ListCamerasProtocol();
+          resultIsReadOnly = false;
+          MergeFrom(original);
+        }
+        return result;
+      }
+      
+      public override bool IsInitialized {
+        get { return result.IsInitialized; }
+      }
+      
+      protected override ListCamerasProtocol MessageBeingBuilt {
+        get { return PrepareBuilder(); }
+      }
+      
+      public override Builder Clear() {
+        result = DefaultInstance;
+        resultIsReadOnly = true;
+        return this;
+      }
+      
+      public override Builder Clone() {
+        if (resultIsReadOnly) {
+          return new Builder(result);
+        } else {
+          return new Builder().MergeFrom(result);
+        }
+      }
+      
+      public override ListCamerasProtocol DefaultInstanceForType {
+        get { return global::metaio.unitycommunication.ListCamerasProtocol.DefaultInstance; }
+      }
+      
+      public override ListCamerasProtocol BuildPartial() {
+        if (resultIsReadOnly) {
+          return result;
+        }
+        resultIsReadOnly = true;
+        return result.MakeReadOnly();
+      }
+      
+      public override Builder MergeFrom(pb::IMessageLite other) {
+        if (other is ListCamerasProtocol) {
+          return MergeFrom((ListCamerasProtocol) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(ListCamerasProtocol other) {
+        if (other == global::metaio.unitycommunication.ListCamerasProtocol.DefaultInstance) return this;
+        PrepareBuilder();
+        if (other.cameras_.Count != 0) {
+          result.cameras_.Add(other.cameras_);
+        }
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        PrepareBuilder();
+        uint tag;
+        string field_name;
+        while (input.ReadTag(out tag, out field_name)) {
+          if(tag == 0 && field_name != null) {
+            int field_ordinal = global::System.Array.BinarySearch(_listCamerasProtocolFieldNames, field_name, global::System.StringComparer.Ordinal);
+            if(field_ordinal >= 0)
+              tag = _listCamerasProtocolFieldTags[field_ordinal];
+            else {
+              ParseUnknownField(input, extensionRegistry, tag, field_name);
+              continue;
+            }
+          }
+          switch (tag) {
+            case 0: {
+              throw pb::InvalidProtocolBufferException.InvalidTag();
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                return this;
+              }
+              ParseUnknownField(input, extensionRegistry, tag, field_name);
+              break;
+            }
+            case 10: {
+              input.ReadMessageArray(tag, field_name, result.cameras_, global::metaio.unitycommunication.Camera.DefaultInstance, extensionRegistry);
+              break;
+            }
+          }
+        }
+        
+        return this;
+      }
+      
+      
+      public pbc::IPopsicleList<global::metaio.unitycommunication.Camera> CamerasList {
+        get { return PrepareBuilder().cameras_; }
+      }
+      public int CamerasCount {
+        get { return result.CamerasCount; }
+      }
+      public global::metaio.unitycommunication.Camera GetCameras(int index) {
+        return result.GetCameras(index);
+      }
+      public Builder SetCameras(int index, global::metaio.unitycommunication.Camera value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.cameras_[index] = value;
+        return this;
+      }
+      public Builder SetCameras(int index, global::metaio.unitycommunication.Camera.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.cameras_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddCameras(global::metaio.unitycommunication.Camera value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        PrepareBuilder();
+        result.cameras_.Add(value);
+        return this;
+      }
+      public Builder AddCameras(global::metaio.unitycommunication.Camera.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        PrepareBuilder();
+        result.cameras_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeCameras(scg::IEnumerable<global::metaio.unitycommunication.Camera> values) {
+        PrepareBuilder();
+        result.cameras_.Add(values);
+        return this;
+      }
+      public Builder ClearCameras() {
+        PrepareBuilder();
+        result.cameras_.Clear();
+        return this;
+      }
+    }
+    static ListCamerasProtocol() {
       object.ReferenceEquals(global::metaio.unitycommunication.UnityCommunicationProtos.Descriptor, null);
     }
   }

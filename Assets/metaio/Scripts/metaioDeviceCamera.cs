@@ -74,7 +74,7 @@ public class metaioDeviceCamera : MonoBehaviour
 		
 		// initialize camera plane object
 		cameraPlane = transform.FindChild("CameraPlane").gameObject;
-		cameraPlane.renderer.material.shader = Shader.Find("metaio/UnlitTexture");
+		cameraPlane.GetComponent<Renderer>().material.shader = Shader.Find("metaio/UnlitTexture");
 		cameraPlane.transform.localPosition = new Vector3(0.0f, 0.0f, 1.0f);
 		
 		screenOrientation = ScreenOrientation.Unknown;
@@ -139,8 +139,9 @@ public class metaioDeviceCamera : MonoBehaviour
 		GameObject sceneCam = GameObject.Find("SceneCamera");
 		if (sceneCam != null)
 		{
-			screenSize.x = sceneCam.camera.pixelRect.width;
-			screenSize.y = sceneCam.camera.pixelRect.height;
+			Camera camera = sceneCam.GetComponent<Camera>();
+			screenSize.x = camera.pixelRect.width;
+			screenSize.y = camera.pixelRect.height;
 		}
 		else
 		{
@@ -247,7 +248,7 @@ public class metaioDeviceCamera : MonoBehaviour
 		
 		currentTextureSize = requiredSize;
 
-		cameraPlane.renderer.material.mainTexture = texture;
+		cameraPlane.GetComponent<Renderer>().material.mainTexture = texture;
 		textureID = texture.GetNativeTextureID();
 
 		Debug.Log("Texture ID: "+textureID);
