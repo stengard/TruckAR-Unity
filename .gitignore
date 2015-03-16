@@ -12,6 +12,7 @@
 /*.userprefs
 /*.pidb
 /*.booproj
+Assets/Plugins/iOS/*
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
