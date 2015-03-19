@@ -5,10 +5,6 @@ using metaio;
 
 public class InfoHUD : MonoBehaviour {
 
-    private string cfpsString = "0";
-    private string tfpsString = "0";
-    private string rfpsString = "0";
-
     public Text cameraFPS;
     public Text renderingFPS;
     public Text trackingFPS;
