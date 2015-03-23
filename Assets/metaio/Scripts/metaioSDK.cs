@@ -70,8 +70,6 @@ public class metaioSDK : MonoBehaviour
 	{
 		// Must be called before any calls to the metaio SDK DLL
 		adjustPath();
-        CountdownThenTweakCameraSettings();
-
 	}
 
 
@@ -359,6 +357,8 @@ public class metaioSDK : MonoBehaviour
 			Screen.orientation = ScreenOrientation.AutoRotation;
 		}
 
+
+
 		DebugLog.Debugga("Starting the default camera with facing: "+cameraFacing);
 		MetaioSDKUnity.startCamera(cameraFacing);
 
@@ -388,6 +388,10 @@ public class metaioSDK : MonoBehaviour
 		// Apply initial settings for mono/stereo and (non-)see-through mode
 		stereoRenderingEnabled = _stereoRenderingEnabled;
 		seeThroughEnabled = _seeThroughEnabled;
+
+
+        MetaioSDKUnity.setHandEyeCalibrationByDevice();
+        CountdownThenTweakCameraSettings();
 	}
 
 	void OnDisable()

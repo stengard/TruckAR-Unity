@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using metaio;
 
 public class LoadScene : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class LoadScene : MonoBehaviour {
 
     void Start()
     {
+
         loadingTexture = new Texture2D((int)loadingSprite.rect.width, (int)loadingSprite.rect.height);
 
         Color[] pixels = loadingSprite.texture.GetPixels((int)loadingSprite.textureRect.x,
