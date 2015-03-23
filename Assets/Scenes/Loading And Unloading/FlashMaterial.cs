@@ -20,9 +20,10 @@ public class FlashMaterial : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        currentOpacity = Mathf.Abs(Mathf.Sin(Time.time*flashingSpeed));
 
+        //Change opacity of the material attached to the object
+        currentOpacity = Mathf.Abs(Mathf.Sin(Time.time*flashingSpeed));
         meshRenderer.material.SetColor("_Color", new Color(meshRenderer.material.color.r, meshRenderer.material.color.g, meshRenderer.material.color.b, currentOpacity));
-        //DebugLog.Debugga(meshRenderer.material.color);
+
     }
 }
