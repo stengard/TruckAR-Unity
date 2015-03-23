@@ -391,7 +391,7 @@ public class metaioSDK : MonoBehaviour
 
 
         //Setting the calibration from the file in /mnt/sdcard/metaio/hec/hec.xml
-        MetaioSDKUnity.setHandEyeCalibrationByDevice();
+        //MetaioSDKUnity.setHandEyeCalibrationByDevice();
         StartCoroutine(CountdownThenTweakCameraSettings());
 	}
 

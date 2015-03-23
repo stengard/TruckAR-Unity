@@ -6,10 +6,13 @@ public class ChangeSizeOnDistance : MonoBehaviour {
     public float sizeMultiplier;
     private float[] trackingValues;
 
+    private Vector3 originalScale;
+
     // Use this for initialization
     void Start() {
-        sizeMultiplier = 1;
+        sizeMultiplier = 2;
         trackingValues = new float[7];
+        originalScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -33,10 +36,13 @@ public class ChangeSizeOnDistance : MonoBehaviour {
         Vector3 cameraPosition = cameraRotation * (-cameraTranslation);
 
         float distance = Vector3.Distance(Vector3.zero, cameraPosition);
+        float scaleFactor = (distance / (sizeMultiplier * 1000));
 
-        //transform.localScale = transform.localScale * (distance/sizeMultiplier);
+        if(distance != 0)
+            transform.localScale = new Vector3(originalScale.x * scaleFactor, originalScale.y * scaleFactor, originalScale.z * scaleFactor);
         
-        Debugga.LoggaLive("Distance: " + distance);
+        //Debugga.LoggaLive("Distance: " + distance);
+        Debugga.LoggaLive("Scale: " + transform.localScale + " " + scaleFactor);
 
     }
 }
