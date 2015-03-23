@@ -110,7 +110,7 @@ public class metaioTracker : MonoBehaviour
 			{
 				if (cameraToPositionMono != null && cameraToPositionMono != unityCamera)
 				{
-					DebugLog.DebuggaWarning("Two cameras have the metaioCamera script attached and are marked as mono camera. Choosing main camera.");
+					Debugga.LoggaVarning("Two cameras have the metaioCamera script attached and are marked as mono camera. Choosing main camera.");
 				}
 				else
 				{
@@ -121,7 +121,7 @@ public class metaioTracker : MonoBehaviour
 			{
 				if (cameraToPositionLeft != null)
 				{
-					DebugLog.DebuggaWarning("Two cameras have the metaioCamera script attached and are marked as left camera. Choosing first one.");
+					Debugga.LoggaVarning("Two cameras have the metaioCamera script attached and are marked as left camera. Choosing first one.");
 				}
 				else
 				{
@@ -132,7 +132,7 @@ public class metaioTracker : MonoBehaviour
 			{
 				if (cameraToPositionRight != null)
 				{
-					DebugLog.DebuggaWarning("Two cameras have the metaioCamera script attached and are marked as right camera. Choosing first one.");
+					Debugga.LoggaVarning("Two cameras have the metaioCamera script attached and are marked as right camera. Choosing first one.");
 				}
 				else
 				{
@@ -143,12 +143,12 @@ public class metaioTracker : MonoBehaviour
 
 		if (transformCamera && cameraToPositionMono == null)
 		{
-			DebugLog.DebuggaError("Metaio plugin didn't find camera to position. Please use the metaioSDK prefab, or create a camera with the 'metaioCamera' script attached.");
+			Debugga.LoggaFel("Metaio plugin didn't find camera to position. Please use the metaioSDK prefab, or create a camera with the 'metaioCamera' script attached.");
 		}
 
 		if (cameraToPositionLeft == null || cameraToPositionRight == null)
 		{
-			DebugLog.DebuggaWarning("No left/right camera for Metaio SDK stereo rendering found - this feature won't be available. Please make sure you imported the latest metaioSDK.unitypackage.");
+			Debugga.LoggaVarning("No left/right camera for Metaio SDK stereo rendering found - this feature won't be available. Please make sure you imported the latest metaioSDK.unitypackage.");
 		}
 
 		childsEnabled = true;
@@ -176,7 +176,7 @@ public class metaioTracker : MonoBehaviour
 		}
 		
 		int isTracking = MetaioSDKUnity.getTrackingValues(cosID, trackingValues);
-		// DebugLog.Debugga("cosID " + cosID + ", isTracking: " + isTracking);
+		// Debugga.Debugga("cosID " + cosID + ", isTracking: " + isTracking);
 		
 		if (isTracking > 0)
 		{
@@ -206,7 +206,7 @@ public class metaioTracker : MonoBehaviour
 			{
 				// convert LLA to cartesian translation
 				MetaioSDKUnity.convertLLAToTranslation(geoLocation.x, geoLocation.y, enableLLALimits?1:0, translation);
-				//DebugLog.Debugga("LLA translation: "+translation[0]+", "+translation[1]+", "+translation[2]);
+				//Debugga.Debugga("LLA translation: "+translation[0]+", "+translation[1]+", "+translation[2]);
 			
 				Vector3 tLLA;
 				tLLA.x = translation[0];

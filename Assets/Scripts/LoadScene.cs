@@ -49,7 +49,7 @@ public class LoadScene : MonoBehaviour {
     public void loadScene(string scene)
     {
         
-        DebugLog.Debugga("Loading scene " + scene);
+        Debugga.Logga("Loading scene " + scene);
         Application.LoadLevelAsync(scene);
     }
 

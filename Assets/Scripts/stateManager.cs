@@ -35,11 +35,11 @@ public class stateManager : MonoBehaviour {
                 break;
             case "STATE_GAZE":
                 changeInit(GAZEObject);
-                DebugLog.Debugga("Gaze initiated");
+                Debugga.Logga("Gaze initiated");
                 break;
             case "STATE_MARKER":
                 changeInit(MARKERObject);
-                DebugLog.Debugga("Marker Initiated");
+                Debugga.Logga("Marker Initiated");
                 break;
             default:
                 break;
@@ -51,7 +51,7 @@ public class stateManager : MonoBehaviour {
         for(int nObjs=0;nObjs<allActiveObjs.Length;nObjs++){
             Destroy(allActiveObjs[nObjs].gameObject);  
         }
-        DebugLog.Debugga("l = " + allActiveObjs.Length);
+        Debugga.Logga("l = " + allActiveObjs.Length);
         Instantiate(obj);
     }
 

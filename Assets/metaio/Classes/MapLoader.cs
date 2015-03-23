@@ -35,11 +35,11 @@ public class MapLoader
         totalFeatures = MetaioSDKUnity.get3DPointsFrom3Dmap(Path.Combine(Application.streamingAssetsPath, mapPath), featuresRaw);
 		if (totalFeatures <= 0)
 		{
-			DebugLog.DebuggaError("Failed to load 3D map visualization");
+			Debugga.LoggaFel("Failed to load 3D map visualization");
 			return;
 		}
 
-		DebugLog.Debugga(String.Format("Loaded map has {0} features", totalFeatures));
+		Debugga.Logga(String.Format("Loaded map has {0} features", totalFeatures));
         
         map = new GameObject("Feature Map") as GameObject;
         map.AddComponent<EditorOnly>();     
@@ -58,7 +58,7 @@ public class MapLoader
         map.transform.eulerAngles = mapRotation;
         map.transform.localScale = mapScale;
 
-        DebugLog.Debugga("Start loading map... Don't delete Feature Map object while loading!");
+        Debugga.Logga("Start loading map... Don't delete Feature Map object while loading!");
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class MapLoader
             feature.transform.localPosition = new Vector3(featuresRaw[i * 3], featuresRaw[i * 3 + 1], featuresRaw[i * 3 + 2]);
         }
         loadedFeatures += FEATURES_PACKAGES_AMOUNT;
-        DebugLog.Debugga("Map is loading. Progress: " + (float) i / totalFeatures * 100 + "%");
+        Debugga.Logga("Map is loading. Progress: " + (float) i / totalFeatures * 100 + "%");
         if (loadedFeatures >= totalFeatures) return true;
         return false;
     }

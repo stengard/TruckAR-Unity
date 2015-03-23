@@ -15,7 +15,7 @@ public class metaioTrackerEditor : Editor
 		 
 		metaioSDK = (metaioSDK) GameObject.Find("metaioSDK").GetComponent("metaioSDK");
 		if(!metaioSDK)
-			DebugLog.DebuggaError("Could not find the metaioSDK, with the metaioSDK script attached");
+			Debugga.LoggaFel("Could not find the metaioSDK, with the metaioSDK script attached");
     }
 	
 	void OnGUI ()
@@ -50,7 +50,7 @@ public class metaioTrackerEditor : Editor
             // was Application.streamingAssetsPath, but caused problems on Mac 
             if (tracker.trackingImage.StartsWith("Assets") && !tracker.trackingImage.StartsWith("Assets/StreamingAssets"))
             {
-                DebugLog.DebuggaWarning("Selected image is not in the StreamingAsset folder");
+                Debugga.LoggaVarning("Selected image is not in the StreamingAsset folder");
                 return;
             }
 
@@ -79,7 +79,7 @@ public class metaioTrackerEditor : Editor
 	{
 		// clean up the path
 		pattern = pattern.Replace("Assets/StreamingAssets/", "");
-		DebugLog.Debugga("new pattern" +pattern);
+		Debugga.Logga("new pattern" +pattern);
 		
 		writer.WriteStartElement("SensorCOS");
 		writer.WriteElementString("SensorCosID", name);
@@ -92,7 +92,7 @@ public class metaioTrackerEditor : Editor
 	
 	public void saveTrackingXML()
 	{
-		DebugLog.Debugga("Saving xml");
+		Debugga.Logga("Saving xml");
 		string filename = "TrackingConfigGenerated.xml";
 		string filepath = Application.dataPath + @"/StreamingAssets/"+filename;  
 		
@@ -108,7 +108,7 @@ public class metaioTrackerEditor : Editor
 		metaioTracker[] patterns = metaioSDK.GetComponentsInChildren<metaioTracker>();
 
 		if (patterns.Length == 0)
-			DebugLog.DebuggaWarning("No metaioTracker objects found, make sure you have assigned at least one as child of " +
+			Debugga.LoggaVarning("No metaioTracker objects found, make sure you have assigned at least one as child of " +
 			                 "the metaioSDK object. The currently generated tracking configuration will fail to load.");
 
 		//Sensors
