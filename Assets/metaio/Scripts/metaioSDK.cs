@@ -4,7 +4,8 @@ using System.Text;
 using System.Xml;
 using UnityEngine;
 using metaio;
-
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// This class provides main behavior for the metaioSDK GameObject
@@ -69,6 +70,8 @@ public class metaioSDK : MonoBehaviour
 	{
 		// Must be called before any calls to the metaio SDK DLL
 		adjustPath();
+        CountdownThenTweakCameraSettings();
+
 	}
 
 
@@ -179,7 +182,7 @@ public class metaioSDK : MonoBehaviour
 
 		if (showWrongRendererError)
 		{
-			Debug.LogError("#######################\n" +
+			DebugLog.DebuggaError("#######################\n" +
 			               "Metaio SDK only works with OpenGL renderer. The current renderer is "+SystemInfo.graphicsDeviceVersion+".\n"+
 #if !UNITY_EDITOR && (UNITY_IPHONE)
 			               "Please choose OpenGL ES 2.x Graphics API from the Player Settings.\n" +
@@ -233,7 +236,7 @@ public class metaioSDK : MonoBehaviour
 			XmlNodeList rootList = doc.GetElementsByTagName("Keys");
 			if (rootList.Count != 1)
 			{
-				Debug.LogError("MetaioSDKLicense.xml has wrong format");
+				DebugLog.DebuggaError("MetaioSDKLicense.xml has wrong format");
 			}
 			else
 			{
@@ -254,9 +257,9 @@ public class metaioSDK : MonoBehaviour
 					// On Android/iOS, you *must* register the application and enter a signature (even for free
 					// license), while on Windows/Mac, the SDK runs with free license if no signature given.
 #if (UNITY_IPHONE || UNITY_ANDROID) && !UNITY_EDITOR
-					Debug.LogError("Missing application signature");
+					DebugLog.DebuggaError("Missing application signature");
 #else
-					Debug.Log("Missing application signature");
+					DebugLog.Debugga("Missing application signature");
 #endif
 				}
 				else
@@ -268,9 +271,9 @@ public class metaioSDK : MonoBehaviour
 		else
 		{
 #if (UNITY_IPHONE || UNITY_ANDROID) && !UNITY_EDITOR
-					Debug.LogError("No file MetaioSDKLicense.xml found in StreamingAssets");
+					DebugLog.DebuggaError("No file MetaioSDKLicense.xml found in StreamingAssets");
 #else
-					Debug.Log("No file MetaioSDKLicense.xml found in StreamingAssets");
+					DebugLog.Debugga("No file MetaioSDKLicense.xml found in StreamingAssets");
 #endif
 		}
 
@@ -306,7 +309,7 @@ public class metaioSDK : MonoBehaviour
 		}
 		catch (Exception e)
 		{
-			Debug.LogError("Failed to write MetaioSDKLicense.xml ("+signatureKey+"): " + e);
+			//DebugLog.DebuggaError("Failed to write MetaioSDKLicense.xml ("+signatureKey+"): " + e);
 		}
 #endif
 	}
@@ -315,9 +318,9 @@ public class metaioSDK : MonoBehaviour
 	{
 		int result = MetaioSDKUnity.createMetaioSDKUnity(parseApplicationSignature());
 		if (result == 0)
-			Debug.Log("metaio SDK created successfully");
+			DebugLog.Debugga("metaio SDK created successfully");
 		else
-			Debug.LogError("Failed to create metaio SDK!");
+			DebugLog.DebuggaError("Failed to create metaio SDK!");
 
 		bool mustRestoreAutoRotation = false;
 		if (Screen.orientation == ScreenOrientation.Unknown)
@@ -326,7 +329,7 @@ public class metaioSDK : MonoBehaviour
 			// default orientation (as defined in player settings).
 			mustRestoreAutoRotation = true;
 
-			Debug.Log("Fixing unknown orientation problem");
+			DebugLog.Debugga("Fixing unknown orientation problem");
 
 			switch (Input.deviceOrientation)
 			{
@@ -356,13 +359,13 @@ public class metaioSDK : MonoBehaviour
 			Screen.orientation = ScreenOrientation.AutoRotation;
 		}
 
-		Debug.Log("Starting the default camera with facing: "+cameraFacing);
+		DebugLog.Debugga("Starting the default camera with facing: "+cameraFacing);
 		MetaioSDKUnity.startCamera(cameraFacing);
 
 		// Load tracking configuration
 		if (String.IsNullOrEmpty(trackingConfiguration))
 		{
-			Debug.Log("No tracking configuration specified");
+			DebugLog.Debugga("No tracking configuration specified");
 
 			result = MetaioSDKUnity.setTrackingConfiguration("", 0);
 		}
@@ -371,9 +374,9 @@ public class metaioSDK : MonoBehaviour
 			result = MetaioSDKUnity.setTrackingConfigurationFromAssets(trackingConfiguration);
 
 			if (result == 0)
-				Debug.LogError("Start: failed to load tracking configuration: "+trackingConfiguration);
+				DebugLog.DebuggaError("Start: failed to load tracking configuration: "+trackingConfiguration);
 			else
-				Debug.Log("Loaded tracking configuration: "+trackingConfiguration);
+				DebugLog.Debugga("Loaded tracking configuration: "+trackingConfiguration);
 		}
 
 		// Set LLA objects' rendering limits
@@ -389,7 +392,7 @@ public class metaioSDK : MonoBehaviour
 
 	void OnDisable()
 	{
-		Debug.Log("OnDisable: deleting metaio sdk...");
+		DebugLog.Debugga("OnDisable: deleting metaio sdk...");
 
 		// stop camera before deleting the instance
 		MetaioSDKUnity.stopCamera();
@@ -400,7 +403,7 @@ public class metaioSDK : MonoBehaviour
 
 	void OnApplicationPause(bool pause)
 	{
-		Debug.Log("OnApplicationPause: "+pause);
+		DebugLog.Debugga("OnApplicationPause: "+pause);
 
 		if (pause)
 		{
@@ -414,5 +417,47 @@ public class metaioSDK : MonoBehaviour
 			MetaioSDKUnity.onResumeApplication();
 		}
 	}
+
+    IEnumerator CountdownThenTweakCameraSettings() {
+
+        // Wait a bit as this doesn’t work if you do it straight from start, obviously I probably just want to wait a frame rather then seconds in the final thing but 5 seconds was a good amount of time to test with. 
+        yield return new WaitForSeconds(1.0f);
+
+        // Get the cameras
+        List<MetaioCamera> cameras = MetaioSDKUnity.getCameraList();
+
+        // the first camera in the array is the back camera or it is for iPad3 anyway.
+        MetaioCamera camera = cameras[0];
+
+        // Not necessary but I found knowing the original settings of the iPad camera very useful
+        DebugLog.Debugga("-- TINKERING STUFF --");
+        DebugLog.Debugga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
+        DebugLog.Debugga("Downsampling: " + camera.downsample);
+        DebugLog.Debugga("FPS: x=" + camera.fps.x + " y=" + camera.fps.y);
+        DebugLog.Debugga("Resolution: x=" + camera.resolution.x + " y=" + camera.resolution.y);
+        DebugLog.Debugga("-- End of Tinkering Stuff --");
+
+        // Defining the new camera settings , I encountered a bug where setting resolution without setting FPS caused the FPS to be set to the resolution's values, to avoid this I’m stating the FPS as well.  
+        camera.fps.x = 30;
+        camera.fps.y = 30;
+        camera.resolution.x = 320;
+        camera.resolution.y = 240;
+        // this bits probably unnecessary now but meh, testing on device takes so long that I can’t be bothered to check for bugs post its removal. 
+        camera.downsample = 1;
+
+        // Apply the new camera settings 
+        MetaioSDKUnity.startCamera(camera);
+
+        // Waiting some more then reporting back the camera settings so I could check they’d been successfully changed.
+        yield return new WaitForSeconds(1.0f);
+
+        DebugLog.Debugga("-- TINKERING STUFF --");
+        DebugLog.Debugga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
+        DebugLog.Debugga("Downsampling: " + camera.downsample);
+        DebugLog.Debugga("FPS: x=" + camera.fps.x + " y=" + camera.fps.y);
+        DebugLog.Debugga("Resolution: x=" + camera.resolution.x + " y=" + camera.resolution.y);
+        DebugLog.Debugga("-- End of Tinkering Stuff --");
+
+    }
 
 }

@@ -153,12 +153,12 @@ public class metaioDeviceCamera : MonoBehaviour
 		// update orthographic size
 		Camera cam = GetComponent(typeof(Camera)) as Camera;
 		cam.orthographicSize = getOrthographicSize(screenOrientation);
-		Debug.Log("Camera orthographic size: "+cam.orthographicSize);
+		DebugLog.Debugga("Camera orthographic size: "+cam.orthographicSize);
 		
 		// update camera plane rotation
 		cameraPlane.transform.localRotation = Quaternion.AngleAxis(270.0f, Vector3.right);
 		
-		Debug.Log("Screen orientation: "+screenOrientation);
+		DebugLog.Debugga("Screen orientation: "+screenOrientation);
 		
 		
 		switch (screenOrientation)
@@ -239,7 +239,7 @@ public class metaioDeviceCamera : MonoBehaviour
 			textureFormat = TextureFormat.RGB24;
 		}
 		
-		Debug.Log("Creating texture with size " + requiredSize + " and format " + textureFormat);
+		DebugLog.Debugga("Creating texture with size " + requiredSize + " and format " + textureFormat);
 		
 		texture = new Texture2D((int)requiredSize, (int)requiredSize, textureFormat, false);		
 		
@@ -251,7 +251,7 @@ public class metaioDeviceCamera : MonoBehaviour
 		cameraPlane.GetComponent<Renderer>().material.mainTexture = texture;
 		textureID = texture.GetNativeTextureID();
 
-		Debug.Log("Texture ID: "+textureID);
+		DebugLog.Debugga("Texture ID: "+textureID);
 		
 		return true;
 	}

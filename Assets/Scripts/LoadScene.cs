@@ -5,10 +5,20 @@ using UnityEngine.UI;
 public class LoadScene : MonoBehaviour {
 
     private bool loading = true;
-    public Texture loadingTexture;
+    private Texture2D loadingTexture;
+    public Sprite loadingSprite;
 
     void Start()
     {
+        loadingTexture = new Texture2D((int)loadingSprite.rect.width, (int)loadingSprite.rect.height);
+
+        Color[] pixels = loadingSprite.texture.GetPixels((int)loadingSprite.textureRect.x,
+                                                (int)loadingSprite.textureRect.y,
+                                                (int)loadingSprite.textureRect.width,
+                                                (int)loadingSprite.textureRect.height);
+
+        loadingTexture.SetPixels(pixels);
+        loadingTexture.Apply();
     }
 
     void Awake () {
@@ -36,7 +46,8 @@ public class LoadScene : MonoBehaviour {
 
     public void loadScene(string scene)
     {
-        Debug.Log("Loading scene " + scene);
+        
+        DebugLog.Debugga("Loading scene " + scene);
         Application.LoadLevelAsync(scene);
     }
 

@@ -44,8 +44,8 @@ public class AssetsManager
 			String filename = asset.FullName.Remove(0, Application.streamingAssetsPath.Length+1);
 			if (!mAssets.ContainsKey(filename) && !filename.EndsWith(".meta"))
 			{
-				Debug.Log("AssetsManager: copying asset: " + filename);
-				Debug.Log("AssetsManager: asset copied: " + asset.FullName);
+				DebugLog.Debugga("AssetsManager: copying asset: " + filename);
+				DebugLog.Debugga("AssetsManager: asset copied: " + asset.FullName);
 				mAssets.Add(filename, asset.FullName);
 			}
 		}
@@ -65,7 +65,7 @@ public class AssetsManager
 	/// </param>
 	public static String getAssetPath(String filename)
 	{
-		Debug.Log("AssetsManager.getAssetPath: "+filename);
+		DebugLog.Debugga("AssetsManager.getAssetPath: "+filename);
 		
 		filename = filename.Replace('/', Path.DirectorySeparatorChar);
 		String assetPath = null;
@@ -83,13 +83,13 @@ public class AssetsManager
 		
 		if (mAssets == null)
 		{
-			Debug.LogError("AssetsManager.getAssetPath: streaming assets are not extracted");
+			DebugLog.DebuggaError("AssetsManager.getAssetPath: streaming assets are not extracted");
 			return null;
 		}
 		if (mAssets.ContainsKey(filename))
 		{
 			assetPath = (String)mAssets[filename];
-			Debug.Log("AssetsManager: fullpath: "+assetPath);
+			DebugLog.Debugga("AssetsManager: fullpath: "+assetPath);
 		}
 		
 #endif

@@ -66,7 +66,7 @@ public class metaioMovieTexture : MonoBehaviour
 		var mesh = gameObject.GetComponent<MeshFilter>().mesh;
 
 		if (mesh == null)
-			Debug.LogError("Cannot adjust game object dimensions to movie, no mesh attached (try a plane)");
+			DebugLog.DebuggaError("Cannot adjust game object dimensions to movie, no mesh attached (try a plane)");
 		else
 		{
 			float objectWidth = mesh.bounds.size.x * gameObject.transform.localScale.x;
@@ -75,11 +75,11 @@ public class metaioMovieTexture : MonoBehaviour
 
 			if (objectWidth <= 0.01 || objectHeight <= 0.01)
 			{
-				Debug.LogWarning("Not adjusting game object dimensions to movie, X or Z bound/scale is zero, is this a plane mesh?");
+				DebugLog.DebuggaWarning("Not adjusting game object dimensions to movie, X or Z bound/scale is zero, is this a plane mesh?");
 			}
 			else if (Math.Abs(objectWidth/objectHeight - movieAspect) > 0.03)
 			{
-				Debug.Log(string.Format("Adjusting game object to movie texture aspect ratio {0}", movieAspect));
+				DebugLog.Debugga(string.Format("Adjusting game object to movie texture aspect ratio {0}", movieAspect));
 
 				if (isRotatedCCW)
 				{
@@ -99,7 +99,7 @@ public class metaioMovieTexture : MonoBehaviour
 						gameObject.transform.localScale.z * (objectWidth/objectHeight) / movieAspect);
 			}
 			else
-				Debug.Log("Not adjusting game object dimensions, already has same aspect ratio as movie");
+				DebugLog.Debugga("Not adjusting game object dimensions, already has same aspect ratio as movie");
 		}
 	}
 
@@ -131,7 +131,7 @@ public class metaioMovieTexture : MonoBehaviour
 
 		textureID = texture.GetNativeTextureID();
 
-		Debug.Log(string.Format("Texture ID for movie {0} ({1}x{2}): {3}", movieFile, movieWidth, movieHeight, textureID));
+		DebugLog.Debugga(string.Format("Texture ID for movie {0} ({1}x{2}): {3}", movieFile, movieWidth, movieHeight, textureID));
 	}
 	
 	internal static string getGameObjectNameForMovieTextureGeometryPtr(IntPtr movieTextureGeometry)
@@ -140,7 +140,7 @@ public class metaioMovieTexture : MonoBehaviour
 
 		if (!movieGeometryToGameObjectNameCache.TryGetValue(movieTextureGeometry, out gameObjectName))
 		{
-			Debug.LogError("Could not find matching game object for movie texture, game object already removed?");
+			DebugLog.DebuggaError("Could not find matching game object for movie texture, game object already removed?");
 			return null;
 		}
 
@@ -246,14 +246,14 @@ public class metaioMovieTexture : MonoBehaviour
 
 		if (movieFile.Length == 0)
 		{
-			Debug.LogError("No movie texture file specified");
+			DebugLog.DebuggaError("No movie texture file specified");
 			return;
 		}
 
 		String fullPath = AssetsManager.getAssetPath(movieFile);
 		if (fullPath == null)
 		{
-			Debug.Log("Movie texture file not found in streaming assets, using absolute path: "+movieFile);
+			DebugLog.Debugga("Movie texture file not found in streaming assets, using absolute path: "+movieFile);
 			fullPath = movieFile;
 		}
 		
@@ -268,7 +268,7 @@ public class metaioMovieTexture : MonoBehaviour
 
 		MetaioSDKUnity.setMovieTextureTargetTextureID(movieGeometry, textureID);
 
-		Debug.Log("Loaded movie " + movieFile);
+		DebugLog.Debugga("Loaded movie " + movieFile);
 
 		if (autoResizeGameObjectToVideoDimensions)
 			autoResizeGameObject();

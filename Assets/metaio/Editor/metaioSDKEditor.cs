@@ -47,7 +47,7 @@ public class metaioSDKEditor : Editor {
 		}
 		catch (Exception e)
 		{
-			Debug.LogWarning("Failed to write Metaio SDK license file (expected failure if you use Unity Free license): "+e.Message);
+			DebugLog.DebuggaWarning("Failed to write Metaio SDK license file (expected failure if you use Unity Free license): "+e.Message);
 		}
 
 		EditorGUILayout.Separator();
@@ -75,7 +75,7 @@ public class metaioSDKEditor : Editor {
 			// set the actual file path
 			metaioSDK.trackingConfiguration = AssetDatabase.GetAssetPath(metaioSDK.trackingAsset);
 			metaioSDK.trackingConfiguration = metaioSDK.trackingConfiguration.Replace("Assets/StreamingAssets/", "");
-			//Debug.Log("Tracking configuration dragged: " + metaioSDK.trackingConfiguration);
+			//DebugLog.Debugga("Tracking configuration dragged: " + metaioSDK.trackingConfiguration);
 		}
 		else if (metaioSDK.trackingAssetIndex == 9)
 		{
@@ -94,7 +94,7 @@ public class metaioSDKEditor : Editor {
 		else
 		{
 			metaioSDK.trackingConfiguration = "";
-			Debug.LogWarning("No tracking configuration selected");
+			DebugLog.DebuggaWarning("No tracking configuration selected");
 		}
 			
 		// here we can add more options

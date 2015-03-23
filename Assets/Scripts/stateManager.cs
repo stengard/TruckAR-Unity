@@ -8,6 +8,7 @@ public class stateManager : MonoBehaviour {
     public GameObject HUDObject;
     public GameObject GAZEObject;
     public GameObject MARKERObject;
+    public GameObject HUD;
     private GameObject[] allActiveObjs;
 	// Use this for initialization
 	void Start () {
@@ -15,8 +16,14 @@ public class stateManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	}
+    void Update()
+    {
+        if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
+        {
+            HUD.SetActive(!HUD.activeInHierarchy);
+
+        }
+    }
 
     public void changeState(string state)
     {
@@ -28,11 +35,11 @@ public class stateManager : MonoBehaviour {
                 break;
             case "STATE_GAZE":
                 changeInit(GAZEObject);
-                Debug.Log("Gaze initiated");
+                DebugLog.Debugga("Gaze initiated");
                 break;
             case "STATE_MARKER":
                 changeInit(MARKERObject);
-                Debug.Log("Marker Initiated");
+                DebugLog.Debugga("Marker Initiated");
                 break;
             default:
                 break;
@@ -44,7 +51,7 @@ public class stateManager : MonoBehaviour {
         for(int nObjs=0;nObjs<allActiveObjs.Length;nObjs++){
             Destroy(allActiveObjs[nObjs].gameObject);  
         }
-        Debug.Log("l = " + allActiveObjs.Length);
+        DebugLog.Debugga("l = " + allActiveObjs.Length);
         Instantiate(obj);
     }
 
