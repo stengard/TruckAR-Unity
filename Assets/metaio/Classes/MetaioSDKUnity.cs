@@ -478,7 +478,7 @@ public static class MetaioSDKUnity
 		{
 			if (pbList == IntPtr.Zero || length == 0)
 			{
-				Debug.LogError("listCamerasInternal failed");
+				DebugLog.DebuggaError("listCamerasInternal failed");
 				return ret;
 			}
 
@@ -667,7 +667,7 @@ public static class MetaioSDKUnity
 		}
 		else if (trackingConfig != null)
 		{
-			Debug.Log("Tracking configuration '" +trackingConfig + "' not found in the streaming assets, loading it as absolute path or string");
+			DebugLog.Debugga("Tracking configuration '" +trackingConfig + "' not found in the streaming assets, loading it as absolute path or string");
 			result = setTrackingConfiguration(trackingConfig, 1);
 		}
 
@@ -697,7 +697,7 @@ public static class MetaioSDKUnity
 			setScreenRotation(1);
 			break;
 		default:
-			Debug.LogError("Screen orientation still unknown");
+			DebugLog.DebuggaError("Screen orientation still unknown");
 			break;
 		}
 	}

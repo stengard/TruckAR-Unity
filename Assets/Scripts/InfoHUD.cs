@@ -9,7 +9,7 @@ public class InfoHUD : MonoBehaviour {
     public Text renderingFPS;
     public Text trackingFPS;
 
-	
+    //Testa get camera list och kolla vad upplösningen är
 	// Update is called once per frame
 	void Update () {
         cameraFPS.text = MetaioSDKUnity.getCameraFrameRate().ToString();

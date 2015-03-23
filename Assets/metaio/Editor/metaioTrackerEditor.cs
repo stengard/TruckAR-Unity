@@ -15,7 +15,7 @@ public class metaioTrackerEditor : Editor
 		 
 		metaioSDK = (metaioSDK) GameObject.Find("metaioSDK").GetComponent("metaioSDK");
 		if(!metaioSDK)
-			Debug.LogError("Could not find the metaioSDK, with the metaioSDK script attached");
+			DebugLog.DebuggaError("Could not find the metaioSDK, with the metaioSDK script attached");
     }
 	
 	void OnGUI ()
@@ -50,7 +50,7 @@ public class metaioTrackerEditor : Editor
             // was Application.streamingAssetsPath, but caused problems on Mac 
             if (tracker.trackingImage.StartsWith("Assets") && !tracker.trackingImage.StartsWith("Assets/StreamingAssets"))
             {
-                Debug.LogWarning("Selected image is not in the StreamingAsset folder");
+                DebugLog.DebuggaWarning("Selected image is not in the StreamingAsset folder");
                 return;
             }
 
@@ -79,7 +79,7 @@ public class metaioTrackerEditor : Editor
 	{
 		// clean up the path
 		pattern = pattern.Replace("Assets/StreamingAssets/", "");
-		Debug.Log("new pattern" +pattern);
+		DebugLog.Debugga("new pattern" +pattern);
 		
 		writer.WriteStartElement("SensorCOS");
 		writer.WriteElementString("SensorCosID", name);
@@ -92,7 +92,7 @@ public class metaioTrackerEditor : Editor
 	
 	public void saveTrackingXML()
 	{
-		Debug.Log("Saving xml");
+		DebugLog.Debugga("Saving xml");
 		string filename = "TrackingConfigGenerated.xml";
 		string filepath = Application.dataPath + @"/StreamingAssets/"+filename;  
 		
@@ -108,7 +108,7 @@ public class metaioTrackerEditor : Editor
 		metaioTracker[] patterns = metaioSDK.GetComponentsInChildren<metaioTracker>();
 
 		if (patterns.Length == 0)
-			Debug.LogWarning("No metaioTracker objects found, make sure you have assigned at least one as child of " +
+			DebugLog.DebuggaWarning("No metaioTracker objects found, make sure you have assigned at least one as child of " +
 			                 "the metaioSDK object. The currently generated tracking configuration will fail to load.");
 
 		//Sensors

@@ -75,7 +75,7 @@ public class metaioCallback : MonoBehaviour
 	/// </param>
 	virtual protected void onLog(String log)
 	{
-		Debug.Log(log);
+		DebugLog.Debugga(log);
 	}
 	
 	/// <summary>
@@ -86,7 +86,7 @@ public class metaioCallback : MonoBehaviour
 	/// </param>
 	virtual protected void onLogWarning(String log)
 	{
-		Debug.LogWarning(log);
+		DebugLog.DebuggaWarning(log);
 	}
 	
 	/// <summary>
@@ -97,7 +97,7 @@ public class metaioCallback : MonoBehaviour
 	/// </param>
 	virtual protected void onLogError(String log)
 	{
-		Debug.LogError(log);
+		DebugLog.DebuggaError(log);
 	}
 	
 #endregion
@@ -133,7 +133,7 @@ public class metaioCallback : MonoBehaviour
 		}
 		if (activeCallbacks > 1)
 		{
-			Debug.LogError("Multiple metaioCallback objects active. There should only be one, else you will receive events in an arbitrary instance.");
+			DebugLog.DebuggaError("Multiple metaioCallback objects active. There should only be one, else you will receive events in an arbitrary instance.");
 		}
 
 		// Enable callbacks
@@ -168,7 +168,7 @@ public class metaioCallback : MonoBehaviour
 			uint eventValueLength = 0;
 			IntPtr eventValuePtr = MetaioSDKUnity.getUnityCallbackEventValue(out eventValueLength);
 
-//			Debug.Log("Callback event: "+eventID+", "+eventValue);
+//			DebugLog.Debugga("Callback event: "+eventID+", "+eventValue);
 
 			try
 			{
@@ -222,7 +222,7 @@ public class metaioCallback : MonoBehaviour
 			}
 			catch (Exception e)
 			{
-				Debug.LogException(e);
+				DebugLog.DebuggaException(e);
 			}
 			finally
 			{
