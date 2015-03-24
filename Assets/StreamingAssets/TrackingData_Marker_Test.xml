@@ -125,32 +125,6 @@
 			<SensorSource trigger="1">
 				<SensorID>Markertracking1</SensorID>
 				<SensorCosID>Marker1</SensorCosID>
-				<HandEyeCalibration>
-					<TranslationOffset>
-						<x>0</x>
-						<y>0</y>
-						<z>0</z>
-					</TranslationOffset>
-					<RotationOffset>
-						<x>0</x>
-						<y>0</y>
-						<z>0</z>
-						<w>1</w>
-					</RotationOffset>
-				</HandEyeCalibration>
-				<COSOffset>
-					<TranslationOffset>
-						<x>0</x>
-						<y>0</y>
-						<z>0</z>
-					</TranslationOffset>
-					<RotationOffset>
-						<x>0</x>
-						<y>0</y>
-						<z>0</z>
-						<w>1</w>
-					</RotationOffset>
-				</COSOffset>
 			</SensorSource>
 		</COS>
 

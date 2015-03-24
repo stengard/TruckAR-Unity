@@ -61,7 +61,7 @@ public class GestureHandler : MonoBehaviour
 		// if the GameObject or its children has no Collider, disable the script with a warning
 		if (gameObject.GetComponent<Collider>() == null && gameObject.GetComponentsInChildren<Collider>().Length == 0)
 		{
-			DebugLog.DebuggaWarning("No Collider found in the GameObject("+gameObject.name+") or its children, gestures will not work!");
+			Debugga.LoggaVarning("No Collider found in the GameObject("+gameObject.name+") or its children, gestures will not work!");
 			enabled = false;
 			return;
 		}
@@ -93,7 +93,7 @@ public class GestureHandler : MonoBehaviour
 		mLastTouchDistance = 0f;
 		mLastTouchAngle = 0f;
 		
-		DebugLog.Debugga("Multitouch enabled: "+Input.multiTouchEnabled);
+		Debugga.Logga("Multitouch enabled: "+Input.multiTouchEnabled);
 	}
 	
 	// Update is called once per frame
@@ -225,7 +225,7 @@ public class GestureHandler : MonoBehaviour
 	/// </param>
 	private bool selectGameObject(Vector2 position)
 	{
-		DebugLog.Debugga("selectGameObject: "+position);
+		Debugga.Logga("selectGameObject: "+position);
 		
 		// get a ray from the touch point
 		Ray ray = Camera.main.ScreenPointToRay(position);
@@ -234,7 +234,7 @@ public class GestureHandler : MonoBehaviour
 		if (Physics.Raycast(ray, out mHit, Camera.main.farClipPlane, ~(1<<mTrackerPlane.layer)))
 		{
 			
-			DebugLog.Debugga("GameObject found: "+mHit.collider.gameObject.name);
+			Debugga.Logga("GameObject found: "+mHit.collider.gameObject.name);
 			
 			if (mHit.collider.gameObject == gameObject ||
 				isChildOf(gameObject.transform, mHit.collider.gameObject.transform))
@@ -276,7 +276,7 @@ public class GestureHandler : MonoBehaviour
 			return;
 		}
 		
-//		DebugLog.Debugga("dragGameObject: "+position);
+//		Debugga.Debugga("dragGameObject: "+position);
 		
 		// cast a ray on layer 8 (the plane) to calculate the hit position of the plane
 		Ray ray = Camera.main.ScreenPointToRay(position);
@@ -300,7 +300,7 @@ public class GestureHandler : MonoBehaviour
 			return;
 		}
 			
-//		DebugLog.Debugga("pinchGameObject: "+factor);
+//		Debugga.Debugga("pinchGameObject: "+factor);
 		gameObject.transform.localScale *= factor;
 	}
 	
@@ -317,7 +317,7 @@ public class GestureHandler : MonoBehaviour
 			return;
 		}
 		
-//		DebugLog.Debugga("rotateGameObject: "+angle);
+//		Debugga.Debugga("rotateGameObject: "+angle);
 		gameObject.transform.Rotate(Vector3.up * angle);
 	}
 	

@@ -75,7 +75,7 @@ public class metaioCallback : MonoBehaviour
 	/// </param>
 	virtual protected void onLog(String log)
 	{
-		DebugLog.Debugga(log);
+		Debugga.Logga(log);
 	}
 	
 	/// <summary>
@@ -84,9 +84,9 @@ public class metaioCallback : MonoBehaviour
 	/// <param name='log'>
 	/// Warning message
 	/// </param>
-	virtual protected void onLogWarning(String log)
+	virtual protected void onLoggaVarning(String log)
 	{
-		DebugLog.DebuggaWarning(log);
+		Debugga.LoggaVarning(log);
 	}
 	
 	/// <summary>
@@ -95,9 +95,9 @@ public class metaioCallback : MonoBehaviour
 	/// <param name='log'>
 	/// Error message
 	/// </param>
-	virtual protected void onLogError(String log)
+	virtual protected void onLoggaError(String log)
 	{
-		DebugLog.DebuggaError(log);
+		Debugga.LoggaFel(log);
 	}
 	
 #endregion
@@ -133,7 +133,7 @@ public class metaioCallback : MonoBehaviour
 		}
 		if (activeCallbacks > 1)
 		{
-			DebugLog.DebuggaError("Multiple metaioCallback objects active. There should only be one, else you will receive events in an arbitrary instance.");
+			Debugga.LoggaFel("Multiple metaioCallback objects active. There should only be one, else you will receive events in an arbitrary instance.");
 		}
 
 		// Enable callbacks
@@ -168,7 +168,7 @@ public class metaioCallback : MonoBehaviour
 			uint eventValueLength = 0;
 			IntPtr eventValuePtr = MetaioSDKUnity.getUnityCallbackEventValue(out eventValueLength);
 
-//			DebugLog.Debugga("Callback event: "+eventID+", "+eventValue);
+//			Debugga.Debugga("Callback event: "+eventID+", "+eventValue);
 
 			try
 			{
@@ -183,10 +183,10 @@ public class metaioCallback : MonoBehaviour
 						onLog(Marshal.PtrToStringAnsi(eventValuePtr));
 						break;
 					case EUNITY_CALLBACK_EVENT.EUCE_LOG_WARNING:
-						onLogWarning(Marshal.PtrToStringAnsi(eventValuePtr));
+						onLoggaVarning(Marshal.PtrToStringAnsi(eventValuePtr));
 						break;
 					case EUNITY_CALLBACK_EVENT.EUCE_LOG_ERROR:
-						onLogError(Marshal.PtrToStringAnsi(eventValuePtr));
+						onLoggaError(Marshal.PtrToStringAnsi(eventValuePtr));
 						break;
 					case EUNITY_CALLBACK_EVENT.EUCE_SDK_READY:
 						onSDKReady();
@@ -222,7 +222,7 @@ public class metaioCallback : MonoBehaviour
 			}
 			catch (Exception e)
 			{
-				DebugLog.DebuggaException(e);
+				Debugga.LoggaUndantag(e);
 			}
 			finally
 			{
