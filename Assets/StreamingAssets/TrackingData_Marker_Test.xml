@@ -42,7 +42,7 @@
                               the markers, which is less precise, but faster 
                               than robust. 
                               -->
-                    <TrackingQuality>robust</TrackingQuality>
+                    <TrackingQuality>fast</TrackingQuality>
                     <!--    <TrackingQuality>fast</TrackingQuality> -->
 
                     <!--    The threshold which is used to binarize the camera 
@@ -110,7 +110,7 @@
                                 associated with the pattern on the marker and 
                                 is used to identify the marker in the camera 
                                 image. -->
-                        <MatrixID>1</MatrixID>
+                    <MatrixID>1</MatrixID>
 
                     </MarkerParameters>
                 </Parameters>
@@ -125,6 +125,19 @@
 			<SensorSource trigger="1">
 				<SensorID>Markertracking1</SensorID>
 				<SensorCosID>Marker1</SensorCosID>
+	            <COSOffset>
+	                <TranslationOffset>
+	                    <X>0</X>
+	                    <Y>0</Y>
+	                    <Z>0</Z>
+	                </TranslationOffset>
+	                <RotationOffset>
+	                    <X>0</X>
+	                    <Y>0</Y>
+	                    <Z>0</Z>
+	                    <W>1</W>
+	                </RotationOffset>
+	            </COSOffset>
 			</SensorSource>
 		</COS>
 

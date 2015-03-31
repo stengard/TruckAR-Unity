@@ -130,6 +130,7 @@ public class metaioCallback : MonoBehaviour
 		foreach (UnityEngine.Object obj in callbacks)
 		{
 			activeCallbacks += ((metaioCallback)obj).gameObject.GetComponent<metaioCallback>().enabled ? 1 : 0;
+            Debugga.Logga("HEJ: " + activeCallbacks);
 		}
 		if (activeCallbacks > 1)
 		{

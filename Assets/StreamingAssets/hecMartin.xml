@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<HandEyeCalibration>
+	<Metadata>
+		<ToolboxVersion>6.0.1, v6010 (metaio SDK v6.0.1)</ToolboxVersion>
+		<Device>EPSON_embt2 (embt2; EPSON; embt2; D1.1.0)</Device>
+		<Date>2015-03-31 09:58:13.738+0000</Date>
+	</Metadata>
+	<!-- Transformation from camera to eye (display) coordinates -->
+	<Transform for="ECT_RENDERING_STEREO_LEFT">
+		<!-- Translation in millimeters -->
+		<TranslationOffset>
+			<X>113.399</X>
+			<Y>-16.685</Y>
+			<Z>-27.3447</Z>
+		</TranslationOffset>
+		<!-- Rotation specified as unit quaternion -->
+		<RotationOffset>
+			<X>-0.0527972</X>
+			<Y>-0.0192436</Y>
+			<Z>0.00204231</Z>
+			<W>0.998418</W>
+		</RotationOffset>
+	</Transform>
+	<Transform for="ECT_RENDERING_STEREO_RIGHT">
+		<!-- Translation in millimeters -->
+		<TranslationOffset>
+			<X>50.0783</X>
+			<Y>-8.66387</Y>
+			<Z>-17.8209</Z>
+		</TranslationOffset>
+		<!-- Rotation specified as unit quaternion -->
+		<RotationOffset>
+			<X>-0.0597746</X>
+			<Y>-0.0201862</Y>
+			<Z>0.00215418</Z>
+			<W>0.998006</W>
+		</RotationOffset>
+	</Transform>
+</HandEyeCalibration>
