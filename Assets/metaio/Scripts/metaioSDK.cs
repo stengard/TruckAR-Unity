@@ -392,6 +392,7 @@ public class metaioSDK : MonoBehaviour
 
         //Setting the calibration from the file in /mnt/sdcard/metaio/hec/hec.xml
         //MetaioSDKUnity.setHandEyeCalibrationByDevice();
+
         StartCoroutine(CountdownThenTweakCameraSettings());
 	}
 
@@ -435,12 +436,12 @@ public class metaioSDK : MonoBehaviour
         MetaioCamera camera = cameras[0];
 
         // Not necessary but I found knowing the original settings of the iPad camera very useful
-        Debugga.Logga("-- TINKERING STUFF --");
-        Debugga.Logga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
-        Debugga.Logga("Downsampling: " + camera.downsample);
-        Debugga.Logga("FPS: x=" + camera.fps.x + " y=" + camera.fps.y);
-        Debugga.Logga("Resolution: x=" + camera.resolution.x + " y=" + camera.resolution.y);
-        Debugga.Logga("-- End of Tinkering Stuff --");
+        //Debugga.Logga("-- TINKERING STUFF --");
+        //Debugga.Logga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
+        //Debugga.Logga("Downsampling: " + camera.downsample);
+        //Debugga.Logga("FPS: x=" + camera.fps.x + " y=" + camera.fps.y);
+        //Debugga.Logga("Resolution: x=" + camera.resolution.x + " y=" + camera.resolution.y);
+        //Debugga.Logga("-- End of Tinkering Stuff --");
 
         // Defining the new camera settings , I encountered a bug where setting resolution without setting FPS caused the FPS to be set to the resolution's values, to avoid this I’m stating the FPS as well.  
         camera.fps.x = 30;
@@ -456,12 +457,12 @@ public class metaioSDK : MonoBehaviour
         // Waiting some more then reporting back the camera settings so I could check they’d been successfully changed.
         yield return new WaitForSeconds(1.0f);
 
-        Debugga.Logga("-- TINKERING STUFF --");
-        Debugga.Logga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
-        Debugga.Logga("Downsampling: " + camera.downsample);
-        Debugga.Logga("FPS: x=" + camera.fps.x + " y=" + camera.fps.y);
-        Debugga.Logga("Resolution: x=" + camera.resolution.x + " y=" + camera.resolution.y);
-        Debugga.Logga("-- End of Tinkering Stuff --");
+        //Debugga.Logga("-- TINKERING STUFF --");
+        //Debugga.Logga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
+        //Debugga.Logga("Downsampling: " + camera.downsample);
+        //Debugga.Logga("FPS: x=" + camera.fps.x + " y=" + camera.fps.y);
+        //Debugga.Logga("Resolution: x=" + camera.resolution.x + " y=" + camera.resolution.y);
+        //Debugga.Logga("-- End of Tinkering Stuff --");
 
     }
 

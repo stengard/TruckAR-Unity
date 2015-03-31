@@ -172,8 +172,12 @@ public static class MetaioSDKUnity
 	/// </param>
 	public static bool setHandEyeCalibrationFromFile(string calibrationFilePath)
 	{
+
+        Debugga.Logga("Från fil: hej " + calibrationFilePath);
+
 		if (calibrationFilePath == null)
 		{
+            Debugga.Logga("Från fil: null " + calibrationFilePath);
 			throw new ArgumentNullException("calibrationFilePath");
 		}
 

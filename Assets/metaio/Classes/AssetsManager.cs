@@ -65,7 +65,7 @@ public class AssetsManager
 	/// </param>
 	public static String getAssetPath(String filename)
 	{
-		Debugga.Logga("AssetsManager.getAssetPath: "+filename);
+		Debugga.Logga("AssetsManager.getAssetPath: " + filename);
 		
 		filename = filename.Replace('/', Path.DirectorySeparatorChar);
 		String assetPath = null;

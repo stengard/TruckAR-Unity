@@ -17,12 +17,14 @@ public class StereoRenderingCallback : metaioCallback
 		//    because stereo glasses can vary).
 		// Items 2) and 3) only do something on Android for the moment, as there are no supported,
 		// non-Android stereo devices yet.
-		string calibrationFilePath = AssetsManager.getAssetPath("StreamingAssets/hec.xml");
-		if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath)) &&
-			!MetaioSDKUnity.setHandEyeCalibrationFromFile())
-		{
-			MetaioSDKUnity.setHandEyeCalibrationByDevice();
-		}
+        //Debugga.LoggaLive("Inne i OnSDKReaady");
+
+        string calibrationFilePath = AssetsManager.getAssetPath("hecMartin2.xml");
+
+        if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath)) && !MetaioSDKUnity.setHandEyeCalibrationFromFile()) {
+            Debugga.Logga("HEJJJ");
+            MetaioSDKUnity.setHandEyeCalibrationByDevice();
+        }
 	}
 
 

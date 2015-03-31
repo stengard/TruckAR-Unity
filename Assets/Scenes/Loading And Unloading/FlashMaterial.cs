@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent (typeof(MeshRenderer))]
 public class FlashMaterial : MonoBehaviour {
 
-    public int flashingSpeed;
+    public float flashingSpeed;
 
     private float currentOpacity;
 
