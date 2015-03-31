@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Debugga {
 
-    public bool doDebug = false;
+    public bool doDebug = true;
 
     public List<string> stringOfLogs;
 

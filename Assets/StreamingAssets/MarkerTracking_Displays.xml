@@ -1,0 +1,88 @@
+﻿<?xml version="1.0"?>
+<TrackingData>
+  <Sensors>
+    <Sensor type="MarkerBasedSensorSource">
+      <SensorID>Markertracking1</SensorID>
+      <Parameters>
+        <MarkerTrackingParameters>
+          <TrackingQuality>fast</TrackingQuality>
+          <ThresholdOffset>110</ThresholdOffset>
+          <NumberOfSearchIterations>1</NumberOfSearchIterations>
+        </MarkerTrackingParameters>
+      </Parameters>
+      <SensorCOS>
+        <SensorCosID>Marker1</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>80</Size>
+            <MatrixID>1</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
+      
+      <SensorCOS>
+        <SensorCosID>Marker3</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>60</Size>
+            <MatrixID>3</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
+      
+      <SensorCOS>
+        <SensorCosID>Marker5</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>60</Size>
+            <MatrixID>5</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
+    </Sensor>
+  </Sensors>
+  <Connections>
+
+    <COS>
+      <Name>COS1</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Marker1</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS2</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Marker3</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+    
+    <COS>
+      <Name>COS3</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Marker5</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+  </Connections>
+</TrackingData>

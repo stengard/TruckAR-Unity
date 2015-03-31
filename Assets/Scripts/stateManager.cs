@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using metaio;
 
 public class stateManager : MonoBehaviour {
     private string currentState;
-    public GameObject HUDObject;
-    public GameObject GAZEObject;
-    public GameObject MARKERObject;
+    public List<GameObject> HUDObject = new List<GameObject>();
+    public List<GameObject> GAZEObject = new List<GameObject>();
+    public List<GameObject> MARKERObject = new List<GameObject>();
     public GameObject HUD;
     private GameObject[] allActiveObjs;
 	// Use this for initialization
@@ -21,7 +22,6 @@ public class stateManager : MonoBehaviour {
         if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
         {
             HUD.SetActive(!HUD.activeInHierarchy);
-
         }
     }
 
@@ -35,24 +35,26 @@ public class stateManager : MonoBehaviour {
                 break;
             case "STATE_GAZE":
                 changeInit(GAZEObject);
-                Debugga.Logga("Gaze initiated");
                 break;
             case "STATE_MARKER":
                 changeInit(MARKERObject);
-                Debugga.Logga("Marker Initiated");
                 break;
             default:
                 break;
         }
     }
 
-    void changeInit(GameObject obj){
+    void changeInit(List<GameObject> obj)
+    {
         allActiveObjs = GameObject.FindGameObjectsWithTag("Displays");
         for(int nObjs=0;nObjs<allActiveObjs.Length;nObjs++){
-            Destroy(allActiveObjs[nObjs].gameObject);  
+            allActiveObjs[nObjs].gameObject.SetActive(false);  
         }
-        Debugga.Logga("l = " + allActiveObjs.Length);
-        Instantiate(obj);
+
+        for (int i = 0; i < obj.Count; i++)
+        {
+            obj[i].SetActive(true);
+        }
     }
 
 }
