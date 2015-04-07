@@ -446,8 +446,8 @@ public class metaioSDK : MonoBehaviour
         // Defining the new camera settings , I encountered a bug where setting resolution without setting FPS caused the FPS to be set to the resolution's values, to avoid this I’m stating the FPS as well.  
         camera.fps.x = 30;
         camera.fps.y = 30;
-        //camera.resolution.x = 320;
-        //camera.resolution.y = 240;
+        camera.resolution.x = 320;
+        camera.resolution.y = 240;
         // this bits probably unnecessary now but meh, testing on device takes so long that I can’t be bothered to check for bugs post its removal. 
         camera.downsample = 1;
 

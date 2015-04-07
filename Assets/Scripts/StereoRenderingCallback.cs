@@ -19,8 +19,8 @@ public class StereoRenderingCallback : metaioCallback
 		// non-Android stereo devices yet.
         //Debugga.LoggaLive("Inne i OnSDKReaady");
 
-        string calibrationFilePath = AssetsManager.getAssetPath("hecMartin2.xml");
-
+        //string calibrationFilePath = AssetsManager.getAssetPath("hecMartin2.xml");
+        string calibrationFilePath = AssetsManager.getAssetPath("hecMike.xml");
         if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath)) && !MetaioSDKUnity.setHandEyeCalibrationFromFile()) {
             Debugga.Logga("HEJJJ");
             MetaioSDKUnity.setHandEyeCalibrationByDevice();
