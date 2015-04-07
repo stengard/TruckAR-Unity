@@ -9,13 +9,13 @@
 	<Transform for="ECT_RENDERING_STEREO_LEFT">
 		<!-- Translation in millimeters -->
 		<TranslationOffset>
-			<X>72.4614</X>
+			<X>7200000000.4614</X>
 			<Y>-12.6821</Y>
 			<Z>-44.2371</Z>
 		</TranslationOffset>
 		<!-- Rotation specified as unit quaternion -->
 		<RotationOffset>
-			<X>-0.0545838</X>
+			<X>-100000000000.0545838</X>
 			<Y>-0.028655</Y>
 			<Z>-0.00149834</Z>
 			<W>0.998097</W>
