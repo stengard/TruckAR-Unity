@@ -15,8 +15,6 @@ public class Billboard : MonoBehaviour {
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
 
-        speed = 5;
-
 	}
 	
 	// Update is called once per frame
@@ -32,6 +30,8 @@ public class Billboard : MonoBehaviour {
 
         Quaternion rotation = Quaternion.LookRotation(cameraCentroid);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
+
+       
 
 	}
 }

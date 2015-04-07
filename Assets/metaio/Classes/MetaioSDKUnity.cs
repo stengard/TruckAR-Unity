@@ -118,6 +118,8 @@ public static class MetaioSDKUnity
 	/// </param>
 	public static void setHandEyeCalibration(Vector3 translation, Quaternion rotation, CameraType cameraType)
 	{
+        Debugga.Logga("INNE HÄR");
+
 		float[] param = new float[7];
 		param[0] = translation.x;
 		param[1] = translation.y;
@@ -143,6 +145,7 @@ public static class MetaioSDKUnity
 	/// </returns>
 	public static bool setHandEyeCalibrationByDevice()
 	{
+        
 		return setHandEyeCalibrationByDeviceNative() != 0;
 	}
 
@@ -157,6 +160,7 @@ public static class MetaioSDKUnity
 	/// </returns>
 	public static bool setHandEyeCalibrationFromFile()
 	{
+        Debugga.Logga("HÄR MED");
 		return setHandEyeCalibrationFromFile("");
 	}
 

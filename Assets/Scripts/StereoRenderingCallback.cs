@@ -21,7 +21,7 @@ public class StereoRenderingCallback : metaioCallback
 
         string calibrationFilePath = AssetsManager.getAssetPath("hecMartin2.xml");
 
-        if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath)) && !MetaioSDKUnity.setHandEyeCalibrationFromFile()) {
+        if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath))) {
             Debugga.Logga("HEJJJ");
             MetaioSDKUnity.setHandEyeCalibrationByDevice();
         }

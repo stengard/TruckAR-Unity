@@ -125,6 +125,12 @@
 			<SensorSource trigger="1">
 				<SensorID>Markertracking1</SensorID>
 				<SensorCosID>Marker1</SensorCosID>
+	            <Fuser Type="SmoothingFuser">
+					<Parameters>
+						<ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+						<KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+					</Parameters>
+	            </Fuser>
 	            <COSOffset>
 	                <TranslationOffset>
 	                    <X>0</X>

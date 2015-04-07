@@ -7,64 +7,45 @@ using System.Collections;
 public class ChangeSizeOnDistance : MonoBehaviour {
 
     public float sizeMultiplier;
-    private float[] trackingValues;
 
     private Vector3 originalScale;
+
+    private float distance;
+
+    public Camera cameraLeft;
+    public Camera cameraRight;
+
+    public Vector3 cameraCentroid;
 
     // Use this for initialization
     void Start() {
 
+        cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
+        cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
+
+         cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
 
         //sizeMultiplier = 1;
-        trackingValues = new float[7];
         originalScale = transform.localScale;
     }
 
     // Update is called once per frame
     void Update() {
 
-        //Check if marker with COS 1 is trackable
-        float quality = metaio.MetaioSDKUnity.getTrackingValues(1, trackingValues);
+        //Calcculate the distance between marker and camera. Multiplied by 1000 to compensate for the distance returned is in mm.
+        distance = Vector3.Distance(transform.position, cameraCentroid) / (sizeMultiplier * 1000);
 
-        //Get Camera translation
-        Vector3 cameraTranslation;
-        cameraTranslation.x = trackingValues[0];
-        cameraTranslation.y = trackingValues[1];
-        cameraTranslation.z = trackingValues[2];
-
-        Quaternion cameraRotation = new Quaternion();
-        // get the camera rotation from the Metaio SDK
-        cameraRotation.x = trackingValues[3];
-        cameraRotation.x = trackingValues[4];
-        cameraRotation.z = trackingValues[5];
-        cameraRotation.w = trackingValues[6];
-        cameraRotation = Quaternion.Inverse(cameraRotation);
-
-        //Calculate camera position
-        Vector3 cameraPosition = cameraRotation * (-cameraTranslation);
-
-        //Calcculate the distance between marker and camera
-        float distance = Vector3.Distance(Vector3.zero, cameraPosition);
-
-        //Calulate the scalefactor to scale the attatched gameObject with. Multiplied by 1000 to compensate for the distance returned is in mm.
-        float scaleFactorX = originalScale.x * (distance / (sizeMultiplier * 1000));
-        float scaleFactorY = originalScale.y * (distance / (sizeMultiplier * 1000));
-        float scaleFactorZ = originalScale.z * (distance / (sizeMultiplier * 1000));
-
-        if (scaleFactorX > originalScale.x)
-            scaleFactorX = originalScale.x;
-
-        if (scaleFactorY > originalScale.y)
-            scaleFactorY = originalScale.y;
-
-        if (scaleFactorZ > originalScale.z)
-            scaleFactorZ = originalScale.z;
+        //Calulate the scalefactor to scale the attatched gameObject with. 
+        float scaleFactorX = distance;
+        float scaleFactorY = distance;
+        float scaleFactorZ = distance;
 
         //If the marker is recogniized (distance != 0), scale the object with the factor scaleFactor
         if(distance != 0)
-            transform.localScale = new Vector3(scaleFactorX, scaleFactorY, scaleFactorZ);
+            transform.localScale = new Vector3(originalScale.x * scaleFactorX, originalScale.y * scaleFactorY, originalScale.z * scaleFactorZ);
 
         //Debugga.LoggaLive("Scale :" + scaleFactorX + ", " + scaleFactorY + ", " + scaleFactorZ);
+        //Debugga.LoggaLive("position: " + distance);
         //Debugga.LoggaLive(originalScale.x + "");
     }
 }
