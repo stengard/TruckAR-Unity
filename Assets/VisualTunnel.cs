@@ -11,7 +11,8 @@ public class VisualTunnel : MonoBehaviour {
     public Camera cameraRight;
 
     public GameObject square;
-    public int size;
+
+    public int squareDensity;
 
     private Vector3 cameraCentroid;
     private Vector3 bending;
@@ -32,7 +33,7 @@ public class VisualTunnel : MonoBehaviour {
          cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
-        numberOfTunnels = Mathf.RoundToInt((distance / 1000)*size);
+        numberOfTunnels = Mathf.RoundToInt((distance / 1000)*squareDensity);
 
         tunnelObjects = new List<GameObject>();
 
@@ -46,7 +47,7 @@ public class VisualTunnel : MonoBehaviour {
 	void Update () {
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
-        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * size);
+        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
 
 
         Debugga.Logga("Number of tunnels: " + numberOfTunnels);
