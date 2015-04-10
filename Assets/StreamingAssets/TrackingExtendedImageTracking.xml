@@ -4,7 +4,7 @@
 		<SensorID>SLAM</SensorID>
 			<Parameters>
 				<Initialization type="Markerless2D"/>
-				<ReferenceImage WidthMM="285" HeightMM="285">target2.png</ReferenceImage>
+				<ReferenceImage WidthMM="285" HeightMM="285">idmarker1.png</ReferenceImage>
 				<SimilarityThreshold>0.7</SimilarityThreshold>
 				<MinNumberOfObservations>3</MinNumberOfObservations>
 			</Parameters>

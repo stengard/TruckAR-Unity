@@ -11,7 +11,6 @@ public class FlashMaterial : MonoBehaviour {
     MeshRenderer meshRenderer;
     // Use this for initialization
     void Start() {
-        flashingSpeed = 10;
         currentOpacity = 0;
 
         meshRenderer = GetComponent<MeshRenderer>();
