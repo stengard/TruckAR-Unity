@@ -22,10 +22,15 @@ public class StereoRenderingCallback : metaioCallback
         //string calibrationFilePath = AssetsManager.getAssetPath("hecMartin2.xml");
         string calibrationFilePath = AssetsManager.getAssetPath("hecMike.xml");
         if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath))) {
-            Debugga.Logga("HEJJJ");
             MetaioSDKUnity.setHandEyeCalibrationByDevice();
         }
 	}
 
+    protected override void onTrackingEvent(System.Collections.Generic.List<TrackingValues> trackingValues) {
+        base.onTrackingEvent(trackingValues);
+        if (trackingValues[0].state == metaio.TrackingState.Found) {
+            transform.FindChild("MonoCamera").GetComponent<NavTruckScript>().updatePath();
+        }
+    }
 
 }

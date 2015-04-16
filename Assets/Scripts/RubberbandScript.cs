@@ -27,7 +27,16 @@ public class RubberbandScript : MonoBehaviour {
             cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
             cam = cameraRight;
         }
-        Vector3 screenWorld = cam.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, transform.position.z));
+        Vector3 screenWorld = new Vector3();
+
+        if (cam == cameraRight) {
+            screenWorld = cam.ScreenToWorldPoint(new Vector3(3*Screen.width / 4, Screen.height / 2, transform.position.z));
+        }
+        else {
+            screenWorld = cam.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, transform.position.z));
+        }
+        
+        Debugga.Logga("Width of screen!" + Screen.width);
         float offsetX = (transform.parent.position.x - screenWorld.x) / 2;
         float offsetY = (transform.parent.position.y - screenWorld.y) / 2;
         float tempX = Mathf.Lerp(transform.position.x, screenWorld.x + offsetX, Time.deltaTime * Dampening);

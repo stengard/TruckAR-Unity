@@ -434,7 +434,7 @@ public class metaioSDK : MonoBehaviour
 
         // the first camera in the array is the back camera or it is for iPad3 anyway.
         MetaioCamera camera = cameras[0];
-
+        
         // Not necessary but I found knowing the original settings of the iPad camera very useful
         //Debugga.Logga("-- TINKERING STUFF --");
         //Debugga.Logga("Camera: " + camera.index + " Camera Name: " + camera.friendlyName);
