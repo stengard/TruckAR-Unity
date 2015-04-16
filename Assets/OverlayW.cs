@@ -31,7 +31,6 @@ public class OverlayW : MonoBehaviour {
             overlayObjects[i].transform.parent = transform;
             overlayObjects[i].transform.position = transform.position;
             overlayObjects[i].name = overlay.name + "_" + i;
-           // overlayObjects[i].transform.ro
         }
 
         originalOverlayObjects = overlayObjects;

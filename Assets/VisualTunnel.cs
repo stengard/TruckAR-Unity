@@ -24,27 +24,25 @@ public class VisualTunnel : MonoBehaviour {
 
     CRSpline catmullRom;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
 
-         catmullRom = new CRSpline();
-         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
-         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
-         cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
+        catmullRom = new CRSpline();
+        cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
+        cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
+        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
-        numberOfTunnels = Mathf.RoundToInt((distance / 1000)*squareDensity);
+        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
 
         tunnelObjects = new List<GameObject>();
 
         //Instantiate objects
         addTunnels();
+    }
 
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update() {
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
@@ -53,11 +51,11 @@ public class VisualTunnel : MonoBehaviour {
         Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
         //Position vector half the distance between the camera and the object in the cameras looking direction to ccreate the curved path.
-        Vector3 vectorMid = cameraCentroid + cameraRight.transform.forward * (distance *0.5f);
+        Vector3 vectorMid = cameraCentroid + cameraRight.transform.forward * (distance * 0.5f);
 
 
         catmullRomVectors = new Vector3[] { cameraCentroid, cameraCentroid, vectorMid, transform.position, transform.position };
-        
+
         //Add vectors to CR points
         catmullRom.pts = catmullRomVectors;
 
@@ -73,13 +71,13 @@ public class VisualTunnel : MonoBehaviour {
             addTunnels();
         }
 
-       // tunnelObjects = new GameObject[size];
+        // tunnelObjects = new GameObject[size];
         Vector3 prevPt = catmullRom.Interp(0);
         for (int i = 1; i <= tunnelObjects.Count; i++) {
             float pm = (float)i / tunnelObjects.Count;
             Vector3 currPt = catmullRom.Interp(pm);
 
-            tunnelObjects[i-1].transform.position = currPt;
+            tunnelObjects[i - 1].transform.position = currPt;
             if (i != tunnelObjects.Count) {
                 //Rotate the object so that it "looks at" the previous.
                 tunnelObjects[i - 1].transform.LookAt(tunnelObjects[i].transform.position);
@@ -89,11 +87,11 @@ public class VisualTunnel : MonoBehaviour {
                 tunnelObjects[i - 1].transform.LookAt(cameraCentroid);
             }
             //sq[i-1].transform.Rotate(new Vector3(90, 0, 0));
-            
+
             prevPt = currPt;
         }
-	
-	}
+
+    }
 
     private void addTunnels() {
         for (int i = 0; i < numberOfTunnels; i++) {
@@ -113,5 +111,5 @@ public class VisualTunnel : MonoBehaviour {
         //    catmullRom.GizmoDraw(3);
     }
 
-    
+
 }

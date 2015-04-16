@@ -9,11 +9,20 @@ public class stateManager : MonoBehaviour {
     public List<GameObject> HUDObject = new List<GameObject>();
     public List<GameObject> GAZEObject = new List<GameObject>();
     public List<GameObject> MARKERObject = new List<GameObject>();
+    public List<GameObject> OVERLAYObject = new List<GameObject>();
+    public List<GameObject> OVERLAYWITHObject = new List<GameObject>();
+    public List<GameObject> TUNNELObject = new List<GameObject>();
+    public List<GameObject> PREDICTIVEObject = new List<GameObject>();
+    public List<GameObject> MULTIPLEObject = new List<GameObject>();
+
     public GameObject HUD;
+    public string startState;
     private GameObject[] allActiveObjs;
+
+    public string taggen;
 	// Use this for initialization
 	void Start () {
-        changeState("STATE_HUD");
+        changeState(startState);
 	}
 	
 	// Update is called once per frame
@@ -39,6 +48,22 @@ public class stateManager : MonoBehaviour {
             case "STATE_MARKER":
                 changeInit(MARKERObject);
                 break;
+            case "STATE_OVERLAY":
+                changeInit(OVERLAYObject);
+                break;
+            case "STATE_OVERLAY_WITH":
+                changeInit(OVERLAYWITHObject);
+                break;
+            case "STATE_TUNNEL":
+                changeInit(TUNNELObject);
+                break;
+            case "STATE_MULTIPLE":
+                changeInit(MULTIPLEObject);
+                break;
+
+            case "STATE_PREDICTIVE":
+                changeInit(PREDICTIVEObject);
+                break;
             default:
                 break;
         }
@@ -46,7 +71,7 @@ public class stateManager : MonoBehaviour {
 
     void changeInit(List<GameObject> obj)
     {
-        allActiveObjs = GameObject.FindGameObjectsWithTag("Displays");
+        allActiveObjs = GameObject.FindGameObjectsWithTag(taggen);
         for(int nObjs=0;nObjs<allActiveObjs.Length;nObjs++){
             allActiveObjs[nObjs].gameObject.SetActive(false);  
         }
