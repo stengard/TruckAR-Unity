@@ -14,6 +14,7 @@ public class predictivePath : MonoBehaviour {
     public GameObject lineObject;
 
     public int numberOfLineObjects;
+    public float lengthOfLines;
 
     private List<GameObject> leftLineObjects, rightLineObjects;
 
@@ -68,18 +69,19 @@ public class predictivePath : MonoBehaviour {
     void Update() {
 
         //Calculate the angle  between backWheel forward vector and middle plane and  rotate the pivot point accordingly.
-        float angle = Vector3.Angle(normalVector, normalVectorWheel);
-        if (angle == 0) angle = 0.001f;
+
 
         Vector3 eulerAngles = originalRotation;
-
         //Calculate normal vectors 
         normalVectorWheel = Vector3.Normalize(backWheel.transform.forward);
         normalVector = pivotPoint.transform.position - backWheel.transform.position;
         normalVectorPivotPoint = Vector3.Normalize(pivotPoint.transform.forward);
 
+        float angle = Vector3.Angle(normalVector, normalVectorWheel);
+        if (angle == 0) angle = 0.001f;
 
-        if (backWheel.transform.localEulerAngles.y < 180 && backWheel.transform.localEulerAngles.y > 0) {
+
+        if (backWheel.transform.localEulerAngles.y < 180.0f && backWheel.transform.localEulerAngles.y > 0) {
             eulerAngles.y = eulerAngles.y + angle;
         }
         else {
@@ -88,52 +90,101 @@ public class predictivePath : MonoBehaviour {
 
         pivotPoint.transform.localEulerAngles = eulerAngles;
 
-        //reinstantiate lineobjects
-        //if (leftLineObjects.Count != numberOfLineObjects) {
-        //    for (int i = 0; i < leftLineObjects.Count; i++) {
-        //        Destroy(leftLineObjects[i]);
-        //        Destroy(rightLineObjects[i]);
-        //    }
-
-        //    rightLineObjects.Clear();
-        //    leftLineObjects.Clear();
-        //    addLeftLines();
-        //    addRightLines();
-        //}
-
         float distance = Vector3.Distance(pivotPoint.transform.position, backWheel.transform.position);
 
-        Vector3 vectorMidLeft = frontWheelLeft.transform.position + pivotPoint.transform.forward * (distance * 0.5f);
-        Vector3 vectorMidRight = frontWheelRight.transform.position + pivotPoint.transform.forward * (distance * 0.5f);
-
-
         float turningRadius = distance / Mathf.Tan(Mathf.Deg2Rad * angle);
+
         Vector3 turningMid = pivotPoint.transform.position + transform.right * turningRadius;
 
+        if (pivotPoint.transform.localEulerAngles.y > 180) {
+            turningMid = pivotPoint.transform.position - transform.right * turningRadius;
+        }
+
         midPoint.transform.position = turningMid;
+
+        float turningRadiusLeftWheel = 1 / (Mathf.Sin(Mathf.Deg2Rad * angle) / Vector3.Distance(frontWheelLeft.transform.position, turningMid));
+        float turningRadiusRightWheel = 1 / (Mathf.Sin(Mathf.Deg2Rad * angle) / Vector3.Distance(frontWheelRight.transform.position, turningMid));
 
         Vector3[] pointsOnTurningCircleLeft = new Vector3[numberOfLineObjects];
         Vector3[] pointsOnTurningCircleRight = new Vector3[numberOfLineObjects];
 
-        float slice = 0.5f*Mathf.PI/ numberOfLineObjects;
+        float slice_L = (lengthOfLines / turningRadiusLeftWheel) * Mathf.PI / numberOfLineObjects;
+        float slice_R = (lengthOfLines / turningRadiusRightWheel) * Mathf.PI / numberOfLineObjects;
+
+        float translateDirection_left_X = 1;
+        float translateDirection_left_Z = 1;
+        float translateDirection_right_Z = 1;
+        float translateDirection_right_X = 1;
+
+        if (eulerAngles.y > 0 && eulerAngles.y < 64) {
+            translateDirection_left_X = -1;
+            translateDirection_left_Z = -1;
+            translateDirection_right_X = -1;
+            translateDirection_right_Z = -1;
+        }
+        else if(eulerAngles.y >= 64 && eulerAngles.y < 115){
+            translateDirection_left_X = -1;
+            translateDirection_left_Z = -1;
+            translateDirection_right_X = 1;
+            translateDirection_right_Z = 1;
+        }
+        else if (eulerAngles.y >= 115 && eulerAngles.y < 180) {
+            translateDirection_left_X = 1;
+            translateDirection_left_Z = 1;
+            translateDirection_right_X = 1;
+            translateDirection_right_Z = 1;
+        }
+        else if (eulerAngles.y >= 180 && eulerAngles.y < 244) {
+            translateDirection_left_X = -1;
+            translateDirection_left_Z = 1;
+            translateDirection_right_X = -1;
+            translateDirection_right_Z = 1;
+        }
+        else if (eulerAngles.y >= 244 && eulerAngles.y < 295) {
+            translateDirection_left_X = -1;
+            translateDirection_left_Z = 1;
+            translateDirection_right_X = 1;
+            translateDirection_right_Z = -1;
+        }
+        else if (eulerAngles.y >= 295 && eulerAngles.y <= 360) {
+            translateDirection_left_X = 1;
+            translateDirection_left_Z = -1;
+            translateDirection_right_X = 1;
+            translateDirection_right_Z = -1;
+        }
 
         for (int i = 0; i < numberOfLineObjects; i++) {
 
-            float stepAngle = slice * i;
+            float stepAngle_L = slice_L * i;
+            float stepAngle_R = slice_R * i;
 
-            float x = turningRadius * Mathf.Cos(stepAngle);
-            float z = turningRadius * Mathf.Sin(stepAngle);
+            float x_L = translateDirection_left_X*turningRadiusLeftWheel * Mathf.Cos(stepAngle_L);
+            float z_L = turningRadiusLeftWheel * Mathf.Sin(stepAngle_L);
 
-            pointsOnTurningCircleLeft[i].x = x - turningRadius;
+            float x_R = translateDirection_right_X * turningRadiusRightWheel * Mathf.Cos(stepAngle_R);
+            float z_R = turningRadiusRightWheel * Mathf.Sin(stepAngle_R);
+
+            pointsOnTurningCircleLeft[i].x = x_L - translateDirection_left_X * turningRadiusLeftWheel;
             pointsOnTurningCircleLeft[i].y = 0;
-            pointsOnTurningCircleLeft[i].z = z;
+            pointsOnTurningCircleLeft[i].z = translateDirection_left_Z * z_L;
 
-            pointsOnTurningCircleRight[i].x = x - turningRadius;
+            pointsOnTurningCircleRight[i].x = x_R - translateDirection_right_X * turningRadiusRightWheel;
             pointsOnTurningCircleRight[i].y = 0;
-            pointsOnTurningCircleRight[i].z = z;
+            pointsOnTurningCircleRight[i].z = translateDirection_right_Z * z_R;
 
-            leftLineObjects[i].transform.localPosition =  pointsOnTurningCircleLeft[i];
-            rightLineObjects[i].transform.localPosition = pointsOnTurningCircleRight[i];
+            leftLineObjects[i].transform.localPosition = pointsOnTurningCircleLeft[i] / frontWheelLeft.transform.localScale.x;
+            rightLineObjects[i].transform.localPosition = pointsOnTurningCircleRight[i] / frontWheelLeft.transform.localScale.x;
+
+            if (i != 0) {
+                //Rotate the object so that it "looks at" the previous.
+                leftLineObjects[i - 1].transform.LookAt(leftLineObjects[i].transform.position);
+                rightLineObjects[i - 1].transform.LookAt(rightLineObjects[i].transform.position);
+
+                rightLineObjects[i - 1].transform.localEulerAngles = new Vector3(0, rightLineObjects[i - 1].transform.localEulerAngles.y, 0);
+                leftLineObjects[i - 1].transform.localEulerAngles = new Vector3(0, leftLineObjects[i - 1].transform.localEulerAngles.y, 0);
+            
+            }
+
         }
 
         //Show some helplines
@@ -174,5 +225,11 @@ public class predictivePath : MonoBehaviour {
             //sq[i].SetActive(false);
 
         }
+    }
+
+    public void rotateBackWheel(float value) {
+
+        backWheel.transform.localEulerAngles = new Vector3(backWheel.transform.localEulerAngles.x, value, backWheel.transform.localEulerAngles.z);
+    
     }
 }

@@ -13,6 +13,7 @@ public class OverlayW : MonoBehaviour {
 
     private int numberOfColumns;
     private int numberOfRows;
+    public float spread;
 
     private List<GameObject> overlayObjects, originalOverlayObjects;
 
@@ -25,42 +26,77 @@ public class OverlayW : MonoBehaviour {
 
         overlayObjects = new List<GameObject>();
 
-        for (int i = 0; i < numberOfOverlays; i++) {
+        instantiateOverlays(numberOfOverlays);
 
-            overlayObjects.Add(Instantiate(overlay));
-            overlayObjects[i].transform.parent = transform;
-            overlayObjects[i].transform.position = transform.position;
-            overlayObjects[i].name = overlay.name + "_" + i;
+        originalOverlayObjects = new List<GameObject>();
+
+        for (int i = 0; i < overlayObjects.Count; i++) {
+
+            originalOverlayObjects.Add(overlayObjects[i]);
         }
-
-        originalOverlayObjects = overlayObjects;
 
         numberOfColumns = Mathf.RoundToInt(Mathf.Sqrt(overlayObjects.Count));
         numberOfRows = Mathf.RoundToInt(Mathf.Ceil(overlayObjects.Count / numberOfColumns));
 
         canvasWidth = overlayObjects[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.x;
         canvasHeight = overlayObjects[0].transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.x;
+
+        useCircle = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.O)) {
-            useCircle = !useCircle;
+        if (useCircle) {
+            PlaceOnCircle();
+        }
+        else { 
+            PlaceOnGrid();
+        }
+
+        if (GetComponent<ChangeSizeOnDistance>().enabled) {
+
+        }
+    }
+
+    public void reInstantiateOvelays(float n) {
+        n = Mathf.RoundToInt(n);
+
+        for (int i = 0; i < overlayObjects.Count; i++) {
+            Destroy(overlayObjects[i]);
+        }
+
+        overlayObjects.Clear();
+
+        instantiateOverlays(Mathf.RoundToInt(n));
+        
+    }
+
+    private void instantiateOverlays(int n) {
+
+        for (int i = 0; i < n; i++) {
+
+            overlayObjects.Add(Instantiate(overlay));
+            overlayObjects[i].transform.parent = transform;
+            overlayObjects[i].transform.position = transform.position;
+            overlayObjects[i].transform.rotation = transform.rotation;
+            overlayObjects[i].name = overlay.name + "_" + i;
         }
 
         if (useCircle) {
-            PlaceInCircle();
-        }
-        else { 
-            PlaceInGrid();
-        }
-        
 
-       
+            PlaceOnCircle();
+        }
+        else {
+
+            PlaceOnGrid();
+        }
     }
 
-    private void PlaceInGrid() {
+    private void PlaceOnGrid() {
+
+        numberOfColumns = Mathf.RoundToInt(Mathf.Sqrt(overlayObjects.Count));
+        numberOfRows = Mathf.RoundToInt(Mathf.Ceil(overlayObjects.Count / numberOfColumns));
 
         Vector3 offsetVector = transform.position;
 
@@ -84,8 +120,8 @@ public class OverlayW : MonoBehaviour {
             float x = 0;
             float y = 0;
 
-            x = offsetVector.x + (canvasWidth/2 + 15) * (i % numberOfColumns);
-            y = offsetVector.y - (canvasHeight/2 + 15) * counter;
+            x = offsetVector.x + (canvasWidth / 2 + spread) * (i % numberOfColumns) * overlayObjects[i].transform.localScale.x * transform.localScale.x;
+            y = offsetVector.y - (canvasHeight / 2 + spread) * counter * overlayObjects[i].transform.localScale.x * transform.localScale.y;
             
 
             float tempX = Mathf.Lerp(overlayObjects[i].transform.position.x, x, Time.deltaTime * damping);
@@ -93,10 +129,14 @@ public class OverlayW : MonoBehaviour {
             float tempY = Mathf.Lerp(overlayObjects[i].transform.position.y, y, Time.deltaTime * damping);
 
             overlayObjects[i].transform.position = new Vector3(tempX, tempY, transform.position.z);
+
         }
     }
 
-    private void PlaceInCircle() {
+    private void PlaceOnCircle() {
+
+        numberOfColumns = Mathf.RoundToInt(Mathf.Sqrt(overlayObjects.Count));
+        numberOfRows = Mathf.RoundToInt(Mathf.Ceil(overlayObjects.Count / numberOfColumns));
 
         for (int i = 0; i < overlayObjects.Count; i++) {
 
@@ -108,14 +148,44 @@ public class OverlayW : MonoBehaviour {
             float x = 0;
             float y = 0;
 
-            x = (canvasWidth / 2) * Mathf.Cos(theta) + transform.position.x;
-            y = (canvasHeight / 2) * Mathf.Sin(theta) + transform.position.y;
+            x = overlayObjects[i].transform.localScale.x * transform.localScale.x * (canvasWidth / 2 + spread * overlayObjects.Count) * Mathf.Cos(theta) + transform.position.x;
+            y = overlayObjects[i].transform.localScale.x * transform.localScale.y * (canvasHeight / 2 + spread * overlayObjects.Count) * Mathf.Sin(theta) + transform.position.y;
 
             float tempX = Mathf.Lerp(overlayObjects[i].transform.position.x, x, Time.deltaTime * damping);
 
             float tempY = Mathf.Lerp(overlayObjects[i].transform.position.y, y, Time.deltaTime * damping);
 
             overlayObjects[i].transform.position = new Vector3(tempX, tempY, transform.position.z);
+        }
+    }
+
+    public void arrangementToggle(bool t) {
+        useCircle = t;
+    }
+
+    public void billboardToggle(bool t) {
+        GetComponent<Billboard>().enabled = t;
+
+        if (!t) {
+            for (int i = 0; i < numberOfOverlays; i++) {
+
+                overlayObjects[i].transform.rotation = transform.rotation;
+                overlayObjects[i].name = overlay.name + "_" + i;
+            }
+        }
+    }
+
+    public void dynamicSize(bool t) {
+        GetComponent<ChangeSizeOnDistance>().enabled = t;
+    }
+
+    public void resizeOverlays(float s) {
+
+        Debugga.Logga(originalOverlayObjects[0].transform.localScale + "");
+
+        for (int i = 0; i < overlayObjects.Count; i++) {
+
+            overlayObjects[i].transform.localScale = originalOverlayObjects[i].transform.localScale + new Vector3(s, s, s);
         }
     }
 }

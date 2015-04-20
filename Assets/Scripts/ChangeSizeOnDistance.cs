@@ -43,9 +43,15 @@ public class ChangeSizeOnDistance : MonoBehaviour {
         //If the marker is recogniized (distance != 0), scale the object with the factor scaleFactor
         if(distance != 0)
             transform.localScale = new Vector3(originalScale.x * scaleFactorX, originalScale.y * scaleFactorY, originalScale.z * scaleFactorZ);
+    }
 
-        //Debugga.LoggaLive("Scale :" + scaleFactorX + ", " + scaleFactorY + ", " + scaleFactorZ);
-        //Debugga.LoggaLive("position: " + distance);
-        //Debugga.LoggaLive(originalScale.x + "");
+    public float getDistance() {
+
+        return distance;
+    }
+
+    public Vector3 getScale() {
+
+        return new Vector3(originalScale.x * distance, originalScale.y * distance, originalScale.z * distance);
     }
 }
