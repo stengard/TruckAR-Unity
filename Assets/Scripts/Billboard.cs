@@ -17,15 +17,15 @@ public class Billboard : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
+	// Update is called once per framez
 	void Update () {
 
 
         if (Camera.main) {
-            cameraCentroid = Camera.main.transform.up;
+            cameraCentroid = Camera.main.transform.position;
         }
         else {
-            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
         }
 
         Quaternion rotation = Quaternion.LookRotation(cameraCentroid);

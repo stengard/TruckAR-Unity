@@ -48,7 +48,7 @@ public class VisualTunnel : MonoBehaviour {
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
 
 
-        Debugga.Logga("Number of tunnels: " + numberOfTunnels);
+        //Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
         //Position vector half the distance between the camera and the object in the cameras looking direction to ccreate the curved path.
         Vector3 vectorMid = cameraCentroid + cameraRight.transform.forward * (distance * 0.5f);
@@ -67,7 +67,6 @@ public class VisualTunnel : MonoBehaviour {
 
             tunnelObjects.Clear();
             Debugga.Logga("number: " + tunnelObjects.Count);
-            //tunnelObjects = new List<GameObject>();
             addTunnels();
         }
 

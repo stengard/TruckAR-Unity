@@ -14,6 +14,7 @@ public class stateManager : MonoBehaviour {
     public List<GameObject> TUNNELObject = new List<GameObject>();
     public List<GameObject> PREDICTIVEObject = new List<GameObject>();
     public List<GameObject> MULTIPLEObject = new List<GameObject>();
+    public List<GameObject> HOLOGRAMTRUCKObject = new List<GameObject>();
 
     public GameObject HUD;
     public string startState;
@@ -63,6 +64,9 @@ public class stateManager : MonoBehaviour {
 
             case "STATE_PREDICTIVE":
                 changeInit(PREDICTIVEObject);
+                break;
+            case "STATE_HOLOGRAM_TRUCK":
+                changeInit(HOLOGRAMTRUCKObject);
                 break;
             default:
                 break;
