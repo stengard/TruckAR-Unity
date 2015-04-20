@@ -21,11 +21,12 @@
 		<Name>COS0</Name>
 		<Fuser Type="SmoothingFuser">
 			<Parameters>
+        <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
 				<AlphaRotation>0.5</AlphaRotation>
 				<AlphaTranslation>0.8</AlphaTranslation>
 				<GammaRotation>0.5</GammaRotation>
 				<GammaTranslation>0.8</GammaTranslation>
-				<KeepPoseForNumberOfFrames>1</KeepPoseForNumberOfFrames>
+				<KeepPoseForNumberOfFrames>3000</KeepPoseForNumberOfFrames>
 			</Parameters>
 		</Fuser>
 		<SensorSource>

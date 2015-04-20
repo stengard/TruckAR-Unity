@@ -61,6 +61,7 @@ public class NavTruckScript : MonoBehaviour {
                 }
                 clonedDirs[i].transform.Rotate(90, -90, 0);
                 clonedDirs[i].transform.position.Set(clonedDirs[i].transform.position.x, 20f, clonedDirs[i].transform.position.z);
+                clonedDirs[i].transform.parent = GameObject.Find("Hans & Greta").transform;
                 clonedDirs[i].SetActive(true);
             }
         }
