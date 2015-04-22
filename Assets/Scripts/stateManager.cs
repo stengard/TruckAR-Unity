@@ -23,7 +23,7 @@ public class stateManager : MonoBehaviour {
     public List<GameObject> AMSTERDAMObject = new List<GameObject>();
 
 
-    public GameObject HUD;
+    public List<GameObject> HUD;
     public string startState;
     private GameObject[] allActiveObjs;
 
@@ -38,7 +38,10 @@ public class stateManager : MonoBehaviour {
     {
         if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
         {
-            HUD.SetActive(!HUD.activeInHierarchy);
+            bool isActive = !HUD[0].activeInHierarchy;
+            for (int i = 0; i < HUD.Count; i++) {
+                HUD[i].SetActive(isActive);
+            }
         }
     }
 

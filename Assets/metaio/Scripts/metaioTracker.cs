@@ -197,7 +197,7 @@ public class metaioTracker : MonoBehaviour
 			q.y = (float)(q.y * qLenRecip);
 			q.z = (float)(q.z * qLenRecip);
 			q.w = (float)(q.w * qLenRecip);
-
+            
 			//translation
 			Vector3 p;
 
@@ -365,14 +365,20 @@ public class metaioTracker : MonoBehaviour
 		{
             component.enabled = enable;
         }
-		
+
+        UnityEngine.UI.Text[] textComponents = GetComponentsInChildren<UnityEngine.UI.Text>();
+        
+        foreach (UnityEngine.UI.Text component in textComponents) {
+            component.enabled = enable;
+        }
+
 		childsEnabled = enable;
 		
     }
 	
 	public void ApplyModifications()
 	{
-		// thenn set the material
+		// then set the material
 		// renderer.material.SetTexture( "_MainTex", texture ) ;
 		Transform previewTransform = transform.FindChild("PreviewPlane");
 		if(previewTransform==null)

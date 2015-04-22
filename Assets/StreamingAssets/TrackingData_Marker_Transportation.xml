@@ -36,6 +36,7 @@
                     </MarkerParameters>
                 </Parameters>
             </SensorCOS>
+          <!--
           <SensorCOS>
             <SensorCosID>Marker1_small</SensorCosID>
             <Parameters>
@@ -44,7 +45,7 @@
                 <MatrixID>1</MatrixID>
               </MarkerParameters>
             </Parameters>
-          </SensorCOS>
+          </SensorCOS>-->
 		</Sensor>
 	</Sensors>
   
@@ -63,6 +64,7 @@
 	            </Fuser>
 			</SensorSource>
 		</COS>
+    <!--
     <COS>
       <Name>COS2</Name>
       <SensorSource trigger="1">
@@ -72,11 +74,10 @@
           <Parameters>
             <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
             <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
-            <GravityAssistance>ReplaceZAxis</GravityAssistance>
           </Parameters>
         </Fuser>
       </SensorSource>
-    </COS>
+    </COS>-->
 	</Connections>
   
 </TrackingData>
