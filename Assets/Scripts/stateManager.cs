@@ -19,7 +19,14 @@ public class stateManager : MonoBehaviour {
     public List<GameObject> XRAYObject = new List<GameObject>();
     public List<GameObject> ENVIRONMENTALObject = new List<GameObject>();
 
-    public GameObject HUD;
+    public List<GameObject> HANSObject = new List<GameObject>();
+    public List<GameObject> PALLETINFOObject = new List<GameObject>();
+    public List<GameObject> PALLETXTNDObject = new List<GameObject>();
+    public List<GameObject> HOLOGRAMMAPObject = new List<GameObject>();
+    public List<GameObject> AMSTERDAMObject = new List<GameObject>();
+
+
+    public List<GameObject> HUD;
     public string startState;
     private GameObject[] allActiveObjs;
 
@@ -34,7 +41,10 @@ public class stateManager : MonoBehaviour {
     {
         if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
         {
-            HUD.SetActive(!HUD.activeInHierarchy);
+            bool isActive = !HUD[0].activeInHierarchy;
+            for (int i = 0; i < HUD.Count; i++) {
+                HUD[i].SetActive(isActive);
+            }
         }
     }
 
@@ -66,6 +76,21 @@ public class stateManager : MonoBehaviour {
                 break;
             case "STATE_PREDICTIVE":
                 changeInit(PREDICTIVEObject);
+                break;
+            case "STATE_HANS":
+                changeInit(HANSObject);
+                break;
+            case "STATE_PALLET_INFO":
+                changeInit(PALLETINFOObject);
+                break;
+            case "STATE_PALLET_EXTENDED":
+                changeInit(PALLETXTNDObject);
+                break;
+            case "STATE_HOLOGRAM_MAP":
+                changeInit(HOLOGRAMMAPObject);
+                break;
+            case "STATE_AMSTERDAM":
+                changeInit(AMSTERDAMObject);
                 break;
             case "STATE_HOLOGRAM_TRUCK":
                 changeInit(HOLOGRAMTRUCKObject);

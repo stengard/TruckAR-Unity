@@ -27,7 +27,6 @@ public class Billboard : MonoBehaviour {
         else {
             cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
         }
-
         Quaternion rotation = Quaternion.LookRotation(cameraCentroid);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
 

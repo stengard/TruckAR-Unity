@@ -6,15 +6,15 @@
       <Parameters>
         <MarkerTrackingParameters>
           <TrackingQuality>fast</TrackingQuality>
-          <ThresholdOffset>110</ThresholdOffset>
-          <NumberOfSearchIterations>1</NumberOfSearchIterations>
+          <ThresholdOffset>200</ThresholdOffset>
+          <NumberOfSearchIterations>3</NumberOfSearchIterations>
         </MarkerTrackingParameters>
       </Parameters>
       <SensorCOS>
         <SensorCosID>Marker1</SensorCosID>
         <Parameters>
           <MarkerParameters>
-            <Size>80</Size>
+            <Size>94</Size>
             <MatrixID>1</MatrixID>
           </MarkerParameters>
         </Parameters>
@@ -51,7 +51,11 @@
         <Fuser Type="SmoothingFuser">
           <Parameters>
             <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
-            <KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
           </Parameters>
         </Fuser>
       </SensorSource>
@@ -65,7 +69,11 @@
         <Fuser Type="SmoothingFuser">
           <Parameters>
             <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
-            <KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
           </Parameters>
         </Fuser>
       </SensorSource>
@@ -79,7 +87,11 @@
         <Fuser Type="SmoothingFuser">
           <Parameters>
             <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
-            <KeepPoseForNumberOfFrames>30</KeepPoseForNumberOfFrames>
+            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
           </Parameters>
         </Fuser>
       </SensorSource>
