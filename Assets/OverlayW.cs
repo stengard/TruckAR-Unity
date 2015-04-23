@@ -120,8 +120,8 @@ public class OverlayW : MonoBehaviour {
             float x = 0;
             float y = 0;
 
-            x = offsetVector.x + (canvasWidth / 2 + spread) * (i % numberOfColumns) * overlayObjects[i].transform.localScale.x * transform.localScale.x;
-            y = offsetVector.y - (canvasHeight / 2 + spread) * counter * overlayObjects[i].transform.localScale.x * transform.localScale.y;
+            x = offsetVector.x + (canvasWidth / 2 + spread) * (i % numberOfColumns) ;
+            y = offsetVector.y - (canvasHeight / 2 + spread) * counter;
             
 
             float tempX = Mathf.Lerp(overlayObjects[i].transform.position.x, x, Time.deltaTime * damping);

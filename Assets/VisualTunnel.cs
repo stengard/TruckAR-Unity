@@ -2,6 +2,8 @@
 using System.Collections;
 using metaio;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 /// <summary>
 /// Script that creates a Viual tunnel from the camera to an object. Using a Catmull-rom spline to interpolate a curve from a to b.
 /// </summary>
@@ -18,6 +20,11 @@ public class VisualTunnel : MonoBehaviour {
     private Vector3 bending;
     private int numberOfTunnels;
     private float distance;
+
+    public Text maxDistanceText;
+    public Text densityText;
+
+    public float maxDistance;
 
     private List<GameObject> tunnelObjects;
     Vector3[] catmullRomVectors;
@@ -37,6 +44,9 @@ public class VisualTunnel : MonoBehaviour {
 
         tunnelObjects = new List<GameObject>();
 
+        maxDistanceText.text = "Max Distance: " + maxDistance;
+        densityText.text = "Square Density: " + squareDensity;
+
         //Instantiate objects
         addTunnels();
     }
@@ -44,9 +54,14 @@ public class VisualTunnel : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        distance = Vector3.Distance(transform.position, cameraCentroid);
-        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
+        maxDistanceText.text = "Max Distance: " + maxDistance;
+        densityText.text = "Square Density: " + squareDensity;
 
+        distance = Vector3.Distance(transform.position, cameraCentroid);
+
+
+        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
+        Debugga.Logga("d: " + distance);
 
         //Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
@@ -66,9 +81,14 @@ public class VisualTunnel : MonoBehaviour {
             }
 
             tunnelObjects.Clear();
-            Debugga.Logga("number: " + tunnelObjects.Count);
-            addTunnels();
+
+            if (distance < maxDistance) {
+                addTunnels();
+
+            }
+            else { return; }
         }
+
 
         // tunnelObjects = new GameObject[size];
         Vector3 prevPt = catmullRom.Interp(0);
@@ -109,6 +129,16 @@ public class VisualTunnel : MonoBehaviour {
         //if (Application.isPlaying)
         //    catmullRom.GizmoDraw(3);
     }
+
+    public void setMaxDistance(float f){
+        maxDistance = f;
+    }
+
+    public void setDensity(float f) {
+        squareDensity = Mathf.RoundToInt(f);
+    }
+
+
 
 
 }

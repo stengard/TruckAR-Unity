@@ -35,13 +35,19 @@ public class ChangeSizeOnDistance : MonoBehaviour {
         //Calcculate the distance between marker and camera. Multiplied by 1000 to compensate for the distance returned is in mm.
         distance = Vector3.Distance(transform.position, cameraCentroid) / (sizeMultiplier * 1000);
 
+
+
         //Calulate the scalefactor to scale the attatched gameObject with. 
         float scaleFactorX = distance;
         float scaleFactorY = distance;
         float scaleFactorZ = distance;
 
+
+
         //If the marker is recogniized (distance != 0), scale the object with the factor scaleFactor
         if(distance != 0)
+
+            Debugga.Logga(distance + " distance");
             transform.localScale = new Vector3(originalScale.x * scaleFactorX, originalScale.y * scaleFactorY, originalScale.z * scaleFactorZ);
     }
 
