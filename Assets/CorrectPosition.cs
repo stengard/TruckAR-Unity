@@ -14,15 +14,16 @@ public class CorrectPosition : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        transform.position = Vector3.zero;
         startText = textPos.text;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.DrawRay(transform.position, transform.right*500, Color.green);
-        Debug.DrawRay(transform.position, transform.forward * 500, Color.red);
-        textPos.text = startText + " " + transform.localPosition.x + ", " + transform.localPosition.y + ", " + transform.localPosition.z;
+        //Debug.DrawRay(transform.position, transform.right*500, Color.green);
+        //Debug.DrawRay(transform.position, transform.forward * 500, Color.red);
 
+        textPos.text = startText + " " + transform.localPosition.x + ", " + transform.localPosition.y + ", " + transform.localPosition.z;
     }
 
     public void translateInX(float f) {
@@ -34,5 +35,10 @@ public class CorrectPosition : MonoBehaviour {
     public void translateInZ(float f) {
         //transform.localPosition = Vector3.forward * f;
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -f);
+    }
+
+    public void translateInY(float f) {
+        //transform.localPosition = Vector3.forward * f;
+        transform.localPosition = new Vector3(transform.localPosition.x, f, transform.localPosition.z);
     }
 }

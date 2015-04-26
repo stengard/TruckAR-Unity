@@ -8,12 +8,17 @@ public class Billboard : MonoBehaviour {
     public float speed;
     public Camera cameraLeft;
     public Camera cameraRight;
+    private Quaternion originalRotation;
+    private Vector3 originalPosition;
 
 	// Use this for initialization
 	void Start () {
 
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
+
+        originalRotation = transform.rotation;
+        originalPosition = transform.position;
 
 	}
 	
@@ -27,7 +32,10 @@ public class Billboard : MonoBehaviour {
         else {
             cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
         }
+        Debugga.Logga(cameraCentroid + "");
+
         Quaternion rotation = Quaternion.LookRotation(cameraCentroid);
+
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
 
        

@@ -41,6 +41,7 @@ public class stateManager : MonoBehaviour {
     {
         if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
         {
+            Debugga.Logga("KLICK! " + HUD.Count);
             bool isActive = !HUD[0].activeInHierarchy;
             for (int i = 0; i < HUD.Count; i++) {
                 HUD[i].SetActive(isActive);

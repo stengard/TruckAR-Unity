@@ -128,7 +128,7 @@
 	            <Fuser Type="SmoothingFuser">
 					<Parameters>
 						<ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
-						<KeepPoseForNumberOfFrames>3000</KeepPoseForNumberOfFrames>
+						<KeepPoseForNumberOfFrames>3</KeepPoseForNumberOfFrames>
 					</Parameters>
 	            </Fuser>
 	            <COSOffset>

@@ -35,9 +35,10 @@ public class VisualTunnel : MonoBehaviour {
     void Start() {
 
         catmullRom = new CRSpline();
+
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
-        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
+        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
@@ -57,11 +58,13 @@ public class VisualTunnel : MonoBehaviour {
         maxDistanceText.text = "Max Distance: " + maxDistance;
         densityText.text = "Square Density: " + squareDensity;
 
+        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
         distance = Vector3.Distance(transform.position, cameraCentroid);
 
 
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
-        Debugga.Logga("d: " + distance);
+        Debugga.Logga("distance: " + distance);
+        Debugga.Logga("cc: " + cameraCentroid);
 
         //Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
@@ -97,15 +100,17 @@ public class VisualTunnel : MonoBehaviour {
             Vector3 currPt = catmullRom.Interp(pm);
 
             tunnelObjects[i - 1].transform.position = currPt;
-            if (i != tunnelObjects.Count) {
-                //Rotate the object so that it "looks at" the previous.
-                tunnelObjects[i - 1].transform.LookAt(tunnelObjects[i].transform.position);
-            }
-            else {
-                //Rotate the last object to "look at" the camera
-                tunnelObjects[i - 1].transform.LookAt(cameraCentroid);
-            }
-            //sq[i-1].transform.Rotate(new Vector3(90, 0, 0));
+            tunnelObjects[i - 1].transform.rotation = cameraLeft.transform.rotation;
+
+            //if (i != tunnelObjects.Count) {
+            //    //Rotate the object so that it "looks at" the previous.
+            //   tunnelObjects[i - 1].transform.LookAt(tunnelObjects[i].transform.position);
+            //}
+            //else {
+            //    //Rotate the last object to "look at" the camera
+            //    tunnelObjects[i - 1].transform.LookAt(cameraCentroid);
+            //}
+
 
             prevPt = currPt;
         }
@@ -116,8 +121,8 @@ public class VisualTunnel : MonoBehaviour {
         for (int i = 0; i < numberOfTunnels; i++) {
 
             tunnelObjects.Add(Instantiate(square));
-            tunnelObjects[i].transform.parent = transform;
-            tunnelObjects[i].transform.position = transform.position;
+            //tunnelObjects[i].transform.parent = transform.parent;
+            tunnelObjects[i].tag = "L&U";
 
             tunnelObjects[i].name = "Ruta_" + i;
             //sq[i].SetActive(false);
