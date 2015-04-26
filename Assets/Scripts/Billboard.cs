@@ -34,9 +34,16 @@ public class Billboard : MonoBehaviour {
         }
         Debugga.Logga(cameraCentroid + "");
 
-        Quaternion rotation = Quaternion.LookRotation(cameraCentroid);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
+        transform.rotation = cameraLeft.transform.rotation;
+
+
+
+        
+
+        //Quaternion rotation = Quaternion.LookRotation(cameraCentroid);
+
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
 
        
 
