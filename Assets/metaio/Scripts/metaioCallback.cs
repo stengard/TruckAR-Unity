@@ -162,7 +162,7 @@ public class metaioCallback : MonoBehaviour
 	public void Update()
 	{
 		EUNITY_CALLBACK_EVENT eventID = (EUNITY_CALLBACK_EVENT)MetaioSDKUnity.getUnityCallbackEventID();
-	
+	    
 		if (eventID != EUNITY_CALLBACK_EVENT.EUCE_NONE)
 		{
 
@@ -241,7 +241,6 @@ public class metaioCallback : MonoBehaviour
 		byte[] pbAsBytes = new byte[eventValueLength];
 		Marshal.Copy(eventValuePtr, pbAsBytes, 0, (int)eventValueLength);
 		metaio.unitycommunication.OnVisualSearchResultProtocol pb = metaio.unitycommunication.OnVisualSearchResultProtocol.ParseFrom(pbAsBytes);
-		
 		VisualSearchResponse[] responses = new VisualSearchResponse[pb.ResponsesCount];
 		for (int i = 0; i < pb.ResponsesCount; ++i)
 		{

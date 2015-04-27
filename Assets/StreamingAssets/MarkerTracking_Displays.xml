@@ -39,6 +39,16 @@
           </MarkerParameters>
         </Parameters>
       </SensorCOS>
+
+      <SensorCOS>
+        <SensorCosID>Marker1_2</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>94</Size>
+            <MatrixID>1</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
     </Sensor>
   </Sensors>
   <Connections>
@@ -96,5 +106,37 @@
         </Fuser>
       </SensorSource>
     </COS>
+
+    <COS>
+      <Name>COS4</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Marker1_2</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.4</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.4</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+          </Parameters>
+        </Fuser>
+        <COSOffset>
+          <TranslationOffset>
+            <x>0</x>
+            <y>0</y>
+            <z>330</z>
+          </TranslationOffset>
+          <RotationOffset>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+            <w>1</w>
+          </RotationOffset>
+        </COSOffset>
+      </SensorSource>
+    </COS>
+    
   </Connections>
 </TrackingData>

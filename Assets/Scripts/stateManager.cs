@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
-using metaio;
 
 public class stateManager : MonoBehaviour {
     private string currentState;
@@ -26,10 +25,11 @@ public class stateManager : MonoBehaviour {
     public List<GameObject> HUD;
     public string startState;
     private GameObject[] allActiveObjs;
-
+    private bool isActive;
     public string taggen;
 	// Use this for initialization
 	void Start () {
+        //isActive = HUD[0].activeInHierarchy;
         changeState(startState);
 	}
 	
@@ -38,9 +38,14 @@ public class stateManager : MonoBehaviour {
     {
         if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
         {
-            bool isActive = !HUD[0].activeInHierarchy;
+            isActive = !HUD[0].activeInHierarchy;
             for (int i = 0; i < HUD.Count; i++) {
                 HUD[i].SetActive(isActive);
+                Canvas[] canvasComponents = HUD[i].GetComponentsInChildren<Canvas>();
+
+                foreach (Canvas component in canvasComponents) {
+                    component.enabled = isActive;
+                }
             }
         }
     }

@@ -25,27 +25,28 @@
                     <TrackingQuality>fast</TrackingQuality>
                     <ThresholdOffset>110</ThresholdOffset>
                     <NumberOfSearchIterations>3</NumberOfSearchIterations>
+                    <MaxObjectsToTrackInParallel>2</MaxObjectsToTrackInParallel>
                 </MarkerTrackingParameters>
             </Parameters>
             <SensorCOS>
                 <SensorCosID>Marker1</SensorCosID>
                 <Parameters>
                     <MarkerParameters>
-                        <Size>285</Size>
+                        <Size>576</Size>
                     <MatrixID>1</MatrixID>
                     </MarkerParameters>
                 </Parameters>
             </SensorCOS>
-          <!--
+          
           <SensorCOS>
             <SensorCosID>Marker1_small</SensorCosID>
             <Parameters>
               <MarkerParameters>
                 <Size>94</Size>
-                <MatrixID>1</MatrixID>
+                <MatrixID>3</MatrixID>
               </MarkerParameters>
             </Parameters>
-          </SensorCOS>-->
+          </SensorCOS>
 		</Sensor>
 	</Sensors>
   
@@ -58,13 +59,17 @@
 	            <Fuser Type="SmoothingFuser">
 					<Parameters>
 						<ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
-            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <KeepPoseForNumberOfFrames>3000</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
             <GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 	            </Fuser>
 			</SensorSource>
 		</COS>
-    <!--
+    
     <COS>
       <Name>COS2</Name>
       <SensorSource trigger="1">
@@ -73,11 +78,16 @@
         <Fuser Type="SmoothingFuser">
           <Parameters>
             <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
-            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <KeepPoseForNumberOfFrames>3000</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
           </Parameters>
         </Fuser>
       </SensorSource>
-    </COS>-->
+    </COS>
 	</Connections>
   
 </TrackingData>
