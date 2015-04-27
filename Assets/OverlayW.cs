@@ -79,7 +79,7 @@ public class OverlayW : MonoBehaviour {
             overlayObjects.Add(Instantiate(overlay));
             overlayObjects[i].transform.parent = transform;
             overlayObjects[i].transform.position = transform.position;
-            overlayObjects[i].transform.rotation = transform.rotation;
+            //overlayObjects[i].transform.rotation = transform.rotation;
             overlayObjects[i].name = overlay.name + "_" + i;
         }
 
@@ -120,15 +120,15 @@ public class OverlayW : MonoBehaviour {
             float x = 0;
             float y = 0;
 
-            x = offsetVector.x + (canvasWidth / 2 + spread) * (i % numberOfColumns) * overlayObjects[i].transform.localScale.x * transform.localScale.x;
-            y = offsetVector.y - (canvasHeight / 2 + spread) * counter * overlayObjects[i].transform.localScale.x * transform.localScale.y;
+            x = offsetVector.x + (canvasWidth / 2 + spread) * (i % numberOfColumns) ;
+            y = offsetVector.y - (canvasHeight / 2 + spread) * counter;
             
 
             float tempX = Mathf.Lerp(overlayObjects[i].transform.position.x, x, Time.deltaTime * damping);
 
-            float tempY = Mathf.Lerp(overlayObjects[i].transform.position.y, y, Time.deltaTime * damping);
+            float tempY = Mathf.Lerp(overlayObjects[i].transform.position.z, y, Time.deltaTime * damping);
 
-            overlayObjects[i].transform.position = new Vector3(tempX, tempY, transform.position.z);
+            overlayObjects[i].transform.position = new Vector3(tempX, transform.position.y, tempY);
 
         }
     }
@@ -149,13 +149,13 @@ public class OverlayW : MonoBehaviour {
             float y = 0;
 
             x = overlayObjects[i].transform.localScale.x * transform.localScale.x * (canvasWidth / 2 + spread * overlayObjects.Count) * Mathf.Cos(theta) + transform.position.x;
-            y = overlayObjects[i].transform.localScale.x * transform.localScale.y * (canvasHeight / 2 + spread * overlayObjects.Count) * Mathf.Sin(theta) + transform.position.y;
+            y = overlayObjects[i].transform.localScale.y * transform.localScale.y * (canvasHeight / 2 + spread * overlayObjects.Count) * Mathf.Sin(theta) + transform.position.z;
 
             float tempX = Mathf.Lerp(overlayObjects[i].transform.position.x, x, Time.deltaTime * damping);
 
-            float tempY = Mathf.Lerp(overlayObjects[i].transform.position.y, y, Time.deltaTime * damping);
+            float tempY = Mathf.Lerp(overlayObjects[i].transform.position.z, y, Time.deltaTime * damping);
 
-            overlayObjects[i].transform.position = new Vector3(tempX, tempY, transform.position.z);
+            overlayObjects[i].transform.position = new Vector3(tempX, transform.position.y, tempY);
         }
     }
 

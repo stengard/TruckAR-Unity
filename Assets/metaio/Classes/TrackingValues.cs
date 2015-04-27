@@ -65,6 +65,8 @@ namespace metaio
 			ret.cosName = tv.CosName;
 			ret.additionalValues = tv.AdditionalValues;
 			ret.sensor = tv.Sensor;
+            
+            
 			return ret;
 		}
 	}

@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Script attached to any GameObject that makes the objecct smaller the closer the user gets to it.
-/// </summary>
 public class ChangeSizeOnDistance : MonoBehaviour {
 
     public float sizeMultiplier;
@@ -15,7 +12,7 @@ public class ChangeSizeOnDistance : MonoBehaviour {
     public Camera cameraLeft;
     public Camera cameraRight;
 
-    public Vector3 cameraCentroid;
+    private Vector3 cameraCentroid;
 
     // Use this for initialization
     void Start() {
@@ -23,15 +20,19 @@ public class ChangeSizeOnDistance : MonoBehaviour {
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
 
-         cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
-
         //sizeMultiplier = 1;
+        //Not working..
         originalScale = transform.localScale;
     }
 
     // Update is called once per frame
     void Update() {
-
+        if (Camera.main) {
+            cameraCentroid = Camera.main.transform.position;
+        }
+        else {
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+        }
         //Calcculate the distance between marker and camera. Multiplied by 1000 to compensate for the distance returned is in mm.
         distance = Vector3.Distance(transform.position, cameraCentroid) / (sizeMultiplier * 1000);
 
@@ -39,7 +40,6 @@ public class ChangeSizeOnDistance : MonoBehaviour {
         float scaleFactorX = distance;
         float scaleFactorY = distance;
         float scaleFactorZ = distance;
-
         //If the marker is recogniized (distance != 0), scale the object with the factor scaleFactor
         if(distance != 0)
             transform.localScale = new Vector3(originalScale.x * scaleFactorX, originalScale.y * scaleFactorY, originalScale.z * scaleFactorZ);

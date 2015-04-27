@@ -6,7 +6,6 @@ public class predictivePath : MonoBehaviour {
 
     public GameObject pivotPoint, backWheel, frontWheelLeft, frontWheelRight, pallet, midPoint;
 
-
     private Vector3 normalVector, normalVectorWheel, normalVectorPivotPoint;
 
     private LineRenderer lineRenderer, lineRendererWheel, lineRendererPivotPoint;
@@ -15,6 +14,8 @@ public class predictivePath : MonoBehaviour {
 
     public int numberOfLineObjects;
     public float lengthOfLines;
+
+    public bool showHelpLines;
 
     private List<GameObject> leftLineObjects, rightLineObjects;
 
@@ -188,14 +189,16 @@ public class predictivePath : MonoBehaviour {
         }
 
         //Show some helplines
-        lineRendererWheel.SetPosition(0, backWheel.transform.position);
-        lineRendererWheel.SetPosition(1, normalVectorWheel * 10);
+        if (showHelpLines) {
+            lineRendererWheel.SetPosition(0, backWheel.transform.position);
+            lineRendererWheel.SetPosition(1, normalVectorWheel * 10);
 
-        lineRendererPivotPoint.SetPosition(0, pivotPoint.transform.position);
-        lineRendererPivotPoint.SetPosition(1, normalVectorPivotPoint * 10);
+            lineRendererPivotPoint.SetPosition(0, pivotPoint.transform.position);
+            lineRendererPivotPoint.SetPosition(1, normalVectorPivotPoint * 10);
 
-        lineRenderer.SetPosition(0, backWheel.transform.position);
-        lineRenderer.SetPosition(1, pivotPoint.transform.position);
+            lineRenderer.SetPosition(0, backWheel.transform.position);
+            lineRenderer.SetPosition(1, pivotPoint.transform.position);
+        }
 
 
 

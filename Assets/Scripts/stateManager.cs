@@ -9,11 +9,14 @@ public class stateManager : MonoBehaviour {
     public List<GameObject> GAZEObject = new List<GameObject>();
     public List<GameObject> MARKERObject = new List<GameObject>();
     public List<GameObject> OVERLAYObject = new List<GameObject>();
-    public List<GameObject> OVERLAYWITHObject = new List<GameObject>();
+    public List<GameObject> SAFEZONEObject = new List<GameObject>();
     public List<GameObject> TUNNELObject = new List<GameObject>();
     public List<GameObject> PREDICTIVEObject = new List<GameObject>();
     public List<GameObject> MULTIPLEObject = new List<GameObject>();
     public List<GameObject> HOLOGRAMTRUCKObject = new List<GameObject>();
+    public List<GameObject> XRAYTOOLTIPObject = new List<GameObject>();
+    public List<GameObject> XRAYObject = new List<GameObject>();
+    public List<GameObject> ENVIRONMENTALObject = new List<GameObject>();
 
     public List<GameObject> HANSObject = new List<GameObject>();
     public List<GameObject> PALLETINFOObject = new List<GameObject>();
@@ -29,7 +32,7 @@ public class stateManager : MonoBehaviour {
     public string taggen;
 	// Use this for initialization
 	void Start () {
-        //isActive = HUD[0].activeInHierarchy;
+        isActive = HUD[0].activeInHierarchy;
         changeState(startState);
 	}
 	
@@ -38,11 +41,9 @@ public class stateManager : MonoBehaviour {
     {
         if ((Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Menu)) || Input.GetKeyDown("up"))
         {
-            isActive = !HUD[0].activeInHierarchy;
+            isActive = !isActive;
             for (int i = 0; i < HUD.Count; i++) {
-                HUD[i].SetActive(isActive);
                 Canvas[] canvasComponents = HUD[i].GetComponentsInChildren<Canvas>();
-
                 foreach (Canvas component in canvasComponents) {
                     component.enabled = isActive;
                 }
@@ -67,8 +68,8 @@ public class stateManager : MonoBehaviour {
             case "STATE_OVERLAY":
                 changeInit(OVERLAYObject);
                 break;
-            case "STATE_OVERLAY_WITH":
-                changeInit(OVERLAYWITHObject);
+            case "STATE_SAFE_ZONE":
+                changeInit(SAFEZONEObject);
                 break;
             case "STATE_TUNNEL":
                 changeInit(TUNNELObject);
@@ -96,6 +97,15 @@ public class stateManager : MonoBehaviour {
                 break;
             case "STATE_HOLOGRAM_TRUCK":
                 changeInit(HOLOGRAMTRUCKObject);
+                break;
+            case "STATE_XRAY_TOOLTIP":
+                changeInit(XRAYTOOLTIPObject);
+                break;
+            case "STATE_XRAY":
+                changeInit(XRAYObject);
+                break;
+            case "STATE_ENVIRONMENTAL_OVERLAY":
+                changeInit(ENVIRONMENTALObject);
                 break;
             default:
                 break;

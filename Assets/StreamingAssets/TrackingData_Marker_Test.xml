@@ -104,7 +104,7 @@
                                 correctly relate the marker pixel size to world 
                                 coordinates. The size is specified in 
                                 millimeters. -->
-                        <Size>285</Size>
+                        <Size>576</Size>
 
                         <!--    Matrix ID to identify the marker. The ID is
                                 associated with the pattern on the marker and 
@@ -128,7 +128,7 @@
 	            <Fuser Type="SmoothingFuser">
 					<Parameters>
 						<ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
-						<KeepPoseForNumberOfFrames>3000</KeepPoseForNumberOfFrames>
+						<KeepPoseForNumberOfFrames>3</KeepPoseForNumberOfFrames>
 					</Parameters>
 	            </Fuser>
 	            <COSOffset>

@@ -20,12 +20,12 @@ public class StereoRenderingCallback : metaioCallback
         //Debugga.LoggaLive("Inne i OnSDKReaady");
 
         string calibrationFilePath = AssetsManager.getAssetPath("hecMike.xml");
-        //string calibrationFilePath = AssetsManager.getAssetPath("hecMartin2.xml");
+        //string calibrationFilePath = AssetsManager.getAssetPath("hecMartinNew.xml");
         if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath))) {
             MetaioSDKUnity.setHandEyeCalibrationByDevice();
         }
 	}
-
+    
     protected override void onTrackingEvent(System.Collections.Generic.List<TrackingValues> trackingValues) {
         base.onTrackingEvent(trackingValues);
         Debugga.Logga("Quality:"+trackingValues[0].quality);

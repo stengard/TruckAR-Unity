@@ -17,10 +17,10 @@ public class amsterdamScript : MonoBehaviour {
     private GameObject[] trafficLights_left;
     private GameObject[] trafficLights_right;
     private float distanceMoved;
-    public Material theMaterial;
+    public GameObject theCube;
     // Use this for initialization
 	void Start () {
-        distanceMoved = -distToLine;
+        distanceMoved = (-distBetween * noOfLights / 3) -distToLine;
         trafficLights_left = new GameObject[noOfLights];
         trafficLights_right = new GameObject[noOfLights];
         createCubes();
@@ -28,24 +28,22 @@ public class amsterdamScript : MonoBehaviour {
 
     void createCubes() {
         for (int i = 0; i < noOfLights; i++) {
-            trafficLights_left[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            trafficLights_left[i] = Instantiate(theCube);
             trafficLights_left[i].name = "LeftLight" + i;
             trafficLights_left[i].transform.parent = transform;
-            trafficLights_left[i].transform.localPosition = new Vector3(i * distBetween, lightScale / 2, -rightLeftOffset / 2);
+            trafficLights_left[i].transform.localPosition = new Vector3((-distBetween*noOfLights/3)+i * distBetween, lightScale / 2, -rightLeftOffset / 2);
             trafficLights_left[i].transform.localScale = new Vector3(lightScale, lightScale, lightScale);
-            trafficLights_left[i].GetComponent<Renderer>().material = theMaterial;
-            
-            trafficLights_right[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            trafficLights_right[i] = Instantiate(theCube);
             trafficLights_right[i].name = "RightLight" + i;
             trafficLights_right[i].transform.parent = transform;
-            trafficLights_right[i].transform.localPosition = new Vector3(i * distBetween, lightScale / 2, rightLeftOffset / 2);
+            trafficLights_right[i].transform.localPosition = new Vector3((-distBetween * noOfLights / 3) + i * distBetween, lightScale / 2, rightLeftOffset / 2);
             trafficLights_right[i].transform.localScale = new Vector3(lightScale, lightScale, lightScale);
-            trafficLights_right[i].GetComponent<Renderer>().material = theMaterial;
         }
     }
 
     void resetColor() {
-        distanceMoved = -distToLine;
+        distanceMoved = (-distBetween * noOfLights / 3) -distToLine;
     }
 	
 	// Update is called once per frame
@@ -86,8 +84,8 @@ public class amsterdamScript : MonoBehaviour {
     public void setDistanceBetween(float newDist) {
         distBetween = newDist;
         for (int i = 0; i < noOfLights; i++) {
-            trafficLights_left[i].transform.localPosition = new Vector3(i * distBetween, trafficLights_left[i].transform.localPosition.y, trafficLights_left[i].transform.localPosition.z);
-            trafficLights_right[i].transform.localPosition = new Vector3(i * distBetween, trafficLights_right[i].transform.localPosition.y, trafficLights_right[i].transform.localPosition.z);
+            trafficLights_left[i].transform.localPosition = new Vector3((-distBetween * noOfLights / 3) + i * distBetween, trafficLights_left[i].transform.localPosition.y, trafficLights_left[i].transform.localPosition.z);
+            trafficLights_right[i].transform.localPosition = new Vector3((-distBetween * noOfLights / 3) + i * distBetween, trafficLights_right[i].transform.localPosition.y, trafficLights_right[i].transform.localPosition.z);
         }
     }
     public void setSpeed(float newSpeed) {

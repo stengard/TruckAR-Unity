@@ -2,6 +2,8 @@
 using System.Collections;
 using metaio;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 /// <summary>
 /// Script that creates a Viual tunnel from the camera to an object. Using a Catmull-rom spline to interpolate a curve from a to b.
 /// </summary>
@@ -19,6 +21,11 @@ public class VisualTunnel : MonoBehaviour {
     private int numberOfTunnels;
     private float distance;
 
+    public Text maxDistanceText;
+    public Text densityText;
+
+    public float maxDistance;
+
     private List<GameObject> tunnelObjects;
     Vector3[] catmullRomVectors;
 
@@ -28,14 +35,18 @@ public class VisualTunnel : MonoBehaviour {
     void Start() {
 
         catmullRom = new CRSpline();
+
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
-        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
+        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
 
         tunnelObjects = new List<GameObject>();
+
+        maxDistanceText.text = "Max Distance: " + maxDistance;
+        densityText.text = "Square Density: " + squareDensity;
 
         //Instantiate objects
         addTunnels();
@@ -44,9 +55,16 @@ public class VisualTunnel : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        distance = Vector3.Distance(transform.position, cameraCentroid);
-        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
+        maxDistanceText.text = "Max Distance: " + maxDistance;
+        densityText.text = "Square Density: " + squareDensity;
 
+        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+        distance = Vector3.Distance(transform.position, cameraCentroid);
+
+
+        numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
+        Debugga.Logga("distance: " + distance);
+        Debugga.Logga("cc: " + cameraCentroid);
 
         //Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
@@ -66,9 +84,14 @@ public class VisualTunnel : MonoBehaviour {
             }
 
             tunnelObjects.Clear();
-            Debugga.Logga("number: " + tunnelObjects.Count);
-            addTunnels();
+
+            if (distance < maxDistance) {
+                addTunnels();
+
+            }
+            else { return; }
         }
+
 
         // tunnelObjects = new GameObject[size];
         Vector3 prevPt = catmullRom.Interp(0);
@@ -77,15 +100,17 @@ public class VisualTunnel : MonoBehaviour {
             Vector3 currPt = catmullRom.Interp(pm);
 
             tunnelObjects[i - 1].transform.position = currPt;
-            if (i != tunnelObjects.Count) {
-                //Rotate the object so that it "looks at" the previous.
-                tunnelObjects[i - 1].transform.LookAt(tunnelObjects[i].transform.position);
-            }
-            else {
-                //Rotate the last object to "look at" the camera
-                tunnelObjects[i - 1].transform.LookAt(cameraCentroid);
-            }
-            //sq[i-1].transform.Rotate(new Vector3(90, 0, 0));
+            tunnelObjects[i - 1].transform.rotation = cameraLeft.transform.rotation;
+
+            //if (i != tunnelObjects.Count) {
+            //    //Rotate the object so that it "looks at" the previous.
+            //   tunnelObjects[i - 1].transform.LookAt(tunnelObjects[i].transform.position);
+            //}
+            //else {
+            //    //Rotate the last object to "look at" the camera
+            //    tunnelObjects[i - 1].transform.LookAt(cameraCentroid);
+            //}
+
 
             prevPt = currPt;
         }
@@ -96,8 +121,8 @@ public class VisualTunnel : MonoBehaviour {
         for (int i = 0; i < numberOfTunnels; i++) {
 
             tunnelObjects.Add(Instantiate(square));
-            tunnelObjects[i].transform.parent = transform;
-            tunnelObjects[i].transform.position = transform.position;
+            //tunnelObjects[i].transform.parent = transform.parent;
+            tunnelObjects[i].tag = "L&U";
 
             tunnelObjects[i].name = "Ruta_" + i;
             //sq[i].SetActive(false);
@@ -109,6 +134,16 @@ public class VisualTunnel : MonoBehaviour {
         //if (Application.isPlaying)
         //    catmullRom.GizmoDraw(3);
     }
+
+    public void setMaxDistance(float f){
+        maxDistance = f;
+    }
+
+    public void setDensity(float f) {
+        squareDensity = Mathf.RoundToInt(f);
+    }
+
+
 
 
 }
