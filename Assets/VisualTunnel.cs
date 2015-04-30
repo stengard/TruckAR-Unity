@@ -12,6 +12,8 @@ public class VisualTunnel : MonoBehaviour {
     public Camera cameraLeft;
     public Camera cameraRight;
 
+    private Camera currentCamera;
+
     public GameObject square;
 
     public int squareDensity;
@@ -38,7 +40,20 @@ public class VisualTunnel : MonoBehaviour {
 
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
-        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+
+
+        if (Camera.main) {
+            cameraCentroid = Camera.main.transform.position;
+            currentCamera = Camera.main;
+        }
+        else {
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+            currentCamera = cameraLeft;
+        }
+ 
+
+
+        //cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
@@ -58,7 +73,13 @@ public class VisualTunnel : MonoBehaviour {
         maxDistanceText.text = "Max Distance: " + maxDistance;
         densityText.text = "Square Density: " + squareDensity;
 
-        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+        if (Camera.main) {
+            cameraCentroid = Camera.main.transform.position;
+        }
+        else {
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+        }
+
         distance = Vector3.Distance(transform.position, cameraCentroid);
 
 
@@ -69,7 +90,7 @@ public class VisualTunnel : MonoBehaviour {
         //Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
         //Position vector half the distance between the camera and the object in the cameras looking direction to ccreate the curved path.
-        Vector3 vectorMid = cameraCentroid + cameraRight.transform.forward * (distance * 0.5f);
+        Vector3 vectorMid = cameraCentroid + currentCamera.transform.forward * (distance * 0.5f);
 
 
         catmullRomVectors = new Vector3[] { cameraCentroid, cameraCentroid, vectorMid, transform.position, transform.position };
@@ -100,7 +121,7 @@ public class VisualTunnel : MonoBehaviour {
             Vector3 currPt = catmullRom.Interp(pm);
 
             tunnelObjects[i - 1].transform.position = currPt;
-            tunnelObjects[i - 1].transform.rotation = cameraLeft.transform.rotation;
+            tunnelObjects[i - 1].transform.rotation = currentCamera.transform.rotation;
 
             //if (i != tunnelObjects.Count) {
             //    //Rotate the object so that it "looks at" the previous.

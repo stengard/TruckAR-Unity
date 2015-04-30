@@ -7,6 +7,7 @@ public class safeZoneScript : MonoBehaviour {
 
     public Camera cameraLeft;
     public Camera cameraRight;
+    private Camera currentCamera;
 
     public Color safeColor;
     public Color unsafeColor;
@@ -38,9 +39,20 @@ public class safeZoneScript : MonoBehaviour {
 
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
-        cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
+
+        if (Camera.main) {
+            cameraCentroid = Camera.main.transform.position;
+            currentCamera = Camera.main;
+        }
+        else {
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+            currentCamera = cameraLeft;
+        }
+
+        //cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.up, cameraRight.transform.up });
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
+
 
         radius = transform.localScale.x * GetComponent<CapsuleCollider>().radius;
 
@@ -82,9 +94,16 @@ public class safeZoneScript : MonoBehaviour {
 	// Update is called once per frame
     void Update() {
 
+        if (Camera.main) {
+            cameraCentroid = Camera.main.transform.position;
+        }
+        else {
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+        }
+
         distance = Vector3.Distance(transform.position, cameraCentroid);
 
-
+        Debugga.Logga("Distance: " + distance);
        // Debug.Log(distance);
        // Debug.Log(radius);
 
@@ -97,8 +116,8 @@ public class safeZoneScript : MonoBehaviour {
         lineMaterial.color = gradient.Evaluate(distance/secondSafeRadius);
 
         if (distance < secondSafeRadius && distance > safeRadius) {
-            currentOpacity = Mathf.Abs(Mathf.Sin(Time.time * flashingSpeed));
-
+            //currentOpacity = Mathf.Abs(Mathf.Sin(Time.time * flashingSpeed));
+            currentOpacity = 1;
             lineMaterial.color = new Color(lineMaterial.color.r, lineMaterial.color.g, lineMaterial.color.b, currentOpacity);
         }
         else {
