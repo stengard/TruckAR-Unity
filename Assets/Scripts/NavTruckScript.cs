@@ -20,7 +20,7 @@ public class NavTruckScript : MonoBehaviour {
     // Use this for initialization
     void Start() {
         seeker = GetComponent<Seeker>();
-        position = transform.position;
+        position = GetComponent<Camera>().transform.position;
         position.y = 0;
 
         target = targetTransform.transform.position;

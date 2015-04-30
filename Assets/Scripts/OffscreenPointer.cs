@@ -45,4 +45,15 @@ public class OffscreenPointer : MonoBehaviour {
             theTrans.localEulerAngles = new Vector3(theTrans.eulerAngles.x, theTrans.eulerAngles.y, Mathf.Rad2Deg * angle);
         }
     }
+
+    void OnEnable() {
+        if (theArrow)
+            theArrow.SetActive(true);        
+    }
+    void OnDisable() {
+        if(theArrow)
+            theArrow.SetActive(false);
+    }
+    
+
 }

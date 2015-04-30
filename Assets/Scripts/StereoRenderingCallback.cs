@@ -19,15 +19,16 @@ public class StereoRenderingCallback : metaioCallback
 		// non-Android stereo devices yet.
         //Debugga.LoggaLive("Inne i OnSDKReaady");
 
-        //string calibrationFilePath = AssetsManager.getAssetPath("hecMike.xml");
-        string calibrationFilePath = AssetsManager.getAssetPath("hecMartinNew.xml");
+        string calibrationFilePath = AssetsManager.getAssetPath("hecMike.xml");
+        //string calibrationFilePath = AssetsManager.getAssetPath("hecMartinNew.xml");
         if ((calibrationFilePath == null || !MetaioSDKUnity.setHandEyeCalibrationFromFile(calibrationFilePath))) {
             MetaioSDKUnity.setHandEyeCalibrationByDevice();
         }
 	}
-
+    
     protected override void onTrackingEvent(System.Collections.Generic.List<TrackingValues> trackingValues) {
         base.onTrackingEvent(trackingValues);
+        Debugga.Logga("Quality:"+trackingValues[0].quality);
         if (trackingValues[0].state == metaio.TrackingState.Found) {
             transform.FindChild("StereoCameraRight").GetComponent<NavTruckScript>().updatePath();
         }

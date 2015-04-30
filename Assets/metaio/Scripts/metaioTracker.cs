@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using metaio;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 public class metaioTracker : MonoBehaviour 
 {
@@ -13,7 +15,7 @@ public class metaioTracker : MonoBehaviour
 	private Camera cameraToPositionMono;
 	private Camera cameraToPositionLeft;
 	private Camera cameraToPositionRight;
-
+    TrackingValues values;
 	// COS ID
 	[SerializeField]
 	public int cosID = 1;	
@@ -174,10 +176,11 @@ public class metaioTracker : MonoBehaviour
 
 			return;
 		}
-		
-		int isTracking = MetaioSDKUnity.getTrackingValues(cosID, trackingValues);
-		// Debugga.Debugga("cosID " + cosID + ", isTracking: " + isTracking);
-		
+
+        //int otherTracking = metaio.unitycommunication.TrackingValues.GetTrackingValues(0);
+        //Debugga.Logga("DISTANCE2:" + otherTracking);
+
+        int isTracking = MetaioSDKUnity.getTrackingValues(cosID, trackingValues);
 		if (isTracking > 0)
 		{
 			// Metaio SDK: RHS with X=right (on marker) Y=up (on marker, i.e. back) Z=up (away from marker)

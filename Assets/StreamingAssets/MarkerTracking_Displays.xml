@@ -39,6 +39,16 @@
           </MarkerParameters>
         </Parameters>
       </SensorCOS>
+
+      <SensorCOS>
+        <SensorCosID>Marker1_2</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>94</Size>
+            <MatrixID>1</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
     </Sensor>
   </Sensors>
   <Connections>
@@ -50,7 +60,7 @@
         <SensorCosID>Marker1</SensorCosID>
         <Fuser Type="SmoothingFuser">
           <Parameters>
-            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
             <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
             <AlphaRotation>0.5</AlphaRotation>
             <AlphaTranslation>0.8</AlphaTranslation>
@@ -68,7 +78,7 @@
         <SensorCosID>Marker3</SensorCosID>
         <Fuser Type="SmoothingFuser">
           <Parameters>
-            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
             <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
             <AlphaRotation>0.5</AlphaRotation>
             <AlphaTranslation>0.8</AlphaTranslation>
@@ -86,7 +96,7 @@
         <SensorCosID>Marker5</SensorCosID>
         <Fuser Type="SmoothingFuser">
           <Parameters>
-            <ContinueLostTrackingWithOrientationSensor>true</ContinueLostTrackingWithOrientationSensor>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
             <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
             <AlphaRotation>0.5</AlphaRotation>
             <AlphaTranslation>0.8</AlphaTranslation>
@@ -96,5 +106,25 @@
         </Fuser>
       </SensorSource>
     </COS>
+
+    <COS>
+      <Name>COS4</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Marker1_2</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+    
   </Connections>
 </TrackingData>
