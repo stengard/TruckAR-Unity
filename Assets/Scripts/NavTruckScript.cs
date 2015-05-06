@@ -12,6 +12,7 @@ public class NavTruckScript : MonoBehaviour {
     public GameObject circleOriginal;
     public List<GameObject> clonedDirs;
     public Path path;
+    public GameObject theParent;
     //The max distance from the AI to a waypoint for it to continue to the next waypoint
     public float nextWaypointDistance = 50;
 
@@ -20,7 +21,12 @@ public class NavTruckScript : MonoBehaviour {
     // Use this for initialization
     void Start() {
         seeker = GetComponent<Seeker>();
-        position = GetComponent<Camera>().transform.position;
+        if (GetComponent<Camera>()) {
+            Debugga.Logga("Kamera");
+            position = GetComponent<Camera>().transform.position;
+        }
+        else
+            position = transform.position;
         position.y = 0;
 
         target = targetTransform.transform.position;
@@ -61,7 +67,7 @@ public class NavTruckScript : MonoBehaviour {
                 }
                 clonedDirs[i].transform.Rotate(90, -90, 0);
                 clonedDirs[i].transform.position.Set(clonedDirs[i].transform.position.x, 20f, clonedDirs[i].transform.position.z);
-                clonedDirs[i].transform.parent = GameObject.Find("Hans & Greta").transform;
+                clonedDirs[i].transform.parent = theParent.transform;
                 clonedDirs[i].SetActive(true);
             }
         }

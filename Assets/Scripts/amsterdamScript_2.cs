@@ -50,8 +50,6 @@ public class amsterdamScript_2 : MonoBehaviour {
         distanceMoved = distanceMoved + Time.deltaTime * speedToDriveAt;
         for (int i = 0; i < noOfLights; i++) {
             float scaleFactor = maxScale - (maxScale - 1) * Mathf.Clamp01(Mathf.Abs(trafficLights_go[i].transform.localPosition.x - distanceMoved) / distToLine);
-            if (i == 1)
-                Debugga.Logga("Scalefactor:" + scaleFactor);
             //Sätt A - Röda förhåller sig till distanceMoved
             float greenScale = 1 - (scaleFactor - 1) / (maxScale - 1);
             //Sätt B - Gröna förhåller sig till distanceMoved
