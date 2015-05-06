@@ -24,7 +24,7 @@
         <SensorCosID>Marker3</SensorCosID>
         <Parameters>
           <MarkerParameters>
-            <Size>60</Size>
+            <Size>94</Size>
             <MatrixID>3</MatrixID>
           </MarkerParameters>
         </Parameters>
@@ -34,7 +34,7 @@
         <SensorCosID>Marker5</SensorCosID>
         <Parameters>
           <MarkerParameters>
-            <Size>60</Size>
+            <Size>94</Size>
             <MatrixID>5</MatrixID>
           </MarkerParameters>
         </Parameters>

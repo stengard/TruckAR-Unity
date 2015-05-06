@@ -12,7 +12,7 @@ public class Shootout_script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         lastFrame = transform.parent.eulerAngles;
-        theForks.transform.position = new Vector3(theForks.transform.position.x, theForks.transform.position.y, moveDist);
+        theForks.transform.localPosition = new Vector3(theForks.transform.localPosition.x, theForks.transform.localPosition.y, moveDist);
         theText.text = (moveDist / 10).ToString("0") + "m";
 	}
 

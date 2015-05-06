@@ -28,13 +28,15 @@ public class Billboard : MonoBehaviour {
 
         if (Camera.main) {
             cameraCentroid = Camera.main.transform.position;
+            transform.rotation = Camera.main.transform.rotation;
         }
         else {
             cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+            transform.rotation = cameraLeft.transform.rotation;
         }
 
 
-        transform.rotation = cameraLeft.transform.rotation;
+        
 
 
 
