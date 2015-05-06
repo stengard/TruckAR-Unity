@@ -70,8 +70,6 @@ public class predictivePath : MonoBehaviour {
     void Update() {
 
         //Calculate the angle  between backWheel forward vector and middle plane and  rotate the pivot point accordingly.
-
-
         Vector3 eulerAngles = originalRotation;
         //Calculate normal vectors 
         normalVectorWheel = Vector3.Normalize(backWheel.transform.forward);

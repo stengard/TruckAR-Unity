@@ -13,6 +13,8 @@ public class safeZoneScript : MonoBehaviour {
     public Color unsafeColor;
     public float safeRadius, secondSafeRadius;
 
+    public float heightOfUser;
+
     private Gradient gradient;
     private GradientColorKey[] gck;
     private GradientAlphaKey[] gak;
@@ -36,6 +38,18 @@ public class safeZoneScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
+        cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
+
+        if (Camera.main) {
+            cameraCentroid = Camera.main.transform.position;
+            currentCamera = Camera.main;
+        }
+        else {
+            cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
+            currentCamera = cameraLeft;
+        }
 
         cameraLeft = (Camera)GameObject.Find("StereoCameraLeft").GetComponent<Camera>();
         cameraRight = (Camera)GameObject.Find("StereoCameraRight").GetComponent<Camera>();
@@ -102,8 +116,11 @@ public class safeZoneScript : MonoBehaviour {
         }
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
+        Debugga.Logga("Distance 1: " + distance);
 
-        Debugga.Logga("Distance: " + distance);
+        distance = Mathf.Sqrt(distance*distance - heightOfUser*heightOfUser);
+
+        Debugga.Logga("Distance 2: " + distance);
        // Debug.Log(distance);
        // Debug.Log(radius);
 
@@ -112,6 +129,8 @@ public class safeZoneScript : MonoBehaviour {
     }
 
     private void CreatePoints() {
+
+
 
         lineMaterial.color = gradient.Evaluate(distance/secondSafeRadius);
 
