@@ -38,7 +38,6 @@ public class Billboard : MonoBehaviour {
 
             transform.rotation = cameraLeft.transform.rotation;
         }
- 
 
 
 
