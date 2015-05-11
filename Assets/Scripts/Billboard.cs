@@ -27,13 +27,13 @@ public class Billboard : MonoBehaviour {
 
 
         if (Camera.main) {
-            Debugga.Logga("main camera");
+            //Debugga.Logga("main camera");
             cameraCentroid = Camera.main.transform.position;
 
             transform.rotation = Camera.main.transform.rotation;
         }
         else {
-            Debugga.Logga("Stereo");
+            //Debugga.Logga("Stereo");
             cameraCentroid = Vector3Helper.CenterOfVectors(new Vector3[] { cameraLeft.transform.position, cameraRight.transform.position });
 
             transform.rotation = cameraLeft.transform.rotation;
