@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<!--    Example tracking configuration file for using marker-based tracking.
+        Marker tracking is the detection of markers in a camera image and
+        the estimation of the camera position with respect to these markers.
+        Markers, in contrast to natural features, are easy to detect with high
+        precision, which in turn allows to estimate the camera position with
+        high accuracy. 
+        There are three different marker types that can be used:
+        - ID marker,
+        - picture marker and
+        - rectangular image marker
+        To use one or more of these markers for the tracking process, they need
+        to be defined in the configuration file. If a marker is not defined, 
+        but is seen during the tracking process, then it will simply be ignored. 
+        Besides the configuration file, a camera calibration file needs to be 
+        provided. A more precise camera calibration will lead to more accurate 
+        tracking results, so it is advisible to use a high-quality camera 
+        calibration. -->
+<TrackingData>
+    <Sensors>
+        <Sensor type="MarkerBasedSensorSource">
+            <SensorID>Markertracking1</SensorID>
+            <Parameters>
+                <MarkerTrackingParameters>
+                    <TrackingQuality>fast</TrackingQuality>
+                    <ThresholdOffset>110</ThresholdOffset>
+                    <NumberOfSearchIterations>3</NumberOfSearchIterations>
+                    <MaxObjectsToTrackInParallel>4</MaxObjectsToTrackInParallel>
+                </MarkerTrackingParameters>
+            </Parameters>
+          <SensorCOS>
+                <SensorCosID>Marker_Hans_Greta_ID_1</SensorCosID>
+                <Parameters>
+                    <MarkerParameters>
+                        <Size>576</Size>
+                    <MatrixID>1</MatrixID>
+                    </MarkerParameters>
+                </Parameters>
+            </SensorCOS>
+          
+          <SensorCOS>
+            <SensorCosID>Pallet_Tooltip_ID_2</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>2</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Pallet_Hologram_Map_ID_3</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>3</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Green_Wave_ID_4</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>576</Size>
+                <MatrixID>4</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Display_Hud_ID_5</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>5</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Display_Marker1_ID_6</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>6</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Display_Marker2_ID_7</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>7</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Display_Marker3_ID_8</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>8</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Xray_ID_9</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>8</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+
+          <SensorCOS>
+            <SensorCosID>Xray_Tooltip_ID_10</SensorCosID>
+            <Parameters>
+              <MarkerParameters>
+                <Size>94</Size>
+                <MatrixID>8</MatrixID>
+              </MarkerParameters>
+            </Parameters>
+          </SensorCOS>
+		    </Sensor>
+	</Sensors>
+  
+	<Connections>
+		<COS>
+			<Name>COS1</Name>
+			<SensorSource trigger="1">
+				<SensorID>Markertracking1</SensorID>
+				<SensorCosID>Marker_Hans_Greta_ID_1</SensorCosID>
+	            <Fuser Type="SmoothingFuser">
+					<Parameters>
+						<ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+					</Parameters>
+	            </Fuser>
+			</SensorSource>
+		</COS>
+    
+    <COS>
+      <Name>COS2</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Pallet_Tooltip_ID_2</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS3</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Pallet_Hologram_Map_ID_3</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>300</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS5</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Display_Hud_ID_5</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS> 
+    
+    <COS>
+      <Name>COS6</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Display_Marker1_ID_6</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS7</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Display_Marker2_ID_7</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS8</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Display_Marker3_ID_8</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+    
+    <COS>
+      <Name>COS9</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Xray_ID_9</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS10</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Xray_Tooltip_ID_10</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+    
+	</Connections>
+     
+</TrackingData>

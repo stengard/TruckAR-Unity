@@ -18,6 +18,14 @@ public class OffscreenPointer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        UnityEngine.UI.Image someImage = GetComponentInChildren<UnityEngine.UI.Image>();
+        if (!someImage.enabled) {
+            theArrow.SetActive(false);
+            return;
+        }
+        else
+            theArrow.SetActive(true);
+
         if (Camera.main) {
             cameraCentroid = Camera.main.transform.up;
             cam = Camera.main;
@@ -48,10 +56,10 @@ public class OffscreenPointer : MonoBehaviour {
 
     void OnEnable() {
         if (theArrow)
-            theArrow.SetActive(true);        
+            theArrow.SetActive(true);
     }
     void OnDisable() {
-        if(theArrow)
+        if (theArrow)
             theArrow.SetActive(false);
     }
     

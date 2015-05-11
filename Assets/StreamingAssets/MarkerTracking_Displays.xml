@@ -8,6 +8,7 @@
           <TrackingQuality>fast</TrackingQuality>
           <ThresholdOffset>200</ThresholdOffset>
           <NumberOfSearchIterations>3</NumberOfSearchIterations>
+          <MaxObjectsToTrackInParallel>4</MaxObjectsToTrackInParallel>
         </MarkerTrackingParameters>
       </Parameters>
       <SensorCOS>

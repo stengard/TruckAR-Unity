@@ -29,6 +29,7 @@ public class StereoRenderingCallback : metaioCallback
     protected override void onTrackingEvent(System.Collections.Generic.List<TrackingValues> trackingValues) {
         base.onTrackingEvent(trackingValues);
         Debugga.Logga("Quality:"+trackingValues[0].quality);
+        Debugga.Logga("ID" + trackingValues[0].coordinateSystemID);
         if (trackingValues[0].state == metaio.TrackingState.Found) {
             transform.FindChild("StereoCameraRight").GetComponent<NavTruckScript>().updatePath();
         }

@@ -1,48 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using Pathfinding;
+using System.Collections.Generic;
 
-public class NavTruckScript : MonoBehaviour {
+public class HologramMapHelper : MonoBehaviour {
     Seeker seeker;
-    public GameObject targetTransform;
-    Vector3 target;
-    Vector3 position;
+    public GameObject theTarget;
+    Vector3 targetPos;
+    public Vector3 position;
+    public Path path;
+    int currentWaypoint;
+    public float nextWaypointDistance = 50;
     public GameObject dirOriginal;
     public GameObject circleOriginal;
     public List<GameObject> clonedDirs;
-    public Path path;
-    public GameObject theParent;
-    //The max distance from the AI to a waypoint for it to continue to the next waypoint
-    public float nextWaypointDistance = 50;
-
-    //The waypoint we are currently moving towards
-    private int currentWaypoint = 0;
-    // Use this for initialization
-    void Start() {
+	// Use this for initialization
+	void Start () {
         seeker = GetComponent<Seeker>();
-        if (GetComponent<Camera>()) {
-            position = GetComponent<Camera>().transform.position;
-        }
-        else
-            position = transform.position;
+        targetPos = theTarget.transform.position;
+        //position = transform.localPosition;
         position.y = 0;
-
-        target = targetTransform.transform.position;
-        target.y = 0;
+        targetPos.y = 0;
         updatePath();
-    }
-
-
-    // Update is called once per frame
-    void Update() {
-    }
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	}
 
     public void updatePath() {
-        seeker.StartPath(position, target, onPathComplete);
+        Debugga.Logga("target"+targetPos);
+        Debugga.Logga("pos:" + transform.position);
+        Debugga.Logga("localpos:" + position);
+        Debugga.Logga("parentpos:" + transform.parent.position);
+        Debugga.Logga("parentlocalpos:" + transform.parent.localPosition);
+        seeker.StartPath(position, targetPos, completed);
     }
 
-    void onPathComplete(Path p) {
+    void completed(Path p) {
+        Debugga.Logga("PATH searched atleast?");
         if (!p.error) {
             path = p;
             currentWaypoint = 0;
@@ -53,32 +49,32 @@ public class NavTruckScript : MonoBehaviour {
             clonedDirs.Clear();
             for (int i = 0; i < path.vectorPath.Count; i++) {
                 Vector3 pos = path.vectorPath[i];
-                pos.y = 0.1f;
+                pos.y = -999.0f;
 
                 if ((i + 1) < path.vectorPath.Count) {
                     clonedDirs.Insert(i, Instantiate(dirOriginal));
-                    clonedDirs[i].transform.position = pos;
+                    clonedDirs[i].transform.parent = transform;
+                    clonedDirs[i].transform.localPosition = new Vector3((pos.x - 5599)/ transform.localScale.x, pos.y / transform.localScale.x, pos.z / transform.localScale.x);
                     clonedDirs[i].transform.LookAt(path.vectorPath[i + 1]);
                 }
                 else {
                     clonedDirs.Insert(i, Instantiate(circleOriginal));
-                    clonedDirs[i].transform.position = pos;
+                    clonedDirs[i].transform.parent = transform;
+                    clonedDirs[i].transform.localPosition = new Vector3((pos.x - 5599) / transform.localScale.x, pos.y / transform.localScale.x, pos.z / transform.localScale.x);
                 }
+                Debugga.Logga("clonedpos:" + clonedDirs[0].transform.position);
+                Debugga.Logga("clonedLocalpos:" + clonedDirs[0].transform.localPosition);
                 clonedDirs[i].transform.Rotate(90, -90, 0);
-                clonedDirs[i].transform.position.Set(clonedDirs[i].transform.position.x, 20f, clonedDirs[i].transform.position.z);
-                clonedDirs[i].transform.parent = theParent.transform;
                 clonedDirs[i].SetActive(true);
             }
         }
     }
-
     public void FixedUpdate() {
         if (path == null) {
-            //We have no path to move after yet
+            //We have no path to move after ye
             return;
         }
-
-        if (currentWaypoint >= path.vectorPath.Count) {
+                if (currentWaypoint >= path.vectorPath.Count) {
             //Reached the end of the path
             return;
         }

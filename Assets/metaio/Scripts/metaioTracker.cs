@@ -361,19 +361,29 @@ public class metaioTracker : MonoBehaviour
 		// Do nothing if enabled state is not changed
 		if (childsEnabled == enable)
 			return;
-		
-        Renderer[] rendererComponents = GetComponentsInChildren<Renderer>();
 
-        foreach (Renderer component in rendererComponents) 
-		{
-            component.enabled = enable;
+        foreach (Transform child in transform) {
+            child.gameObject.SetActive(enable);
         }
+        //Renderer[] rendererComponents = GetComponentsInChildren<Renderer>();
 
-        UnityEngine.UI.Text[] textComponents = GetComponentsInChildren<UnityEngine.UI.Text>();
+        //foreach (Renderer component in rendererComponents) 
+        //{
+        //    component.enabled = enable;
+        //}
+
+        //UnityEngine.UI.Text[] textComponents = GetComponentsInChildren<UnityEngine.UI.Text>();
         
-        foreach (UnityEngine.UI.Text component in textComponents) {
-            component.enabled = enable;
-        }
+        //foreach (UnityEngine.UI.Text component in textComponents) {
+        //    component.enabled = enable;
+        //}
+
+        //UnityEngine.UI.Image[] imageComponents = GetComponentsInChildren<UnityEngine.UI.Image>();
+        
+        //foreach (UnityEngine.UI.Image component in imageComponents) {
+        //    component.enabled = enable;
+        //}
+
 
 		childsEnabled = enable;
 		
