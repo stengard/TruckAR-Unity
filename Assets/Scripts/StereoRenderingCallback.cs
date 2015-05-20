@@ -17,7 +17,6 @@ public class StereoRenderingCallback : metaioCallback
 		//    because stereo glasses can vary).
 		// Items 2) and 3) only do something on Android for the moment, as there are no supported,
 		// non-Android stereo devices yet.
-        //Debugga.LoggaLive("Inne i OnSDKReaady");
 
         string calibrationFilePath = AssetsManager.getAssetPath("hecMike.xml");
         //string calibrationFilePath = AssetsManager.getAssetPath("hecMartinNew.xml");

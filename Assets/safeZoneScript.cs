@@ -116,13 +116,8 @@ public class safeZoneScript : MonoBehaviour {
         }
 
         distance = Vector3.Distance(transform.position, cameraCentroid);
-        Debugga.Logga("Distance 1: " + distance);
 
         distance = Mathf.Sqrt(distance*distance - heightOfUser*heightOfUser);
-
-        Debugga.Logga("Distance 2: " + distance);
-       // Debug.Log(distance);
-       // Debug.Log(radius);
 
         CreatePoints();
 
