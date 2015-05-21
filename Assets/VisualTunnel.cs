@@ -162,6 +162,20 @@ public class VisualTunnel : MonoBehaviour {
         squareDensity = Mathf.RoundToInt(f);
     }
 
+    public void OnEnable() {
+
+
+    }
+
+    public void OnDisable() {
+        for (int i = 0; i < tunnelObjects.Count; i++) {
+            Destroy(tunnelObjects[i]);
+        }
+
+        tunnelObjects.Clear();
+    }
+
+    
 
 
 
