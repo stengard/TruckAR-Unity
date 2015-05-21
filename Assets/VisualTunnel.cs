@@ -60,8 +60,8 @@ public class VisualTunnel : MonoBehaviour {
 
         tunnelObjects = new List<GameObject>();
 
-        maxDistanceText.text = "Max Distance: " + maxDistance;
-        densityText.text = "Square Density: " + squareDensity;
+        //maxDistanceText.text = "Max Distance: " + maxDistance;
+        //densityText.text = "Square Density: " + squareDensity;
 
         //Instantiate objects
         addTunnels();
@@ -70,8 +70,8 @@ public class VisualTunnel : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        maxDistanceText.text = "Max Distance: " + maxDistance;
-        densityText.text = "Square Density: " + squareDensity;
+        //maxDistanceText.text = "Max Distance: " + maxDistance;
+        //densityText.text = "Square Density: " + squareDensity;
 
         if (Camera.main) {
             cameraCentroid = Camera.main.transform.position;
@@ -86,8 +86,6 @@ public class VisualTunnel : MonoBehaviour {
         numberOfTunnels = Mathf.RoundToInt((distance / 1000) * squareDensity);
         Debugga.Logga("distance: " + distance);
         Debugga.Logga("cc: " + cameraCentroid);
-
-        //Debugga.Logga("Number of tunnels: " + numberOfTunnels);
 
         //Position vector half the distance between the camera and the object in the cameras looking direction to ccreate the curved path.
         Vector3 vectorMid = cameraCentroid + currentCamera.transform.forward * (distance * 0.5f);

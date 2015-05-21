@@ -214,7 +214,6 @@
 						<AlphaTranslation>0.8</AlphaTranslation>
 						<GammaRotation>0.5</GammaRotation>
 						<GammaTranslation>0.8</GammaTranslation>
-						<GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 				</Fuser>
 			</SensorSource>
@@ -233,7 +232,6 @@
 						<AlphaTranslation>0.8</AlphaTranslation>
 						<GammaRotation>0.5</GammaRotation>
 						<GammaTranslation>0.8</GammaTranslation>
-						<GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 				</Fuser>
 			</SensorSource>
@@ -251,7 +249,6 @@
 			            <AlphaTranslation>0.8</AlphaTranslation>
 			            <GammaRotation>0.5</GammaRotation>
 			            <GammaTranslation>0.8</GammaTranslation>
-			            <GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 	            </Fuser>
 			</SensorSource>
@@ -288,7 +285,6 @@
 						<AlphaTranslation>0.8</AlphaTranslation>
 						<GammaRotation>0.5</GammaRotation>
 						<GammaTranslation>0.8</GammaTranslation>
-						<GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 				</Fuser>
 			</SensorSource>
@@ -307,7 +303,6 @@
 						<AlphaTranslation>0.8</AlphaTranslation>
 						<GammaRotation>0.5</GammaRotation>
 						<GammaTranslation>0.8</GammaTranslation>
-						<GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 				</Fuser>
 			</SensorSource>
