@@ -159,6 +159,25 @@
 				</Parameters>
 			</SensorCOS>
 
+      <SensorCOS>
+        <SensorCosID>Hologram_Map_ID_14</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>95</Size>
+            <MatrixID>14</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
+
+      <SensorCOS>
+        <SensorCosID>Green_Wave_ID_15</SensorCosID>
+        <Parameters>
+          <MarkerParameters>
+            <Size>576</Size>
+            <MatrixID>15</MatrixID>
+          </MarkerParameters>
+        </Parameters>
+      </SensorCOS>
 	    </Sensor>
 	</Sensors>
   
@@ -375,7 +394,6 @@
 						<AlphaTranslation>0.8</AlphaTranslation>
 						<GammaRotation>0.5</GammaRotation>
 						<GammaTranslation>0.8</GammaTranslation>
-						<GravityAssistance>ReplaceZAxis</GravityAssistance>
 					</Parameters>
 				</Fuser>
 			</SensorSource>
@@ -399,6 +417,43 @@
 				</Fuser>
 			</SensorSource>
 	    </COS>
+
+    <COS>
+      <Name>COS14</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Hologram_Map_ID_14</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
+
+    <COS>
+      <Name>COS15</Name>
+      <SensorSource trigger="1">
+        <SensorID>Markertracking1</SensorID>
+        <SensorCosID>Green_Wave_ID_15</SensorCosID>
+        <Fuser Type="SmoothingFuser">
+          <Parameters>
+            <ContinueLostTrackingWithOrientationSensor>True</ContinueLostTrackingWithOrientationSensor>
+            <KeepPoseForNumberOfFrames>100</KeepPoseForNumberOfFrames>
+            <AlphaRotation>0.5</AlphaRotation>
+            <AlphaTranslation>0.8</AlphaTranslation>
+            <GammaRotation>0.5</GammaRotation>
+            <GammaTranslation>0.8</GammaTranslation>
+            <GravityAssistance>ReplaceZAxis</GravityAssistance>            
+          </Parameters>
+        </Fuser>
+      </SensorSource>
+    </COS>
 	   
 	</Connections>
      
