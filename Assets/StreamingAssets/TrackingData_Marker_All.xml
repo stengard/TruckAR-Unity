@@ -35,6 +35,7 @@
                     <MarkerParameters>
                         <Size>576</Size>
                     	<MatrixID>1</MatrixID>
+                	 	<GravityAssistance>ReplaceZAxis</GravityAssistance>is>
                     </MarkerParameters>
                 </Parameters>
             </SensorCOS>
